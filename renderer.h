@@ -10,6 +10,7 @@ typedef struct screen_s
 {
    SDL_Window *window;
    SDL_Renderer *renderer;
+   SDL_Surface* icon;
 
 
 }screen_t;
