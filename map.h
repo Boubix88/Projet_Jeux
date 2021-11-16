@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 
-#define MAP_SIZE 16;
+#define MAP_SIZE 16
 
 typedef struct{
     int map [MAP_SIZE][MAP_SIZE];
