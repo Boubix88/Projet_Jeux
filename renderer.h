@@ -3,20 +3,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "map.h"
+#include <SDL2/SDL.h>
 
 
 typedef struct screen_s screen_t;
 struct screen_s{
    SDL_Window *window;
    SDL_Renderer *renderer
-
-
 };
 
 
 
 
-SDL_Renderer *SDL_CreatRenderer(SDL_Window* window, int index, Uint32 flags);
+SDL_Renderer *SDL_CreateRenderer(SDL_Window* window, int index, Uint32 flags);
 
 
 
