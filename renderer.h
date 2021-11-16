@@ -5,4 +5,8 @@
 #include map.h
 
 
-SDL_Window * SDL_CreateWindow();
+
+
+
+
+void Init_Screen(screen_t*screen);
