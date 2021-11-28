@@ -8,7 +8,8 @@
 int drawMap(int x, int y);
 void drawPlayer(unsigned char color[3]);
 int playerHere(int x, int y);
-float laser();
+void drawFov(unsigned char color[3]);
+int fovHere(int x, int y, int i);
 
 #define MAP_SIZE 16
 

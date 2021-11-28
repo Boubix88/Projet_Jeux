@@ -2,14 +2,17 @@
 #include <math.h>
 
 #define PLAYER_SIZE 4
+#define M_PI 3.14159265358979323846
+const float fov = M_PI/3.; // field of view
 
 float player_x = 1.5;
 float player_y = 1.5;
 float player_a = 1.523; //angle de vue
+const size_t rect_w = WIDTH/MAP_SIZE;
+const size_t rect_h = HEIGHT/MAP_SIZE;
 
 int playerHere(int x, int y) {
     if ((x >= player_x && y >= player_y) && (x <= player_x + PLAYER_SIZE && y <= player_y + PLAYER_SIZE)){
-        printf("C'est vrai\n");
         return 1;
     }
     return 0;
@@ -21,16 +24,35 @@ void drawPlayer(unsigned char color[3]) {
     color[2] = 0;  //blue
 }
 
-float laser() {
-    float c;
-    for (c = 0; c < 100; c+= 0.05) {
-        float x = player_x + c*cosf(player_a);
-        float y = player_y + c*sinf(player_a);
-        printf("Valeur de x : %f\n", x);
-        printf("Valeur de c : %f\n", c);
-        if (drawMap((int) x,(int) y)){
-            break;
+
+
+int fovHere(int x, int y, int i) {
+    float t;
+    float angle;
+
+    //for (size_t i=0; i<WIDTH; i++) { // draw the visibility cone
+        angle = player_a-fov/2 + fov*i/(float)WIDTH;
+    //}
+    
+
+   for (t=0; t<20; t+=.05) {
+        float cx = player_x + t*cos(angle);
+        float cy = player_y + t*sin(angle);
+
+        int pix_x = cx*rect_w;
+        int pix_y = cy*rect_w;
+
+        if (x == pix_x && y == pix_y){
+            printf("Valeur t : %f   Boucle : %d\n", t, i);
+            return 1;
         }
-   }
-    return c;
+    }
+    
+    return 0;
+}
+
+void drawFov(unsigned char color[3]) {
+    color[0] = 0;
+    color[1] = 0;
+    color[2] = 0;
 }

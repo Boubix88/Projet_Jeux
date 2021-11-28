@@ -14,15 +14,17 @@ int main(void) {
         color[2] = 255;  //blue
       } else if (playerHere(i, j)){
         drawPlayer(color);
+      } else if (fovHere(i, j, i)){
+        drawFov(color);
       } else {
         color[0] = 255;  //red 
         color[1] = (i + j)/8;  //green
         color[2] = (i + j)/4;  //blue
       }
+      
       (void) fwrite(color, 1, 3, file);
     }
   }
-  laser();
   (void) fclose(file);
   return EXIT_SUCCESS;
 }
