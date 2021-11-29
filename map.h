@@ -16,7 +16,6 @@ int fovHere(int x, int y, int i);
 typedef struct{
     int map [MAP_SIZE][MAP_SIZE];
 
-
 }Map;
 
 

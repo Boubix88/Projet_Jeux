@@ -4,24 +4,25 @@ int main(void) {
   FILE *file= fopen("map.ppm", "wb"); // mode binaire
   (void) fprintf(file, "P6\n%d %d\n255\n", WIDTH, HEIGHT);
   unsigned char color[3];
+
   for (int j = 0; j < HEIGHT; j++)
   {
     for (int i = 0; i < WIDTH; i++)
     {
-      if (drawMap(i/32, j/32)){ // On appel la fonction toute les 32 lignes
+      if (playerHere(i, j)){
+        drawPlayer(color);
+      }else if (drawMap(i/32, j/32)){ // On appel la fonction toute les 32 lignes
         color[0] = 1;  //red 
         color[1] = 200;  //green
         color[2] = 255;  //blue
-      } else if (playerHere(i, j)){
-        drawPlayer(color);
-      } else if (fovHere(i, j, i)){
+      }
+      else if (fovHere(i, j, i)){
         drawFov(color);
-      } else {
+      }else {
         color[0] = 255;  //red 
         color[1] = (i + j)/8;  //green
         color[2] = (i + j)/4;  //blue
       }
-      
       (void) fwrite(color, 1, 3, file);
     }
   }

@@ -12,7 +12,9 @@ const size_t rect_w = WIDTH/MAP_SIZE;
 const size_t rect_h = HEIGHT/MAP_SIZE;
 
 int playerHere(int x, int y) {
-    if ((x >= player_x && y >= player_y) && (x <= player_x + PLAYER_SIZE && y <= player_y + PLAYER_SIZE)){
+    //printf("Valeur de x : %d   Valeur de y : %d\n",x ,y);
+    if ((x >= player_x*rect_w && y >= player_y*rect_h) && (x <= player_x*rect_w + PLAYER_SIZE && y <= player_y*rect_h + PLAYER_SIZE)){
+        printf("Joueur affiché\n");
         return 1;
     }
     return 0;
@@ -30,24 +32,25 @@ int fovHere(int x, int y, int i) {
     float t;
     float angle;
 
-    //for (size_t i=0; i<WIDTH; i++) { // draw the visibility cone
-        angle = player_a-fov/2 + fov*i/(float)WIDTH;
-    //}
-    
-
-   for (t=0; t<20; t+=.05) {
+    angle = (player_a-fov)/2 + fov*i/(float)WIDTH;
+    printf("Angle : %f\n", angle);
+    for (t=0; t<20; t+=.05) {
         float cx = player_x + t*cos(angle);
         float cy = player_y + t*sin(angle);
+
+        if (drawMap((int)cx, (int)cy)){
+            //printf("Valeur de cx : %d   Valeur de cy : %d\n", cx, cy);
+            break;
+        }
 
         int pix_x = cx*rect_w;
         int pix_y = cy*rect_w;
 
         if (x == pix_x && y == pix_y){
-            printf("Valeur t : %f   Boucle : %d\n", t, i);
+            //printf("Valeur de t : %d   Boucle : %d\n", t, i);
             return 1;
         }
     }
-    
     return 0;
 }
 
