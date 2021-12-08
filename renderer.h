@@ -17,7 +17,5 @@ typedef struct screen_s
 SDL_Renderer *SDL_CreateRenderer(SDL_Window* window, int index, Uint32 flags);
 
 
-
-
 void Init_Screen(screen_t*screen);
 #endif

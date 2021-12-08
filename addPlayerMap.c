@@ -1,4 +1,4 @@
-#include "map.h"
+/*#include "map.h"
 #include <math.h>
 
 #define PLAYER_SIZE 4
@@ -58,4 +58,4 @@ void drawFov(unsigned char color[3]) {
     color[0] = 0;
     color[1] = 0;
     color[2] = 0;
-}
+}*/
