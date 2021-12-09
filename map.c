@@ -25,7 +25,11 @@ void draw3DMapSdl(const char map[16][16], screen_t* screen, world_t *world){
   float player_fov = 1.58;
 
 	SDL_SetRenderDrawColor(screen->renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-	SDL_RenderClear(screen->renderer);
+
+  SDL_RenderClear(screen->renderer);
+
+  drawSky(screen, world);
+
 	SDL_SetRenderDrawColor(screen->renderer, 0, 200, 255, SDL_ALPHA_OPAQUE);
   	for (int r=0; r<512; r++) { 
   		float angle = world->player_a - player_fov/2 + player_fov*r/512;      
@@ -42,5 +46,23 @@ void draw3DMapSdl(const char map[16][16], screen_t* screen, world_t *world){
       		}
     	}
   	}
+  drawFPS(world, screen);
 	SDL_RenderPresent(screen->renderer);
+}
+
+void drawSky(screen_t* screen, world_t* world){
+  SDL_Rect srcRect;
+  SDL_Rect destRect;
+
+  srcRect.x = world->player_a*800;
+  srcRect.y = 0;
+  srcRect.w = 1280;
+  srcRect.h = 720/2;
+
+  destRect.x = 0;
+  destRect.y = 0;
+  destRect.w = 1280;
+  destRect.h = 720/2-80;
+
+  SDL_RenderCopy(screen->renderer, screen->skyTexture, &srcRect, &destRect);
 }
