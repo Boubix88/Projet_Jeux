@@ -13,8 +13,7 @@ int main(int argc, char *argv[]){
     world.player_y = 6;
     world.exit = false;
 
-    screen.sky = SDL_LoadBMP("ciel.bmp");
-    screen.skyTexture = SDL_CreateTextureFromSurface(screen.renderer, screen.sky);
+    initialiserTexture(&screen);
 
     screen.font = TTF_OpenFont("Pixeled.ttf",25);
     

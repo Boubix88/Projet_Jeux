@@ -29,6 +29,7 @@ void draw3DMapSdl(const char map[16][16], screen_t* screen, world_t *world){
   SDL_RenderClear(screen->renderer);
 
   drawSky(screen, world);
+  drawGround(screen, world);
 
 	SDL_SetRenderDrawColor(screen->renderer, 0, 200, 255, SDL_ALPHA_OPAQUE);
   	for (int r=0; r<512; r++) { 
@@ -65,4 +66,21 @@ void drawSky(screen_t* screen, world_t* world){
   destRect.h = 720/2-80;
 
   SDL_RenderCopy(screen->renderer, screen->skyTexture, &srcRect, &destRect);
+}
+
+void drawGround(screen_t* screen, world_t* world){
+  SDL_Rect srcRect;
+  SDL_Rect destRect;
+
+  srcRect.x = world->player_a*800;
+  srcRect.y = 0;
+  srcRect.w = 1280;
+  srcRect.h = 720/2;
+
+  destRect.x = 0;
+  destRect.y = 720/2-80;
+  destRect.w = 1280;
+  destRect.h = 720-250;
+
+  SDL_RenderCopy(screen->renderer, screen->groundTexture, &srcRect, &destRect);
 }

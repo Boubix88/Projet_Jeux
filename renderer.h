@@ -15,6 +15,8 @@ typedef struct screen_s
    SDL_Surface* sky;
    SDL_Texture* skyTexture;
    SDL_Surface* skyDest;
+   SDL_Surface* ground;
+   SDL_Texture* groundTexture;
 
    TTF_Font* font;
 

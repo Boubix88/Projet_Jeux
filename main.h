@@ -23,5 +23,7 @@ void handle_events(SDL_Event *event, world_t *world, screen_t *screen);
 void draw3DMapSdl(const char map[16][16], screen_t* screen, world_t *world);
 void map(screen_t* screen, world_t *world);
 void drawSky(screen_t* screen, world_t* world);
+void drawGround(screen_t* screen, world_t* world);
 void calculFPS(world_t* world);
 void drawFPS(world_t* world, screen_t* screen);
+void initialiserTexture(screen_t* screen);
