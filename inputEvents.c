@@ -1,8 +1,8 @@
 #include "main.h"
 
 
-void handle_events(SDL_Event *event, world_t *world){
-
+void handle_events(SDL_Event *event, world_t *world, screen_t *screen){
+    
     while(SDL_PollEvent(event)){
         switch(event->type) {
             //si une touche est appuyée
@@ -40,9 +40,9 @@ void handle_events(SDL_Event *event, world_t *world){
             break;
 
             case SDL_MOUSEMOTION :
-                printf("La souris bouge, x : %d\n", event->motion.x);
+                //printf("La souris bouge, x : %d\n", event->motion.x);
                 world->player_a = (float)event->motion.x/1000;
-                printf("Player_a : %f", world->player_a); 
+                //printf("Player_a : %f", world->player_a); 
             break;
         }
     }

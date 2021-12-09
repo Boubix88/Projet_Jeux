@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "map.h"
 #include <SDL2/SDL.h>
+#include <SDL_ttf.h>
 
 
 typedef struct screen_s
@@ -11,6 +12,11 @@ typedef struct screen_s
    SDL_Window *window;
    SDL_Renderer *renderer;
    SDL_Surface* icon;
+   SDL_Surface* sky;
+   SDL_Texture* skyTexture;
+   SDL_Surface* skyDest;
+
+   TTF_Font* font;
 
 
 }screen_t;

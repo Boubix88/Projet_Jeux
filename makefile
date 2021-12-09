@@ -1,12 +1,12 @@
 CC = gcc
 
 #OBJS specifies quels fichiers seront compilés pour le programme prison
-OBJS = main.c renderer.c map.c inputEvents.c
+OBJS = main.c renderer.c map.c inputEvents.c world.c graphics.c
 #OBJS2 specifies quels fichiers seront compilés pour le programme map
 OBJS2 = createMap.c addPlayerMap.c
 CFLAGS= -W -Wall $(shell sdl2-config --cflags)
 CFLAGS2= -W -Wall
-LDFLAGS=-export-dynamic $(shell sdl2-config --libs) -lm
+LDFLAGS=-export-dynamic $(shell sdl2-config --libs) -lm -lSDL2_ttf
 LDFLAGS2 = -lm 
 
 

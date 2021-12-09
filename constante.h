@@ -3,3 +3,4 @@
 #define MAP_SIZE 16
 #define PLAYER_SIZE 8
 #define MOVING_STEP 0.1
+#define FPS_INTERVAL 1.0 //1 seconde
