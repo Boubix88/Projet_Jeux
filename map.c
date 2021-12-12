@@ -34,7 +34,8 @@ void draw3DMapSdl(const char map[16][16], screen_t* screen, world_t *world){
 	SDL_SetRenderDrawColor(screen->renderer, 0, 200, 255, SDL_ALPHA_OPAQUE);
   	for (int r=0; r<512; r++) { 
   		float angle = world->player_a - player_fov/2 + player_fov*r/512;      
-  		for (float t=0; t<20; t+=.001) {
+      //Pour regler la fluidité des fps, modifier l'incrementation de t, .001 => 30 fps, .002 => 60 fps, .05 => 144 fps 
+  		for (float t=0; t<20; t+=.002) {
       		float cx = world->player_x + t*cos(angle);
       		float cy = world->player_y + t*sin(angle);
 
@@ -48,6 +49,7 @@ void draw3DMapSdl(const char map[16][16], screen_t* screen, world_t *world){
     	}
   	}
   drawFPS(world, screen);
+  drawMiniMap(screen, world);
 	SDL_RenderPresent(screen->renderer);
 }
 
@@ -73,14 +75,14 @@ void drawGround(screen_t* screen, world_t* world){
   SDL_Rect destRect;
 
   srcRect.x = world->player_a*800;
-  srcRect.y = 0;
+  srcRect.y = 0; //0
   srcRect.w = 1280;
   srcRect.h = 720/2;
 
-  destRect.x = 0;
-  destRect.y = 720/2-80;
-  destRect.w = 1280;
-  destRect.h = 720-250;
+  destRect.x = 0;  //0
+  destRect.y = 720/2-80; //720/2-80
+  destRect.w = 1280;  //1280
+  destRect.h = 720-250;  //720-250
 
   SDL_RenderCopy(screen->renderer, screen->groundTexture, &srcRect, &destRect);
 }

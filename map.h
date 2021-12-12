@@ -8,9 +8,6 @@
 
 void initialisationMap(unsigned char *img);
 void initilaisationMap3D(unsigned char *img);
-void drawWalls(const char map[16][16], unsigned char *img);
-void drawPlayer(unsigned char *img);
-void drawFov(const char map[16][16], unsigned char *img);
 void drawMap(unsigned char *img, FILE *file);
 void draw3DMap(const char map[16][16], unsigned char *img);
 void drawLine(unsigned char *img, float x, float y, float w, float h);
