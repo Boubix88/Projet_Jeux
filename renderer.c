@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include "renderer.h"
+#include"main.h"
 
 
 void Init_Screen(screen_t*screen){
@@ -38,6 +39,21 @@ void draw3DMap2(screen_t* screen, const char map[16][16]) {
     SDL_RenderPresent(screen->renderer);
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
 
     
