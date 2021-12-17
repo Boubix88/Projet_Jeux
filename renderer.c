@@ -43,22 +43,3 @@ void draw3DMap2(screen_t* screen, const char map[16][16]) {
 
 
 }*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-    
-}

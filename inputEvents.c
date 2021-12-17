@@ -42,9 +42,12 @@ void handle_events(SDL_Event *event, world_t *world, screen_t *screen){
             break;
 
             case SDL_MOUSEMOTION :
-                //printf("La souris bouge, x : %d\n", event->motion.x);
-                world->player_a = (float)event->motion.x/1000;
-                //printf("Player_a : %f", world->player_a); 
+                if (event->motion.xrel > 0){
+                    world->player_a += .005;
+                }
+                else{
+                    world->player_a -= .005;
+                }
             break;
         }
     }

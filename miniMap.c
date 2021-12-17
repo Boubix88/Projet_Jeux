@@ -33,15 +33,15 @@ void drawWalls(const char map[16][16], screen_t *screen){
   SDL_RenderFillRect(screen->renderer, &destRect);
 
   destRect.x = 0;
-  destRect.y = 576;
+  destRect.y = 586;
   destRect.w = 8;
   destRect.h = 8;
 
   for (int i=0; i<16; i++){
     destRect.x += 8;
     for (int j=0; j<16; j++){
-      if (map[i][j]=='1') {
-        destRect.y = 706 - j*8;
+      if (map[j][i]=='1') {
+        destRect.y = 586 + j*8;
         SDL_SetRenderDrawColor(screen->renderer, 255, 0, 200, 255);
         SDL_RenderFillRect(screen->renderer, &destRect);
       }
@@ -53,8 +53,8 @@ void drawPlayer(screen_t* screen, world_t* world){
   SDL_Rect destRect;
   destRect.w = 3;
   destRect.h = 3;
-  destRect.y = 712 - world->player_x*8;
-  destRect.x = 8 + world->player_y*8;
+  destRect.y = 586 + world->player_y*8;
+  destRect.x = 8 + world->player_x*8;
 
   SDL_SetRenderDrawColor(screen->renderer, 0, 255, 0, 255);
   SDL_RenderFillRect(screen->renderer, &destRect);
@@ -76,10 +76,10 @@ void drawFov(const char map[16][16], screen_t* screen, world_t* world){
         } 
     
         int pixx = 8 + cx*8;
-        int pixy = 576 + cy*8;
+        int pixy = 586 + cy*8;
 
         SDL_SetRenderDrawColor(screen->renderer, 0, 255, 100, 255);
-        SDL_RenderDrawLine(screen->renderer, 8 + world->player_y*8, 712 - world->player_x*8, pixx, pixy);
+        SDL_RenderDrawPoint(screen->renderer, pixx, pixy);
     }
   }  
 }
