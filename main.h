@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <SDL_ttf.h>
 
+
 typedef struct world_s
 {
     float player_a;
