@@ -121,7 +121,7 @@ void deplacementAvant(world_t* world) {
 
     }
 
-    //en bas
+    //en bas.
     if (world->vx < world->player_x && world->vy > world->player_y) {
         world->player_x = world->player_x - MOVING_STEP;
         world->player_y = world->player_y + MOVING_STEP;
