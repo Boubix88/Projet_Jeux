@@ -131,24 +131,48 @@ void deplacementAvant(world_t* world) {
         world->player_y = world->player_y + MOVING_STEP;
     }
     else if (world->vx == world->player_x && world->vy > world->player_y) {
-        world->player_x = world->player_x + MOVING_STEP;
+        world->player_y = world->player_y + MOVING_STEP;
 
     }
 
 
 }
 void deplacementArriere(world_t* world) {
-    if (world->player_x > world->vx) {
-        world->player_x = world->player_x + MOVING_STEP;
-    }
-    else {
+    // on regarde en haut
+    if (world->vx > world->player_x && world->vy < world->player_y) {
         world->player_x = world->player_x - MOVING_STEP;
-    }
-    if (world->player_y > world->vy) {
         world->player_y = world->player_y + MOVING_STEP;
     }
-    else {
+    else if (world->vx < world->player_x && world->vy < world->player_y) {
+        world->player_x = world->player_x + MOVING_STEP;
+        world->player_y = world->player_y + MOVING_STEP;
+    }
+    else if (world->vx == world->player_x && world->vy < world->player_y) {
+        world->player_y = world->player_y + MOVING_STEP;
+
+    }
+    //gauche et droite
+    else if (world->vx < world->player_x && world->vy == world->player_y) {
+        world->player_x = world->player_x + MOVING_STEP;
+
+    }
+    else if (world->vx > world->player_x && world->vy == world->player_y) {
+        world->player_x = world->player_x - MOVING_STEP;
+
+    }
+
+    //en bas
+    if (world->vx < world->player_x && world->vy > world->player_y) {
+        world->player_x = world->player_x + MOVING_STEP;
         world->player_y = world->player_y - MOVING_STEP;
+    }
+    else if ((world->vx > world->player_x && world->vy > world->player_y)) {
+        world->player_x = world->player_x - MOVING_STEP;
+        world->player_y = world->player_y - MOVING_STEP;
+    }
+    else if (world->vx == world->player_x && world->vy > world->player_y) {
+        world->player_y = world->player_y - MOVING_STEP;
+
     }
 
 
