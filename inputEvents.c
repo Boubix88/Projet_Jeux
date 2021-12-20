@@ -29,7 +29,7 @@ void handle_events(SDL_Event *event, world_t *world, screen_t *screen){
                 if (event->key.keysym.sym == SDLK_z || event->key.keysym.sym ==SDLK_UP){
                  printf("La touche Z est appuyee\n");
                  avancerDirection(world);
-                 deplacement(world);
+                 deplacementAvant(world);
                 }
                 //si la touche appuyée est 'Bas' ou 'S'
                 if (event->key.keysym.sym == SDLK_s || event->key.keysym.sym ==SDLK_DOWN){
@@ -97,18 +97,42 @@ void avancerDirection(world_t* world) {
 
 
 
-void deplacement(world_t* world) {
-     if (world->player_x > world->vx) {
-        world->player_x = world->player_x - MOVING_STEP;
-     }
-    else {
+void deplacementAvant(world_t* world) {
+    // on regarde en haut
+    if (world->vx > world->player_x && world->vy < world->player_y) {
         world->player_x = world->player_x + MOVING_STEP;
-    }
-    if (world->player_y > world->vy) {
         world->player_y = world->player_y - MOVING_STEP;
     }
-    else {
+    else if (world->vx < world->player_x && world->vy < world->player_y) {
+        world->player_x = world->player_x - MOVING_STEP;
+        world->player_y = world->player_y - MOVING_STEP;
+    }
+    else if (world->vx == world->player_x && world->vy < world->player_y) {
+        world->player_y = world->player_y - MOVING_STEP;
+
+    }
+    //gauche et droite
+    else if (world->vx < world->player_x && world->vy == world->player_y) {
+        world->player_x = world->player_x - MOVING_STEP;
+
+    }
+    else if (world->vx > world->player_x && world->vy == world->player_y) {
+        world->player_x = world->player_x + MOVING_STEP;
+
+    }
+
+    //en bas
+    if (world->vx < world->player_x && world->vy > world->player_y) {
+        world->player_x = world->player_x - MOVING_STEP;
         world->player_y = world->player_y + MOVING_STEP;
+    }
+    else if ((world->vx > world->player_x && world->vy > world->player_y)) {
+        world->player_x = world->player_x + MOVING_STEP;
+        world->player_y = world->player_y + MOVING_STEP;
+    }
+    else if (world->vx == world->player_x && world->vy > world->player_y) {
+        world->player_x = world->player_x + MOVING_STEP;
+
     }
 
 
