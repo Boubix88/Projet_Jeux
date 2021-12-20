@@ -1,11 +1,11 @@
 #include "main.h"
 
 void initialiserTexture(screen_t* screen){
-    screen->sky = SDL_LoadBMP("ciel.bmp");
+    screen->sky = SDL_LoadBMP("../ressources/ciel.bmp");
     screen->skyTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->sky);
     SDL_FreeSurface(screen->sky);
 
-    screen->ground = SDL_LoadBMP("beton.bmp");
+    screen->ground = SDL_LoadBMP("../ressources/beton.bmp");
     screen->groundTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->ground);
     SDL_FreeSurface(screen->ground);
 }
@@ -39,7 +39,7 @@ void drawFPS(world_t* world, screen_t* screen){
 }
 
 void apply_menu(screen_t* screen){
-    screen->menu = SDL_LoadBMP("Flou.bmp");
+    screen->menu = SDL_LoadBMP("../ressources/Flou.bmp");
     screen->menuTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->menu);
     SDL_RenderCopy(screen->renderer, screen->menuTexture, NULL, NULL);
     SDL_RenderPresent(screen->renderer);
@@ -48,13 +48,13 @@ void apply_menu(screen_t* screen){
 
 void applyMenuOption(screen_t* screen){
     int x, y;
-    SDL_Surface* continuerS = SDL_LoadBMP("continuer.bmp");
+    SDL_Surface* continuerS = SDL_LoadBMP("../ressources/continuer.bmp");
     SDL_Texture* continuerTexture = SDL_CreateTextureFromSurface(screen->renderer, continuerS);
-    SDL_Surface* graphismes = SDL_LoadBMP("graphismes.bmp");
+    SDL_Surface* graphismes = SDL_LoadBMP("../ressources/graphismes.bmp");
     SDL_Texture* graphismesTexture = SDL_CreateTextureFromSurface(screen->renderer, graphismes);
-    SDL_Surface* quitter = SDL_LoadBMP("quitter.bmp");
+    SDL_Surface* quitter = SDL_LoadBMP("../ressources/quitter.bmp");
     SDL_Texture* quitterTexture = SDL_CreateTextureFromSurface(screen->renderer, quitter);
-    SDL_Surface* flou = SDL_LoadBMP("flou_ecriture.bmp");
+    SDL_Surface* flou = SDL_LoadBMP("../ressources/flou_ecriture.bmp");
     SDL_Texture* flouTexture = SDL_CreateTextureFromSurface(screen->renderer, flou);
 
     SDL_FreeSurface(continuerS);

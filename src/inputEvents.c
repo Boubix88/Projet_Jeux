@@ -100,8 +100,8 @@ void avancerDirection(world_t* world) {
 
 
 void deplacementAvant(world_t* world) {
-    float ancienx= world->player_x;
-    float ancieny = world->player_y;
+    /*float ancienx= world->player_x;
+    float ancieny = world->player_y;*/
     if (world->vx > world->player_x && world->vy < world->player_y) {
         world->player_x =world->player_x + MOVING_STEP;
         world->player_y =world->player_y - MOVING_STEP;

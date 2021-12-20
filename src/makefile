@@ -11,7 +11,7 @@ LDFLAGS2 = -lm
 
 
 #OBJ_NAME specifie le nom de l'executable pour prison
-OBJ_NAME = prison
+OBJ_NAME = ../bin/prison
 
 #OBJ_NAME2 specifie le nom de l'executable pour map
 OBJ2_NAME = map

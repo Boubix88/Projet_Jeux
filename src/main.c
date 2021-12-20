@@ -15,7 +15,7 @@ int main(void) {
 
     initialiserTexture(&screen);
 
-    screen.font = TTF_OpenFont("Pixeled.ttf", 25);
+    screen.font = TTF_OpenFont("../ressources/Pixeled.ttf", 25);
 
     world.fps_lasttime = SDL_GetTicks(); //the last recorded time.
     world.fps_frames = 0; //frames passed since the last recorded fps.
