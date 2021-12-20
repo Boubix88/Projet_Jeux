@@ -27,7 +27,6 @@ void handle_events(SDL_Event *event, world_t *world, screen_t *screen){
                 }
                 //si la touche appuyée est 'Haut' ou 'Z'
                 if (event->key.keysym.sym == SDLK_z || event->key.keysym.sym ==SDLK_UP){
-                 printf("La touche Z est appuyee\n");
                  avancerDirection(world);
                  deplacementAvant(world);
                 }
@@ -98,10 +97,15 @@ void avancerDirection(world_t* world) {
 
 
 void deplacementAvant(world_t* world) {
-    // on regarde en haut
+    float ancienx= world->player_x;
+    float ancieny = world->player_y;
     if (world->vx > world->player_x && world->vy < world->player_y) {
-        world->player_x = world->player_x + MOVING_STEP;
-        world->player_y = world->player_y - MOVING_STEP;
+        world->player_x =world->player_x + MOVING_STEP;
+        world->player_y =world->player_y - MOVING_STEP;
+        printf("Valeur de px: %f:\n", world->player_x);
+        printf("Valeur de py: %f:\n", world->player_y);
+        printf("Valeur de vx: %f:\n", world->vx);
+        printf("Valeur de vy: %f:\n", world->vy);
     }
     else if (world->vx < world->player_x && world->vy < world->player_y) {
         world->player_x = world->player_x - MOVING_STEP;
@@ -123,8 +127,8 @@ void deplacementAvant(world_t* world) {
 
     //en bas.
     if (world->vx < world->player_x && world->vy > world->player_y) {
-        world->player_x = world->player_x - MOVING_STEP;
         world->player_y = world->player_y + MOVING_STEP;
+        world->player_x = world->player_x - MOVING_STEP;
     }
     else if ((world->vx > world->player_x && world->vy > world->player_y)) {
         world->player_x = world->player_x + MOVING_STEP;
@@ -224,10 +228,11 @@ void deplacementDroite(world_t* world) {
     if (world->vx > world->player_x && world->vy < world->player_y) {
         world->player_x = world->player_x + MOVING_STEP;
         world->player_y = world->player_y + MOVING_STEP;
+        
     }
     else if (world->vx < world->player_x && world->vy < world->player_y) {
         world->player_x = world->player_x + MOVING_STEP;
-        world->player_y = world->player_y + MOVING_STEP;
+        world->player_y = world->player_y - MOVING_STEP;
     }
     else if (world->vx == world->player_x && world->vy < world->player_y) {
         world->player_x = world->player_x + MOVING_STEP;
@@ -256,6 +261,32 @@ void deplacementDroite(world_t* world) {
         world->player_x = world->player_x - MOVING_STEP;
 
     }
+
+
+}
+
+bool testMur(world_t* world) {
+    const char map[16][16] = { "1111111111111111",
+                              "1   11   11   11",
+                              "1   11   11   11",
+                              "11 1111 1111 111",
+                              "1              1",
+                              "11111111111111 1",
+                              "1  1         1 1",
+                              "1  1   1 11  1 1",
+                              "1    1       1 1",
+                              "111  1 1  1  1 1",
+                              "1      1 1   1 1",
+                              "1  1 1 1       1",
+                              "1  1       1   1",
+                              "1    1  1 1  1 1",
+                              "1     1      1 1",
+                              "1111111111111111" };
+    if ( map[(int)world->player_x][(int)world->player_y]== '1') {
+        return true;
+
+    }
+    return false;
 
 
 }

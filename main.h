@@ -41,3 +41,4 @@ void deplacementArriere(world_t* world);
 void deplacementGauche(world_t* world);
 void deplacementDroite(world_t* world);
 void avancerDirection(world_t* world);
+bool testMur(world_t* world);
