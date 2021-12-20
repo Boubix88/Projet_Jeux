@@ -96,10 +96,10 @@ void avancerDirection(world_t* world) {
 
 void deplacement(world_t* world) {
      if (world->player_x > world->vx) {
-        world->player_x = world->player_x + MOVING_STEP;
-    }
-    else {
         world->player_x = world->player_x - MOVING_STEP;
+     }
+    else {
+        world->player_x = world->player_x + MOVING_STEP;
     }
     if (world->player_y > world->vy) {
         world->player_y = world->player_y - MOVING_STEP;
