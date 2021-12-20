@@ -37,3 +37,56 @@ void drawFPS(world_t* world, screen_t* screen){
     SDL_FreeSurface(textSurface);
     SDL_FreeSurface(fpsSurface);
 }
+
+void apply_menu(screen_t* screen){
+    screen->menu = SDL_LoadBMP("Flou.bmp");
+    screen->menuTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->menu);
+    SDL_RenderCopy(screen->renderer, screen->menuTexture, NULL, NULL);
+    SDL_RenderPresent(screen->renderer);
+    SDL_FreeSurface(screen->menu);
+}
+
+void applyMenuOption(screen_t* screen){
+    int x, y;
+    SDL_Surface* continuerS = SDL_LoadBMP("continuer.bmp");
+    SDL_Texture* continuerTexture = SDL_CreateTextureFromSurface(screen->renderer, continuerS);
+    SDL_Surface* graphismes = SDL_LoadBMP("graphismes.bmp");
+    SDL_Texture* graphismesTexture = SDL_CreateTextureFromSurface(screen->renderer, graphismes);
+    SDL_Surface* quitter = SDL_LoadBMP("quitter.bmp");
+    SDL_Texture* quitterTexture = SDL_CreateTextureFromSurface(screen->renderer, quitter);
+    SDL_Surface* flou = SDL_LoadBMP("flou_ecriture.bmp");
+    SDL_Texture* flouTexture = SDL_CreateTextureFromSurface(screen->renderer, flou);
+
+    SDL_FreeSurface(continuerS);
+    SDL_FreeSurface(graphismes);
+    SDL_FreeSurface(quitter);
+    SDL_FreeSurface(flou);
+
+    SDL_GetMouseState(&x, &y);
+    SDL_Rect destRect;
+
+    if (x >= 461 && x <= 808 && y >= 152 && y <= 201){
+        destRect.x = 458;
+        destRect.y = 145;
+        destRect.w = 352;
+        destRect.h = 60;
+        SDL_RenderCopy(screen->renderer, continuerTexture, NULL, &destRect);
+    }
+    else if (x >= 428 && x <= 854 && y >= 305 && y <= 366){
+        destRect.x = 426;
+        destRect.y = 300;
+        destRect.w = 431;
+        destRect.h = 71;
+        SDL_RenderCopy(screen->renderer, graphismesTexture, NULL, &destRect);
+    }
+    else if (x >= 524 && x <= 759 && y >= 464 && y <= 521){
+        destRect.x = 521;
+        destRect.y = 457;
+        destRect.w = 242;
+        destRect.h = 70;
+        SDL_RenderCopy(screen->renderer, quitterTexture, NULL, &destRect);   
+    }else {
+        SDL_RenderCopy(screen->renderer, flouTexture, NULL, NULL);   
+    }
+    SDL_RenderPresent(screen->renderer);
+}

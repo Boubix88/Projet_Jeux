@@ -12,8 +12,8 @@ typedef struct world_s
     float player_x;
     float player_y;
     bool exit; 
-    float vx;       //coordonnée du point x pour se déplacer
-    float vy;       //coordonnée du point y pour se déplacer
+    float vx;       //coordonnï¿½e du point x pour se dï¿½placer
+    float vy;       //coordonnï¿½e du point y pour se dï¿½placer
     float dis;
 
     Uint32 fps_lasttime; //the last recorded time.
@@ -42,3 +42,7 @@ void deplacementGauche(world_t* world);
 void deplacementDroite(world_t* world);
 void avancerDirection(world_t* world);
 bool testMur(world_t* world);
+
+void applyMenuOption(screen_t* screen);
+void testSourisPosition(SDL_Event* event, screen_t* screen,world_t* world);
+void apply_menu(screen_t* screen);

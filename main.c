@@ -18,7 +18,6 @@ int main(void) {
     screen.font = TTF_OpenFont("Pixeled.ttf", 25);
 
     world.fps_lasttime = SDL_GetTicks(); //the last recorded time.
-    world.fps_current; //the current FPS.
     world.fps_frames = 0; //frames passed since the last recorded fps.
 
     SDL_ShowCursor(SDL_FALSE);

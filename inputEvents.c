@@ -37,9 +37,12 @@ void handle_events(SDL_Event *event, world_t *world, screen_t *screen){
                     deplacementArriere(world);
                 }
                 //si la touche appuyée est 'Echap'
+                //si la touche appuyée est 'Echap'
                 if (event->key.keysym.sym == SDLK_ESCAPE){
-                    printf("La touche ECHAP est appuyee\n");
-                    world->exit = true;
+                    apply_menu(screen);
+                    
+                    SDL_WarpMouseInWindow(screen->window, 50, 720/2);
+                    testSourisPosition(event, screen, world);
                 }
             break;
 
@@ -287,6 +290,34 @@ bool testMur(world_t* world) {
 
     }
     return false;
+}
 
+void testSourisPosition(SDL_Event* event, screen_t* screen,world_t* world){
+    bool continuer = false;
+    int x, y;
+    while (!continuer){
+        //Applique les couleurs des options selon la position de la souris
+        applyMenuOption(screen);
+        while(SDL_PollEvent(event)){
+            switch(event->type) {
+                case SDL_MOUSEBUTTONDOWN :
+                    SDL_GetMouseState(&x, &y);
+                    if (x >= 461 && x <= 808 && y >= 152 && y <= 201){
+                        //Continuer, on continue
+                        continuer = true;
+                    }
+                    else if (x >= 428 && x <= 854 && y >= 305 && y <= 366){
+                        //Graphismes, pour l'instant on continue
+                        continuer = true;
+                    }
+                    else if (x >= 524 && x <= 759 && y >= 464 && y <= 521){
+                        //Quitter
+                        world->exit = true;
+                        continuer = true;    
+                    }
+                break;
+            }
+        }
 
+    }
 }
