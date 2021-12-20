@@ -15,13 +15,15 @@ void handle_events(SDL_Event *event, world_t *world, screen_t *screen){
                 //si la touche appuyée est 'D' 
                 if(event->key.keysym.sym == SDLK_d || event->key.keysym.sym == SDLK_RIGHT){
                     printf("La touche D est appuyee\n");
-                    world->player_x -= MOVING_STEP;
+                    avancerDirection(world);
+                    deplacementDroite(world);
 
                 }
                 //si la touche appuyée est 'Q'
                 if (event->key.keysym.sym == SDLK_q || event->key.keysym.sym ==SDLK_LEFT){
                     printf("La touche Q est appuyee\n");
-                    world->player_x += MOVING_STEP;
+                    avancerDirection(world);
+                    deplacementGauche(world);
                 }
                 //si la touche appuyée est 'Haut' ou 'Z'
                 if (event->key.keysym.sym == SDLK_z || event->key.keysym.sym ==SDLK_UP){
@@ -123,6 +125,88 @@ void deplacementArriere(world_t* world) {
     }
     else {
         world->player_y = world->player_y - MOVING_STEP;
+    }
+
+
+}
+void deplacementGauche(world_t* world) {
+    // en haut
+    if (world->vx > world->player_x && world->vy < world->player_y) {
+        world->player_x = world->player_x - MOVING_STEP;
+        world->player_y = world->player_y - MOVING_STEP;
+    }
+    else if (world->vx < world->player_x && world->vy < world->player_y){
+        world->player_x = world->player_x - MOVING_STEP;
+        world->player_y = world->player_y + MOVING_STEP;
+    }
+    else if (world->vx == world->player_x && world->vy < world->player_y) {
+        world->player_x = world->player_x - MOVING_STEP;
+
+    }
+    //gauche et droite
+    else if (world->vx < world->player_x && world->vy == world->player_y) {
+        world->player_y = world->player_y + MOVING_STEP;
+
+    }
+    else if (world->vx > world->player_x && world->vy == world->player_y) {
+        world->player_y = world->player_y - MOVING_STEP;
+
+    }
+
+    //en bas
+    if (world->vx < world->player_x && world->vy > world->player_y) {
+        world->player_x = world->player_x + MOVING_STEP;
+        world->player_y = world->player_y + MOVING_STEP;
+    }
+    else if((world->vx > world->player_x && world->vy > world->player_y)) {
+        world->player_x = world->player_x + MOVING_STEP;
+        world->player_y = world->player_y - MOVING_STEP;
+    }
+    else if (world->vx == world->player_x && world->vy > world->player_y) {
+        world->player_x = world->player_x + MOVING_STEP;
+
+    }
+
+
+}
+
+
+void deplacementDroite(world_t* world) {
+    // en haut
+    if (world->vx > world->player_x && world->vy < world->player_y) {
+        world->player_x = world->player_x + MOVING_STEP;
+        world->player_y = world->player_y + MOVING_STEP;
+    }
+    else if (world->vx < world->player_x && world->vy < world->player_y) {
+        world->player_x = world->player_x + MOVING_STEP;
+        world->player_y = world->player_y + MOVING_STEP;
+    }
+    else if (world->vx == world->player_x && world->vy < world->player_y) {
+        world->player_x = world->player_x + MOVING_STEP;
+
+    }
+    //gauche et droite
+    else if (world->vx < world->player_x && world->vy == world->player_y) {
+        world->player_y = world->player_y - MOVING_STEP;
+
+    }
+    else if (world->vx > world->player_x && world->vy == world->player_y) {
+        world->player_y = world->player_y + MOVING_STEP;
+
+    }
+
+    //en bas
+    if (world->vx < world->player_x && world->vy > world->player_y) {
+        world->player_x = world->player_x - MOVING_STEP;
+        world->player_y = world->player_y - MOVING_STEP;
+    }
+    else if ((world->vx > world->player_x && world->vy > world->player_y)) {
+        world->player_x = world->player_x - MOVING_STEP;
+        world->player_y = world->player_y + MOVING_STEP;
+    }
+    else if (world->vx == world->player_x && world->vy > world->player_y) {
+        world->player_x = world->player_x - MOVING_STEP;
+
     }
 
 
