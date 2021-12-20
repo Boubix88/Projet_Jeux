@@ -32,7 +32,8 @@ void handle_events(SDL_Event *event, world_t *world, screen_t *screen){
                 //si la touche appuyée est 'Bas' ou 'S'
                 if (event->key.keysym.sym == SDLK_s || event->key.keysym.sym ==SDLK_DOWN){
                     printf("La touche S est appuyee\n");
-                    world->player_y -= MOVING_STEP;
+                    avancerDirection(world);
+                    deplacementArriere(world);
                 }
                 //si la touche appuyée est 'Echap'
                 if (event->key.keysym.sym == SDLK_ESCAPE){
@@ -106,6 +107,22 @@ void deplacement(world_t* world) {
     }
     else {
         world->player_y = world->player_y + MOVING_STEP;
+    }
+
+
+}
+void deplacementArriere(world_t* world) {
+    if (world->player_x > world->vx) {
+        world->player_x = world->player_x + MOVING_STEP;
+    }
+    else {
+        world->player_x = world->player_x - MOVING_STEP;
+    }
+    if (world->player_y > world->vy) {
+        world->player_y = world->player_y + MOVING_STEP;
+    }
+    else {
+        world->player_y = world->player_y - MOVING_STEP;
     }
 
 

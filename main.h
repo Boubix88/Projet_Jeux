@@ -37,4 +37,7 @@ void drawWalls(const char map[16][16], screen_t *screen);
 void drawPlayer(screen_t* screen, world_t* world);
 void drawFov(const char map[16][16], screen_t* screen, world_t* world);
 void deplacement(world_t*world);
+void deplacementArriere(world_t* world);
+void deplacementGauche(world_t* world);
+void deplacementDroite(world_t* world);
 void avancerDirection(world_t* world);
