@@ -1,28 +1,12 @@
 #include "main.h"
 
 void drawMiniMap(screen_t* screen, world_t* world) {
-  const char map[16][16] = {"1111111111111111",
-                            "1   11   11   11",
-                            "1   11   11   11",
-                            "11 1111 1111 111",
-                            "1              1",
-                            "11111111111111 1",
-                            "1  1         1 1",
-                            "1  1   1 11  1 1",
-                            "1    1       1 1",
-                            "111  1 1  1  1 1",
-                            "1      1 1   1 1",
-                            "1  1 1 1       1",
-                            "1  1       1   1",
-                            "1    1  1 1  1 1",
-                            "1     1      1 1",
-                            "1111111111111111"}; 
-  drawWalls(map, screen);
+  drawWalls(screen, world);
   drawPlayer(screen, world);
-  drawFov(map, screen, world);
+  drawFov(screen, world);
 }
 //128x128 px   16*8
-void drawWalls(const char map[16][16], screen_t *screen){
+void drawWalls(screen_t *screen, world_t* world){
   SDL_Rect destRect;
   destRect.x = 8;
   destRect.y = 586;
@@ -40,7 +24,7 @@ void drawWalls(const char map[16][16], screen_t *screen){
   for (int i=0; i<16; i++){
     destRect.x += 8;
     for (int j=0; j<16; j++){
-      if (map[j][i]=='1') {
+      if (world->map[j][i]=='1') {
         destRect.y = 586 + j*8;
         SDL_SetRenderDrawColor(screen->renderer, 255, 0, 200, 255);
         SDL_RenderFillRect(screen->renderer, &destRect);
@@ -61,7 +45,7 @@ void drawPlayer(screen_t* screen, world_t* world){
 
 }
 
-void drawFov(const char map[16][16], screen_t* screen, world_t* world){
+void drawFov(screen_t* screen, world_t* world){
   float player_fov = 1.58; 
   
   for (int r=0; r<512; r++) { 
@@ -71,7 +55,7 @@ void drawFov(const char map[16][16], screen_t* screen, world_t* world){
         float cx = world->player_x + t*cos(angle);
         float cy = world->player_y + t*sin(angle);
 
-        if (map[(int)(cy)][(int)(cx)] != ' '){
+        if (world->map[(int)(cy)][(int)(cx)] != ' '){
           break;
         } 
     

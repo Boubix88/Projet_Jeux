@@ -2,13 +2,72 @@
 
 void initialiserTexture(screen_t* screen){
     screen->sky = SDL_LoadBMP("../ressources/ciel.bmp");
+    if (screen->sky== NULL){
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
     screen->skyTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->sky);
     SDL_FreeSurface(screen->sky);
 
     screen->ground = SDL_LoadBMP("../ressources/beton.bmp");
+    if (screen->ground== NULL){
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
     screen->groundTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->ground);
-    SDL_FreeSurface(screen->ground);
+    SDL_FreeSurface(screen->ground);  
+
+    screen->murBrique = SDL_LoadBMP("../ressources/mur_brique.bmp");
+    if (screen->murBrique== NULL){
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->murBriqueTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->murBrique);
+    SDL_FreeSurface(screen->murBrique);
 }
+
+void initialiserTexturesMenu(screen_t* screen){
+    screen->menu = SDL_LoadBMP("../ressources/flou.bmp");
+    if (screen->menu== NULL){
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->menuTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->menu);
+    SDL_FreeSurface(screen->menu);
+
+    screen->continuerS = SDL_LoadBMP("../ressources/continuer.bmp");
+    if (screen->continuerS== NULL){
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->continuerTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->continuerS);
+    SDL_FreeSurface(screen->continuerS);
+
+    screen->graphismes = SDL_LoadBMP("../ressources/graphismes.bmp");
+    if (screen->graphismes== NULL){
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->graphismesTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->graphismes);
+    SDL_FreeSurface(screen->graphismes);
+
+    screen->quitter = SDL_LoadBMP("../ressources/quitter.bmp");
+    if (screen->quitter== NULL){
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->quitterTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->quitter);
+    SDL_FreeSurface(screen->quitter);
+
+    screen->flou = SDL_LoadBMP("../ressources/flou_ecriture.bmp");
+    if (screen->flou== NULL){
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->flouTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->flou);
+    SDL_FreeSurface(screen->flou); 
+}
+
+void destroyTexturesMenu(screen_t* screen){
+    SDL_DestroyTexture(screen->menuTexture);
+    SDL_DestroyTexture(screen->continuerTexture);
+    SDL_DestroyTexture(screen->graphismesTexture);
+    SDL_DestroyTexture(screen->quitterTexture);
+    SDL_DestroyTexture(screen->flouTexture);
+}
+
 
 void drawFPS(world_t* world, screen_t* screen){
     SDL_Color color = {255, 0, 100, 255};
@@ -39,28 +98,12 @@ void drawFPS(world_t* world, screen_t* screen){
 }
 
 void apply_menu(screen_t* screen){
-    screen->menu = SDL_LoadBMP("../ressources/Flou.bmp");
-    screen->menuTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->menu);
     SDL_RenderCopy(screen->renderer, screen->menuTexture, NULL, NULL);
     SDL_RenderPresent(screen->renderer);
-    SDL_FreeSurface(screen->menu);
 }
 
 void applyMenuOption(screen_t* screen){
     int x, y;
-    SDL_Surface* continuerS = SDL_LoadBMP("../ressources/continuer.bmp");
-    SDL_Texture* continuerTexture = SDL_CreateTextureFromSurface(screen->renderer, continuerS);
-    SDL_Surface* graphismes = SDL_LoadBMP("../ressources/graphismes.bmp");
-    SDL_Texture* graphismesTexture = SDL_CreateTextureFromSurface(screen->renderer, graphismes);
-    SDL_Surface* quitter = SDL_LoadBMP("../ressources/quitter.bmp");
-    SDL_Texture* quitterTexture = SDL_CreateTextureFromSurface(screen->renderer, quitter);
-    SDL_Surface* flou = SDL_LoadBMP("../ressources/flou_ecriture.bmp");
-    SDL_Texture* flouTexture = SDL_CreateTextureFromSurface(screen->renderer, flou);
-
-    SDL_FreeSurface(continuerS);
-    SDL_FreeSurface(graphismes);
-    SDL_FreeSurface(quitter);
-    SDL_FreeSurface(flou);
 
     SDL_GetMouseState(&x, &y);
     SDL_Rect destRect;
@@ -70,23 +113,37 @@ void applyMenuOption(screen_t* screen){
         destRect.y = 145;
         destRect.w = 352;
         destRect.h = 60;
-        SDL_RenderCopy(screen->renderer, continuerTexture, NULL, &destRect);
+        SDL_RenderCopy(screen->renderer, screen->continuerTexture, NULL, &destRect);
     }
     else if (x >= 428 && x <= 854 && y >= 305 && y <= 366){
         destRect.x = 426;
         destRect.y = 300;
         destRect.w = 431;
         destRect.h = 71;
-        SDL_RenderCopy(screen->renderer, graphismesTexture, NULL, &destRect);
+        SDL_RenderCopy(screen->renderer, screen->graphismesTexture, NULL, &destRect);
     }
     else if (x >= 524 && x <= 759 && y >= 464 && y <= 521){
         destRect.x = 521;
         destRect.y = 457;
         destRect.w = 242;
         destRect.h = 70;
-        SDL_RenderCopy(screen->renderer, quitterTexture, NULL, &destRect);   
+        SDL_RenderCopy(screen->renderer, screen->quitterTexture, NULL, &destRect);   
     }else {
-        SDL_RenderCopy(screen->renderer, flouTexture, NULL, NULL);   
+        SDL_RenderCopy(screen->renderer, screen->flouTexture, NULL, NULL);   
     }
     SDL_RenderPresent(screen->renderer);
+}
+
+void applyCrosshair(screen_t* screen){
+    screen->crosshair = SDL_LoadBMP("../ressources/crosshair.bmp");
+    screen->crosshairTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->crosshair);
+
+    SDL_Rect destRect;
+    destRect.x = 635;
+    destRect.y = 355;
+    destRect.w = 10;
+    destRect.h = 10;
+
+    SDL_RenderCopy(screen->renderer, screen->crosshairTexture, NULL, &destRect);
+    SDL_FreeSurface(screen->crosshair);
 }
