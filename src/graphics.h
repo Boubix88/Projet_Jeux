@@ -28,6 +28,9 @@ typedef struct screen_s
    SDL_Surface* crosshair;
    SDL_Texture* crosshairTexture;
 
+   SDL_Surface* pistolet;
+   SDL_Texture* pistoletTexture;
+
    SDL_Surface* continuerS;
    SDL_Texture* continuerTexture;
    SDL_Surface* graphismes;

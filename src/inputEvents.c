@@ -17,8 +17,8 @@ void handle_events(SDL_Event *event, world_t *world, screen_t *screen){
                     printf("La touche D est appuyee\n");
                     world->angle += M_PI / 2;
                     avancerDirection(world);
-                    world->player_x += world->vx * 0.2;
-                    world->player_y += world->vy * 0.2;
+                    world->player_x += world->vx * MOVING_STEP;
+                    world->player_y += world->vy * MOVING_STEP;
                     world->angle -= M_PI / 2;
                     avancerDirection(world);
                 }
@@ -27,22 +27,22 @@ void handle_events(SDL_Event *event, world_t *world, screen_t *screen){
                     printf("La touche Q est appuyee\n");
                     world->angle += M_PI / 2;
                     avancerDirection(world);
-                    world->player_x -= world->vx * 0.2;
-                    world->player_y -= world->vy * 0.2;
+                    world->player_x -= world->vx * MOVING_STEP;
+                    world->player_y -= world->vy * MOVING_STEP;
                     world->angle -= M_PI / 2;
                     avancerDirection(world);
                 }
                 //si la touche appuyée est 'Haut' ou 'Z'
                 if (event->key.keysym.sym == SDLK_z || event->key.keysym.sym ==SDLK_UP){
                     printf("La touche Z est appuyee\n");
-                    world->player_x += world->vx * 0.2;
-                    world->player_y += world->vy * 0.2;
+                    world->player_x += world->vx * MOVING_STEP;
+                    world->player_y += world->vy * MOVING_STEP;
                 }
                 //si la touche appuyée est 'Bas' ou 'S'
                 if (event->key.keysym.sym == SDLK_s || event->key.keysym.sym ==SDLK_DOWN){
                     printf("La touche S est appuyee\n");
-                    world->player_x -= world->vx * 0.2;
-                    world->player_y -= world->vy * 0.2;
+                    world->player_x -= world->vx * MOVING_STEP;
+                    world->player_y -= world->vy * MOVING_STEP;
                 }
                 //si la touche appuyée est 'Echap'
                 if (event->key.keysym.sym == SDLK_ESCAPE){
@@ -50,6 +50,30 @@ void handle_events(SDL_Event *event, world_t *world, screen_t *screen){
                     apply_menu(screen);
                     testSourisPosition(event, screen, world);
                     destroyTexturesMenu(screen);
+                }
+            break;
+
+            case SDL_MOUSEBUTTONDOWN :
+                switch (event->button.button){
+                    case SDL_BUTTON_LEFT:
+                        if (world->fpsView == false){
+                            //applyViseeFpsPistolet(screen);
+                            applyTirPistolet(screen);
+                            SDL_RenderPresent(screen->renderer);
+                        }else if(world->fpsView){
+                            applyTirPistoletFps(screen);
+                            SDL_RenderPresent(screen->renderer);
+                        }
+                    break;
+
+                    case SDL_BUTTON_RIGHT:
+                        //applyViseeFpsPistolet(screen);
+                        if (world->fpsView){
+                            world->fpsView = false;
+                        }else {
+                            world->fpsView = true;
+                        }                      
+                    break;
                 }
             break;
 

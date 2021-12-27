@@ -20,6 +20,7 @@ typedef struct world_s
     float vy;       //coordonnee du point y pour se deplacer
     float dis;
     int map[MAP_SIZE][MAP_SIZE];
+    bool fpsView;
 
     Uint32 fps_lasttime; //the last recorded time.
     Uint32 fps_current; //the current FPS.
@@ -32,7 +33,7 @@ void handle_events(SDL_Event *event, world_t *world, screen_t *screen);
 void draw3DMapSdl(screen_t* screen, world_t *world);
 void map(screen_t* screen, world_t *world);
 void drawSky(screen_t* screen, world_t* world);
-void drawGround(screen_t* screen, world_t* world);
+void drawGround(screen_t* screen);
 void calculFPS(world_t* world);
 void drawFPS(world_t* world, screen_t* screen);
 void initialiserTexture(screen_t* screen);
@@ -58,3 +59,7 @@ void destroyTexturesMenu(screen_t* screen);
 void intitialiserData(world_t* world);
 void initialiserDeplacement(world_t* world);
 void createMap(world_t* world);
+void applyPistolet(screen_t* screen);
+void applyTirPistolet(screen_t* screen);
+void applyViseeFpsPistolet(screen_t* screen);
+void applyTirPistoletFps(screen_t* screen);

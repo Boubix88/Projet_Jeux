@@ -31,7 +31,7 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
 	SDL_SetRenderDrawColor(screen->renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
   SDL_RenderClear(screen->renderer);
   drawSky(screen, world);
-  drawGround(screen, world);
+  drawGround(screen);
 
 	//SDL_SetRenderDrawColor(screen->renderer, 0, 200, 255, SDL_ALPHA_OPAQUE);
   	for (int r=0; r<512; r++) { 
@@ -68,6 +68,12 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
   applyCrosshair(screen);  
   drawFPS(world, screen);
   drawMiniMap(screen, world);
+  if (world->fpsView == false){
+    applyPistolet(screen);
+  }else {
+    applyViseeFpsPistolet(screen);
+  }
+  
 	SDL_RenderPresent(screen->renderer);
 }
 
@@ -88,7 +94,7 @@ void drawSky(screen_t* screen, world_t* world){
   SDL_RenderCopy(screen->renderer, screen->skyTexture, &srcRect, &destRect);
 }
 
-void drawGround(screen_t* screen, world_t* world){
+void drawGround(screen_t* screen){
   SDL_Rect srcRect;
   SDL_Rect destRect;
   SDL_Rect degradeDestRect;

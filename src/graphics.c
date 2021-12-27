@@ -28,6 +28,13 @@ void initialiserTexture(screen_t* screen){
     }
     screen->degradeTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->degrade);
     SDL_FreeSurface(screen->degrade);
+
+    screen->pistolet = SDL_LoadBMP("../ressources/sprite_pistolet.bmp");
+    if (screen->pistolet== NULL){
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->pistoletTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->pistolet);
+    SDL_FreeSurface(screen->pistolet);
 }
 
 void initialiserTexturesMenu(screen_t* screen){
@@ -153,4 +160,89 @@ void applyCrosshair(screen_t* screen){
 
     SDL_RenderCopy(screen->renderer, screen->crosshairTexture, NULL, &destRect);
     SDL_FreeSurface(screen->crosshair);
+}
+
+void applyPistolet(screen_t* screen){
+    SDL_Rect srcRect;
+    SDL_Rect destRect;
+
+    srcRect.x = 8;
+    srcRect.y = 29;
+    srcRect.w = 111;
+    srcRect.h = 93;
+
+    destRect.x = 1280/2;
+    destRect.y = 720-279;
+    destRect.w = 333;
+    destRect.h = 279;
+
+    SDL_RenderCopy(screen->renderer, screen->pistoletTexture, &srcRect, &destRect);
+}
+
+void applyTirPistolet(screen_t* screen){
+    SDL_Rect srcRect;
+    SDL_Rect destRect;
+
+    srcRect.x = 119;
+    srcRect.y = 6;
+    srcRect.w = 125;
+    srcRect.h = 122;
+
+    destRect.x = 1280/2;
+    destRect.y = 720-366;
+    destRect.w = 375;
+    destRect.h = 366;
+
+    SDL_RenderCopy(screen->renderer, screen->pistoletTexture, &srcRect, &destRect);
+}
+
+void applyViseeFpsPistolet(screen_t* screen){
+    //SDL_Rect srcRect;
+    //SDL_Rect destRect;
+
+    SDL_Rect srcRect1;
+    SDL_Rect destRect1;
+
+    /*srcRect.x = 31;  // Image 1
+    srcRect.y = 375;
+    srcRect.w = 131;
+    srcRect.h = 135;
+
+    destRect.x = 1280/2-200; // Image 1
+    destRect.y = 720-405;
+    destRect.w = 393;
+    destRect.h = 405;
+
+    SDL_RenderCopy(screen->renderer, screen->pistoletTexture, &srcRect, &destRect);
+    SDL_RenderPresent(screen->renderer);*/
+
+    srcRect1.x = 175;  // Image 2
+    srcRect1.y = 373;
+    srcRect1.w = 152;
+    srcRect1.h = 155;
+
+    destRect1.x = 1280/2 - 163; // Image 2
+    destRect1.y = 720-385;
+    destRect1.w = 380;
+    destRect1.h = 387;
+    
+    SDL_RenderCopy(screen->renderer, screen->pistoletTexture, &srcRect1, &destRect1);
+    //SDL_RenderPresent(screen->renderer);
+}
+
+void applyTirPistoletFps(screen_t* screen){
+    SDL_Rect srcRect;
+    SDL_Rect destRect;
+
+    srcRect.x = 327;
+    srcRect.y = 340;
+    srcRect.w = 196;
+    srcRect.h = 203;
+
+    destRect.x = 1280/2 - 210;
+    destRect.y = 720-507;
+    destRect.w = 490;
+    destRect.h = 507;
+
+    SDL_RenderCopy(screen->renderer, screen->pistoletTexture, &srcRect, &destRect);
 }
