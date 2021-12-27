@@ -92,10 +92,10 @@ void drawGround(screen_t* screen, world_t* world){
   SDL_Rect srcRect;
   SDL_Rect destRect;
 
-  srcRect.x = world->player_a*800;
+  srcRect.x = 0;
   srcRect.y = 0; //0
-  srcRect.w = 1280;
-  srcRect.h = 720/2;
+  srcRect.w = FLOOR_SIZE;
+  srcRect.h = FLOOR_SIZE;
 
   destRect.x = 0;  //0
   destRect.y = 720/2-80; //720/2-80

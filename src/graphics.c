@@ -8,7 +8,7 @@ void initialiserTexture(screen_t* screen){
     screen->skyTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->sky);
     SDL_FreeSurface(screen->sky);
 
-    screen->ground = SDL_LoadBMP("../ressources/beton.bmp");
+    screen->ground = SDL_LoadBMP("../ressources/solgris.bmp");
     if (screen->ground== NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
