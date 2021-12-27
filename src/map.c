@@ -47,12 +47,14 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
 		  			  //SDL_RenderDrawLine(screen->renderer, r*2.5+i , (HEIGHT+line_height)/2, r*2.5+i, (HEIGHT-line_height)/2);
               SDL_Rect srcRect;
               SDL_Rect destRect;
-
-              srcRect.x = r;
-              srcRect.y = 0;
-              srcRect.h = 512;
-              srcRect.w = 1;
-
+              float arrondcx = cx - floor(cx + .5);
+              float arrondcy = cy - floor(cy + .5);
+              srcRect.x = arrondcx*WALL_SIZE;
+              if (fabs(arrondcy) > fabs(arrondcx)) {
+                  srcRect.x = arrondcy * WALL_SIZE;
+              }
+              srcRect.h = WALL_SIZE;
+              srcRect.w = WALL_SIZE;
               destRect.x = r*2.5+i;
               destRect.y = (HEIGHT/2) - (line_height/2);
               destRect.h = line_height;
