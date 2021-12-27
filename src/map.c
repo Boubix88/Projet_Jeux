@@ -91,6 +91,7 @@ void drawSky(screen_t* screen, world_t* world){
 void drawGround(screen_t* screen, world_t* world){
   SDL_Rect srcRect;
   SDL_Rect destRect;
+  SDL_Rect degradeDestRect;
 
   srcRect.x = 0;
   srcRect.y = 0; //0
@@ -102,5 +103,11 @@ void drawGround(screen_t* screen, world_t* world){
   destRect.w = 1280;  //1280
   destRect.h = 720-250;  //720-250
 
+  degradeDestRect.x = 0;
+  degradeDestRect.y = 720/2-80;
+  degradeDestRect.w = 1280;
+  degradeDestRect.h = 64;
+
   SDL_RenderCopy(screen->renderer, screen->groundTexture, &srcRect, &destRect);
+  SDL_RenderCopy(screen->renderer, screen->degradeTexture, &srcRect, &degradeDestRect);
 }

@@ -21,6 +21,13 @@ void initialiserTexture(screen_t* screen){
     }
     screen->murBriqueTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->murBrique);
     SDL_FreeSurface(screen->murBrique);
+
+    screen->degrade = SDL_LoadBMP("../ressources/degrade.bmp");
+    if (screen->degrade== NULL){
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->degradeTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->degrade);
+    SDL_FreeSurface(screen->degrade);
 }
 
 void initialiserTexturesMenu(screen_t* screen){

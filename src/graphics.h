@@ -19,6 +19,9 @@ typedef struct screen_s
    SDL_Surface* ground;
    SDL_Texture* groundTexture;
 
+   SDL_Surface* degrade;
+   SDL_Texture* degradeTexture;
+
    SDL_Surface* menu;
    SDL_Texture* menuTexture;
 
