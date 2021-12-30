@@ -41,7 +41,7 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
       		float cx = world->player_x + t*cos(angle);
       		float cy = world->player_y + t*sin(angle);
 
-        	if (world->map[(int)(cy)][(int)(cx)]!=' '){
+        	if (world->map[(int)(cy)][(int)(cx)]=='1'){
         		int line_height = HEIGHT/t;
 		  		  for (int i = 0; i < 16; i++){
 		  			  //SDL_RenderDrawLine(screen->renderer, r*2.5+i , (HEIGHT+line_height)/2, r*2.5+i, (HEIGHT-line_height)/2);
@@ -63,6 +63,29 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
 		  		  }
         		break;
       		}
+            if (world->map[(int)(cy)][(int)(cx)] == '2') {
+                int line_height = HEIGHT / t;
+                for (int i = 0; i < 16; i++) {
+                    //SDL_RenderDrawLine(screen->renderer, r*2.5+i , (HEIGHT+line_height)/2, r*2.5+i, (HEIGHT-line_height)/2);
+                    SDL_Rect srcRect;
+                    SDL_Rect destRect;
+                    float arrondcx = cx - floor(cx + .5);
+                    float arrondcy = cy - floor(cy + .5);
+                    srcRect.x = arrondcx * WALL_SIZE;
+                    if (fabs(arrondcy) > fabs(arrondcx)) {
+                        srcRect.x = arrondcy * WALL_SIZE;
+                    }
+                    srcRect.h = WALL_SIZE;
+                    srcRect.w = WALL_SIZE;
+                    destRect.x = r * 2 + i/4;
+                    destRect.y = (HEIGHT / 2) - (line_height / 2)/4;
+                    destRect.h = line_height/2;
+                    destRect.w =1 ;
+                    SDL_SetRenderDrawColor(screen->renderer,0, 255, 255, 255);
+                    SDL_RenderDrawRect(screen->renderer, &destRect);
+                }
+                break;
+            }
     	}
   	}
  applyCrosshair(screen);  
@@ -120,7 +143,7 @@ void drawGround(screen_t* screen){
 }
 
 
-void drawMonstre3D(world_t* world, screen_t* screen) {
+/**void drawMonstre3D(world_t* world, screen_t* screen) {
     for (int k = 0; k<DIFFICULTE;k++){
 
         float sprite_dir = atan2(world->monstre[i].y - world->player.y, world->monstre[i].x - world->player.x);
@@ -145,4 +168,4 @@ void drawMonstre3D(world_t* world, screen_t* screen) {
             }
         }
     }
-}
+}**/
