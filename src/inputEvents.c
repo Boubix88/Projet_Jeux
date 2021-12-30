@@ -78,6 +78,8 @@ void handle_events(SDL_Event *event, world_t *world, screen_t *screen){
             break;
 
             case SDL_MOUSEMOTION :
+                SDL_ShowCursor(SDL_DISABLE);
+
                 if (event->motion.xrel > 0){
                     world->player_a += .005;
                 }

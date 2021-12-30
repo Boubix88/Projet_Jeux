@@ -8,6 +8,7 @@ void intitialiserData(world_t* world){
 
     world->fps_lasttime = SDL_GetTicks(); //the last recorded time.
     world->fps_frames = 0; //frames passed since the last recorded fps.
+    world->fps_current = 0;
 }
 
 void calculFPS(world_t* world){

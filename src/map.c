@@ -3,19 +3,19 @@
 void createMap(world_t* world){
   char map[16][16] = {"1111111111111111",
                       "1   11   11   11",
-                      "1   11   11   11",
+                      "1   11   11 2 11",
                       "11 1111 1111 111",
-                      "1              1",
+                      "1    2         1",
                       "11111111111111 1",
-                      "1  1         1 1",
+                      "1  1     2   1 1",
                       "1  1   1 11  1 1",
-                      "1    1       1 1",
+                      "1    1   2   1 1",
                       "111  1 1  1  1 1",
                       "1      1 1   1 1",
                       "1  1 1 1       1",
                       "1  1       1   1",
                       "1    1  1 1  1 1",
-                      "1     1      1 1",
+                      "1  2  1      1 1",
                       "1111111111111111"}; 
                       
   for (int i = 0; i < 16; i++){
@@ -63,12 +63,21 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
 		  		  }
         		break;
       		}
+            else if (world->map[(int)(cy)][(int)(cx)] != '2') {
+                int line_height = HEIGHT / t;
+                for (int i = 0; i < 16; i++) {
+                    SDL_RenderDrawLine(screen->renderer, r * 2.5 + i, (HEIGHT + line_height) / 2, 800, 900);
+                }
+
+            }
+
     	}
   	}
-  applyCrosshair(screen);  
-  drawFPS(world, screen);
+ applyCrosshair(screen);  
+ drawFPS(world, screen);
+
   drawMiniMap(screen, world);
-  if (world->fpsView == false){
+  if (world->fpsView == false) {
     applyPistolet(screen);
   }else {
     applyViseeFpsPistolet(screen);
