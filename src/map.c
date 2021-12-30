@@ -15,7 +15,7 @@ void createMap(world_t* world){
                       "1  1 1 1       1",
                       "1  1       1   1",
                       "1    1  1 1  1 1",
-                      "1  2  1      1 1",
+                      "1     1      1 1",
                       "1111111111111111"}; 
                       
   for (int i = 0; i < 16; i++){
@@ -63,14 +63,6 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
 		  		  }
         		break;
       		}
-            else if (world->map[(int)(cy)][(int)(cx)] != '2') {
-                int line_height = HEIGHT / t;
-                for (int i = 0; i < 16; i++) {
-                    SDL_RenderDrawLine(screen->renderer, r * 2.5 + i, (HEIGHT + line_height) / 2, 800, 900);
-                }
-
-            }
-
     	}
   	}
  applyCrosshair(screen);  
@@ -126,3 +118,31 @@ void drawGround(screen_t* screen){
   SDL_RenderCopy(screen->renderer, screen->groundTexture, &srcRect, &destRect);
   SDL_RenderCopy(screen->renderer, screen->degradeTexture, &srcRect, &degradeDestRect);
 }
+
+
+/**void draw_sprite(world_t* world, screen_t* screen) {
+    for (int k = 0; k<DIFFICULTE;k++){
+
+        float sprite_dir = atan2(world->monstre[i].y - world->player.y, world->monstre[i].x - world->player.x);
+        while (sprite_dir - player.a > M_PI) {
+            sprite_dir -= 2 * M_PI;
+        }
+
+        while (sprite_dir - player.a < -M_PI) sprite_dir += 2 * M_PI;
+
+        // distance from the player to the sprite
+        float sprite_dist = std::sqrt(pow(player.x - sprite.x, 2) + pow(player.y - sprite.y, 2));
+        size_t sprite_screen_size = std::min(2000, static_cast<int>(fb.h / sprite_dist));
+        // do not forget the 3D view takes only a half of the framebuffer, thus fb.w/2 for the screen width
+        int h_offset = (sprite_dir - player.a) * (fb.w / 2) / (player.fov) + (fb.w / 2) / 2 - sprite_screen_size / 2;
+        int v_offset = fb.h / 2 - sprite_screen_size / 2;
+
+        for (size_t i = 0; i < sprite_screen_size; i++) {
+            if (h_offset + int(i) < 0 || h_offset + i >= fb.w / 2) continue;
+            for (size_t j = 0; j < sprite_screen_size; j++) {
+                if (v_offset + int(j) < 0 || v_offset + j >= fb.h) continue;
+                fb.set_pixel(fb.w / 2 + h_offset + i, v_offset + j, pack_color(0, 0, 0));
+            }
+        }
+    }
+}**/

@@ -6,7 +6,11 @@
 #include <SDL_ttf.h>
 #include "constante.h"
 
+typedef struct sprite_s
+{
+    float x, y;
 
+}sprite_t;
 typedef struct world_s
 {
     float player_a;
@@ -25,8 +29,12 @@ typedef struct world_s
     Uint32 fps_lasttime; //the last recorded time.
     Uint32 fps_current; //the current FPS.
     Uint32 fps_frames; //frames passed since the last recorded fps.
+    sprite_t monstre[DIFFICULTE];
 
 }world_t;
+
+
+
 
 void handle_events(SDL_Event *event, world_t *world, screen_t *screen);
 
@@ -63,3 +71,5 @@ void applyPistolet(screen_t* screen);
 void applyTirPistolet(screen_t* screen);
 void applyViseeFpsPistolet(screen_t* screen);
 void applyTirPistoletFps(screen_t* screen);
+void setMonstre(world_t* world);
+void drawMonstre(screen_t* screen,world_t* world);

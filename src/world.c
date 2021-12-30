@@ -34,3 +34,24 @@ void testCollision(world_t* world){
         world->player_y = world->ancienPlayer_y;
     }
 }
+
+
+
+void setMonstre(world_t* world) {
+    int z = 0;
+    while (z != DIFFICULTE) {
+        for (int i = 0; i < 15 ; i++) {
+            for (int k = 0; k < 15 ; k++) {
+                if (world->map[i][k] == '2') {
+                    world->monstre[z].y = i;
+                    world->monstre[z].x = k;
+                    z++;
+                }
+            }
+
+        }
+    }
+
+
+
+}

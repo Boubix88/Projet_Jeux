@@ -246,3 +246,4 @@ void applyTirPistoletFps(screen_t* screen){
 
     SDL_RenderCopy(screen->renderer, screen->pistoletTexture, &srcRect, &destRect);
 }
+

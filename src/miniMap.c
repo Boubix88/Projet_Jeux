@@ -4,6 +4,7 @@ void drawMiniMap(screen_t* screen, world_t* world) {
   drawWalls(screen, world);
   drawPlayer(screen, world);
   drawFov(screen, world);
+  drawMonstre(screen, world);
 }
 //128x128 px   16*8
 void drawWalls(screen_t *screen, world_t* world){
@@ -66,4 +67,25 @@ void drawFov(screen_t* screen, world_t* world){
         SDL_RenderDrawPoint(screen->renderer, pixx, pixy);
     }
   }  
+}
+
+
+
+
+void drawMonstre(screen_t* screen, world_t* world) {
+    setMonstre(world);
+    for (int i = 0; i < DIFFICULTE; i++) {
+        SDL_Rect destRect;
+        destRect.w = 3;
+        destRect.h = 3;
+        destRect.y = 586 + world->monstre[i].y * 8;
+        destRect.x = 8 + world->monstre[i].x * 8;
+
+        SDL_SetRenderDrawColor(screen->renderer, 0, 122, 0, 122);
+        SDL_RenderFillRect(screen->renderer, &destRect);
+
+
+    }
+
+
 }
