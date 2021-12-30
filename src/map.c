@@ -120,7 +120,7 @@ void drawGround(screen_t* screen){
 }
 
 
-/**void draw_sprite(world_t* world, screen_t* screen) {
+void drawMonstre3D(world_t* world, screen_t* screen) {
     for (int k = 0; k<DIFFICULTE;k++){
 
         float sprite_dir = atan2(world->monstre[i].y - world->player.y, world->monstre[i].x - world->player.x);
@@ -145,4 +145,4 @@ void drawGround(screen_t* screen){
             }
         }
     }
-}**/
+}
