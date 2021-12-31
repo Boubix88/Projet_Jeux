@@ -1,73 +1,85 @@
 #include "main.h"
 
 void initialiserTexture(screen_t* screen){
+    screen->font = TTF_OpenFont("../ressources/Pixeled.ttf", 25);
+    if (screen->font == NULL){
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+
     screen->sky = SDL_LoadBMP("../ressources/ciel.bmp");
-    if (screen->sky== NULL){
+    if (screen->sky == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->skyTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->sky);
     SDL_FreeSurface(screen->sky);
 
     screen->ground = SDL_LoadBMP("../ressources/solgris.bmp");
-    if (screen->ground== NULL){
+    if (screen->ground == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->groundTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->ground);
     SDL_FreeSurface(screen->ground);  
 
     screen->murBrique = SDL_LoadBMP("../ressources/mur_brique.bmp");
-    if (screen->murBrique== NULL){
+    if (screen->murBrique == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->murBriqueTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->murBrique);
     SDL_FreeSurface(screen->murBrique);
 
     screen->degrade = SDL_LoadBMP("../ressources/degrade.bmp");
-    if (screen->degrade== NULL){
+    if (screen->degrade == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->degradeTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->degrade);
     SDL_FreeSurface(screen->degrade);
 
     screen->pistolet = SDL_LoadBMP("../ressources/sprite_pistolet.bmp");
-    if (screen->pistolet== NULL){
+    if (screen->pistolet == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->pistoletTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->pistolet);
     SDL_FreeSurface(screen->pistolet);
+
+    screen->ammo = SDL_LoadBMP("../ressources/sprite_ammo.bmp");
+    if (screen->ammo == NULL){
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->ammoTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->ammo);
+    SDL_FreeSurface(screen->ammo);
 }
 
 void initialiserTexturesMenu(screen_t* screen){
     screen->menu = SDL_LoadBMP("../ressources/flou.bmp");
-    if (screen->menu== NULL){
+    if (screen->menu == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->menuTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->menu);
     SDL_FreeSurface(screen->menu);
 
     screen->continuerS = SDL_LoadBMP("../ressources/continuer.bmp");
-    if (screen->continuerS== NULL){
+    if (screen->continuerS == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->continuerTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->continuerS);
     SDL_FreeSurface(screen->continuerS);
 
     screen->graphismes = SDL_LoadBMP("../ressources/graphismes.bmp");
-    if (screen->graphismes== NULL){
+    if (screen->graphismes == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->graphismesTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->graphismes);
     SDL_FreeSurface(screen->graphismes);
 
     screen->quitter = SDL_LoadBMP("../ressources/quitter.bmp");
-    if (screen->quitter== NULL){
+    if (screen->quitter == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->quitterTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->quitter);
     SDL_FreeSurface(screen->quitter);
 
     screen->flou = SDL_LoadBMP("../ressources/flou_ecriture.bmp");
-    if (screen->flou== NULL){
+    if (screen->flou == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->flouTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->flou);
@@ -197,24 +209,8 @@ void applyTirPistolet(screen_t* screen){
 }
 
 void applyViseeFpsPistolet(screen_t* screen){
-    //SDL_Rect srcRect;
-    //SDL_Rect destRect;
-
     SDL_Rect srcRect1;
     SDL_Rect destRect1;
-
-    /*srcRect.x = 31;  // Image 1
-    srcRect.y = 375;
-    srcRect.w = 131;
-    srcRect.h = 135;
-
-    destRect.x = 1280/2-200; // Image 1
-    destRect.y = 720-405;
-    destRect.w = 393;
-    destRect.h = 405;
-
-    SDL_RenderCopy(screen->renderer, screen->pistoletTexture, &srcRect, &destRect);
-    SDL_RenderPresent(screen->renderer);*/
 
     srcRect1.x = 175;  // Image 2
     srcRect1.y = 373;
@@ -227,7 +223,6 @@ void applyViseeFpsPistolet(screen_t* screen){
     destRect1.h = 387;
     
     SDL_RenderCopy(screen->renderer, screen->pistoletTexture, &srcRect1, &destRect1);
-    //SDL_RenderPresent(screen->renderer);
 }
 
 void applyTirPistoletFps(screen_t* screen){
@@ -245,5 +240,16 @@ void applyTirPistoletFps(screen_t* screen){
     destRect.h = 507;
 
     SDL_RenderCopy(screen->renderer, screen->pistoletTexture, &srcRect, &destRect);
+}
+
+void drawAmmo(screen_t* screen, world_t* world){
+    SDL_Rect destRect;
+
+    destRect.x = world->ammo.x;
+    destRect.y = world->ammo.y;
+    destRect.w = world->ammo.w;
+    destRect.h = world->ammo.h;
+
+    SDL_RenderCopy(screen->renderer, screen->ammoTexture, NULL, &destRect);
 }
 

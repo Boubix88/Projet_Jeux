@@ -31,6 +31,9 @@ typedef struct screen_s
    SDL_Surface* pistolet;
    SDL_Texture* pistoletTexture;
 
+   SDL_Surface* ammo;
+   SDL_Texture* ammoTexture;
+
    SDL_Surface* continuerS;
    SDL_Texture* continuerTexture;
    SDL_Surface* graphismes;

@@ -73,19 +73,15 @@ void drawFov(screen_t* screen, world_t* world){
 
 
 void drawMonstre(screen_t* screen, world_t* world) {
-    setMonstre(world);
-    for (int i = 0; i < DIFFICULTE; i++) {
-        SDL_Rect destRect;
-        destRect.w = 3;
-        destRect.h = 3;
-        destRect.y = 586 + world->monstre[i].y * 8;
-        destRect.x = 8 + world->monstre[i].x * 8;
+  //setMonstre(world);
+  SDL_SetRenderDrawColor(screen->renderer, 0, 122, 0, 122);
+  for (int i = 0; i < 10; i++) {
+      SDL_Rect destRect;
+      destRect.w = 3;
+      destRect.h = 3;
+      destRect.y = 586 + world->monstre[i].y * 8;
+      destRect.x = 8 + world->monstre[i].x * 8;
 
-        SDL_SetRenderDrawColor(screen->renderer, 0, 122, 0, 122);
-        SDL_RenderFillRect(screen->renderer, &destRect);
-
-
-    }
-
-
+      SDL_RenderFillRect(screen->renderer, &destRect);
+  }
 }

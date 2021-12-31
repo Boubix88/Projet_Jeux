@@ -7,3 +7,5 @@
 #define WALL_SIZE 512
 #define FLOOR_SIZE 256
 #define DIFFICULTE 4
+#define AMMO_HEIGHT 16
+#define AMMO_WIDTH 12

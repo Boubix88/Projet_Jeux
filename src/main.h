@@ -5,13 +5,18 @@
 #include <stdbool.h>
 #include <SDL_ttf.h>
 #include "constante.h"
+#include <time.h>
 
 typedef struct sprite_s
 {
     float x, y;
+    float xMap, yMap;
     float direction;
+    int h;
+    int w;
 
 }sprite_t;
+
 typedef struct world_s
 {
     float player_a;
@@ -26,11 +31,13 @@ typedef struct world_s
     float dis;
     int map[MAP_SIZE][MAP_SIZE];
     bool fpsView;
+    bool ammoShooted;
 
     Uint32 fps_lasttime; //the last recorded time.
     Uint32 fps_current; //the current FPS.
     Uint32 fps_frames; //frames passed since the last recorded fps.
-    sprite_t monstre[DIFFICULTE];
+    sprite_t monstre[10];
+    sprite_t ammo;
 
 }world_t;
 
@@ -75,3 +82,4 @@ void applyTirPistoletFps(screen_t* screen);
 void setMonstre(world_t* world);
 void drawMonstre(screen_t* screen,world_t* world);
 void drawMonstre3D(world_t* world, screen_t* screen);
+void drawAmmo(screen_t* screen, world_t* world);

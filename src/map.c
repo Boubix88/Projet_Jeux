@@ -3,11 +3,11 @@
 void createMap(world_t* world){
   char map[16][16] = {"1111111111111111",
                       "1   11   11   11",
-                      "1   11   11 2 11",
+                      "1   11   11   11",
                       "11 1111 1111 111",
-                      "1    2         1",
+                      "1              1",
                       "11111111111111 1",
-                      "1  1     2   1 1",
+                      "1  1         1 1",
                       "1  1   1 11  1 1",
                       "1    1   2   1 1",
                       "111  1 1  1  1 1",
@@ -63,7 +63,7 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
 		  		  }
         		break;
       		}
-            if (world->map[(int)(cy)][(int)(cx)] == '2') {
+            /*if (world->map[(int)(cy)][(int)(cx)] == '2') {
                 int line_height = HEIGHT / t;
                 for (int i = 0; i < 16; i++) {
                     //SDL_RenderDrawLine(screen->renderer, r*2.5+i , (HEIGHT+line_height)/2, r*2.5+i, (HEIGHT-line_height)/2);
@@ -85,17 +85,38 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
                     SDL_RenderDrawRect(screen->renderer, &destRect);
                 }
                 break;
-            }
+            }*/
     	}
   	}
- applyCrosshair(screen);  
- drawFPS(world, screen);
+  applyCrosshair(screen);  
+  drawFPS(world, screen);
 
   drawMiniMap(screen, world);
   if (world->fpsView == false) {
     applyPistolet(screen);
   }else {
     applyViseeFpsPistolet(screen);
+  }
+
+  if (world->ammoShooted){
+    drawAmmo(screen, world);
+    world->ammo.x -= 5.6; //Defaut : 0.7
+    world->ammo.y -= 6.4; //Defaut : 0.8
+    world->ammo.h -= 0.5;
+    world->ammo.w -= 0.5;
+
+    /*float angle = world->player_a - player_fov/2 + player_fov*256/256;
+    for (float t=0; t<20; t+=.05) {
+      float cx = world->ammo.xMap + t*cos(angle);
+      float cy = world->ammo.yMap + t*sin(angle);
+
+      if (world->map[(int)(cy)][(int)(cx)]=='1'){
+        world->ammoShooted = false;
+        break;
+      }
+    }  
+    world->ammo.xMap += 0.5;
+    world->ammo.yMap += 0.5;*/
   }
   
 	SDL_RenderPresent(screen->renderer);
@@ -141,7 +162,6 @@ void drawGround(screen_t* screen){
   SDL_RenderCopy(screen->renderer, screen->groundTexture, &srcRect, &destRect);
   SDL_RenderCopy(screen->renderer, screen->degradeTexture, &srcRect, &degradeDestRect);
 }
-
 
 /**void drawMonstre3D(world_t* world, screen_t* screen) {
     for (int k = 0; k<DIFFICULTE;k++){
