@@ -63,11 +63,11 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
 		  		  }
         		break;
       		}
-            for (int m = 0; m < DIFFICULTE;m++) {
+            /**for (int m = 0; m < DIFFICULTE; m++) {
                 if (world->map[(int)(cy)][(int)(cx)] == world->map[(int)world->monstre[m].y][(int)world->monstre[m].x]) {
-                    draw3DMapSdl(screen, world);
+                    drawMonstre3D(world,screen,m);
                 }
-            }
+            }**/
 
             /**if (world->map[(int)(cy)][(int)(cx)] == '2') {
                 int line_height = HEIGHT / t;
@@ -123,8 +123,8 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
         world->ammo.w = AMMO_WIDTH;
         world->ammo.h = AMMO_HEIGHT;
       } 
-    world->ammo.xMap += 0.5;
-    world->ammo.yMap += 0.5;
+    world->ammo.xMap +=cx/32;
+    world->ammo.yMap += cy/32;
     world->ammo.direction += 0.5;
   }
   
@@ -172,8 +172,7 @@ void drawGround(screen_t* screen){
   SDL_RenderCopy(screen->renderer, screen->degradeTexture, &srcRect, &degradeDestRect);
 }
 
-void drawMonstre3D(world_t* world, screen_t* screen) {
-    for (int k = 0; k<DIFFICULTE;k++){
+void drawMonstre3D(world_t* world, screen_t* screen,int k) {
 
         float sprite_dir = atan2(world->monstre[k].y - world->player_y, world->monstre[k].x - world->player_x);
         while (sprite_dir - world->player_a > M_PI) {
@@ -186,16 +185,15 @@ void drawMonstre3D(world_t* world, screen_t* screen) {
         float sprite_dist = sqrt(pow(world->player_x - world->monstre[k].x, 2) + pow(world->player_y - world->monstre[k].y, 2));
         int  sprite_screen_size = fmin(2000,(HEIGHT / sprite_dist));
         // do not forget the 3D view takes only a half of the framebuffer, thus fb.w/2 for the screen width
-        int h_offset = (sprite_dir - world->player_a) * (WIDTH) / (FOV) + (WIDTH) / 2 - sprite_screen_size / 2;
+        int h_offset = (sprite_dir - world->player_a) * (WIDTH) / (FOV) + (WIDTH) - sprite_screen_size / 2;
         int v_offset = HEIGHT / 2 - sprite_screen_size / 2;
 
         for (int  i = 0; i < sprite_screen_size; i++) {
-            if (h_offset + i < 0 || h_offset + i >= WIDTH / 2) continue;
+            if (h_offset + i < 0 || h_offset + i >= WIDTH) continue;
             for (int j = 0; j < sprite_screen_size; j++) {
                 if (v_offset + j < 0 || v_offset + j >= HEIGHT) continue;
-                SDL_RenderDrawLine(screen->renderer,WIDTH + h_offset + i, v_offset + j, i + sprite_screen_size, j + sprite_screen_size);
+                SDL_RenderDrawLine(screen->renderer, h_offset + i, v_offset + j,sprite_screen_size, sprite_screen_size);
 
             }
         }
-    }
 }
