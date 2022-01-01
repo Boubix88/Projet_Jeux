@@ -6,6 +6,7 @@
 #define FPS_INTERVAL 1.0 //1 seconde
 #define WALL_SIZE 512
 #define FLOOR_SIZE 256
-#define DIFFICULTE 4
+#define DIFFICULTE 5
 #define AMMO_HEIGHT 16
 #define AMMO_WIDTH 12
+#define FOV 1.58

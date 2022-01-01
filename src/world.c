@@ -47,7 +47,7 @@ void testCollision(world_t* world){
 void setMonstre(world_t* world) {
     srand(time(NULL));
 
-    for (int i = 0; i < 10; i++){
+    for (int i = 0; i < DIFFICULTE; i++){
         //Initialisation des coordonnées à 0
         world->monstre[i].x = 0, 
         world->monstre[i].y = 0;

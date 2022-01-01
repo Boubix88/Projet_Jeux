@@ -9,7 +9,7 @@ void createMap(world_t* world){
                       "11111111111111 1",
                       "1  1         1 1",
                       "1  1   1 11  1 1",
-                      "1    1   2   1 1",
+                      "1    1       1 1",
                       "111  1 1  1  1 1",
                       "1      1 1   1 1",
                       "1  1 1 1       1",
@@ -63,7 +63,13 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
 		  		  }
         		break;
       		}
-            /*if (world->map[(int)(cy)][(int)(cx)] == '2') {
+            for (int m = 0; m < DIFFICULTE;m++) {
+                if (world->map[(int)(cy)][(int)(cx)] == world->map[(int)world->monstre[m].y][(int)world->monstre[m].x]) {
+                    draw3DMapSdl(screen, world);
+                }
+            }
+
+            /**if (world->map[(int)(cy)][(int)(cx)] == '2') {
                 int line_height = HEIGHT / t;
                 for (int i = 0; i < 16; i++) {
                     //SDL_RenderDrawLine(screen->renderer, r*2.5+i , (HEIGHT+line_height)/2, r*2.5+i, (HEIGHT-line_height)/2);
@@ -85,7 +91,7 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
                     SDL_RenderDrawRect(screen->renderer, &destRect);
                 }
                 break;
-            }*/
+            }**/
     	}
   	}
   applyCrosshair(screen);  
@@ -166,29 +172,30 @@ void drawGround(screen_t* screen){
   SDL_RenderCopy(screen->renderer, screen->degradeTexture, &srcRect, &degradeDestRect);
 }
 
-/**void drawMonstre3D(world_t* world, screen_t* screen) {
+void drawMonstre3D(world_t* world, screen_t* screen) {
     for (int k = 0; k<DIFFICULTE;k++){
 
-        float sprite_dir = atan2(world->monstre[i].y - world->player.y, world->monstre[i].x - world->player.x);
-        while (sprite_dir - player.a > M_PI) {
+        float sprite_dir = atan2(world->monstre[k].y - world->player_y, world->monstre[k].x - world->player_x);
+        while (sprite_dir - world->player_a > M_PI) {
             sprite_dir -= 2 * M_PI;
         }
 
-        while (sprite_dir - player.a < -M_PI) sprite_dir += 2 * M_PI;
+        while (sprite_dir - world->player_a < -M_PI) sprite_dir += 2 * M_PI;
 
         // distance from the player to the sprite
-        float sprite_dist = std::sqrt(pow(player.x - sprite.x, 2) + pow(player.y - sprite.y, 2));
-        size_t sprite_screen_size = std::min(2000, static_cast<int>(fb.h / sprite_dist));
+        float sprite_dist = sqrt(pow(world->player_x - world->monstre[k].x, 2) + pow(world->player_y - world->monstre[k].y, 2));
+        int  sprite_screen_size = fmin(2000,(HEIGHT / sprite_dist));
         // do not forget the 3D view takes only a half of the framebuffer, thus fb.w/2 for the screen width
-        int h_offset = (sprite_dir - player.a) * (fb.w / 2) / (player.fov) + (fb.w / 2) / 2 - sprite_screen_size / 2;
-        int v_offset = fb.h / 2 - sprite_screen_size / 2;
+        int h_offset = (sprite_dir - world->player_a) * (WIDTH) / (FOV) + (WIDTH) / 2 - sprite_screen_size / 2;
+        int v_offset = HEIGHT / 2 - sprite_screen_size / 2;
 
-        for (size_t i = 0; i < sprite_screen_size; i++) {
-            if (h_offset + int(i) < 0 || h_offset + i >= fb.w / 2) continue;
-            for (size_t j = 0; j < sprite_screen_size; j++) {
-                if (v_offset + int(j) < 0 || v_offset + j >= fb.h) continue;
-                fb.set_pixel(fb.w / 2 + h_offset + i, v_offset + j, pack_color(0, 0, 0));
+        for (int  i = 0; i < sprite_screen_size; i++) {
+            if (h_offset + i < 0 || h_offset + i >= WIDTH / 2) continue;
+            for (int j = 0; j < sprite_screen_size; j++) {
+                if (v_offset + j < 0 || v_offset + j >= HEIGHT) continue;
+                SDL_RenderDrawLine(screen->renderer,WIDTH + h_offset + i, v_offset + j, i + sprite_screen_size, j + sprite_screen_size);
+
             }
         }
     }
-}**/
+}
