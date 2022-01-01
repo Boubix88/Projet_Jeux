@@ -62,6 +62,7 @@ void handle_events(SDL_Event *event, world_t *world, screen_t *screen){
                             if (!world->ammoShooted){
                                 drawAmmo(screen, world);
                                 world->ammoShooted = true;
+                                world->ammo.direction = 0;
                                 world->ammo.xMap = world->player_x;
                                 world->ammo.yMap = world->player_y;
                             }

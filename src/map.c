@@ -105,18 +105,21 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
     world->ammo.h -= 0.5;
     world->ammo.w -= 0.5;
 
-    /*float angle = world->player_a - player_fov/2 + player_fov*256/256;
-    for (float t=0; t<20; t+=.05) {
-      float cx = world->ammo.xMap + t*cos(angle);
-      float cy = world->ammo.yMap + t*sin(angle);
+    float angle = world->player_a - player_fov/2 + player_fov*256/256;
+
+    float cx = world->ammo.xMap + world->ammo.direction*cos(angle);
+    float cy = world->ammo.yMap + world->ammo.direction*sin(angle);
 
       if (world->map[(int)(cy)][(int)(cx)]=='1'){
         world->ammoShooted = false;
-        break;
-      }
-    }  
+        world->ammo.x = 1280/2 + 70;
+        world->ammo.y = 720/2 + 80;
+        world->ammo.w = AMMO_WIDTH;
+        world->ammo.h = AMMO_HEIGHT;
+      } 
     world->ammo.xMap += 0.5;
-    world->ammo.yMap += 0.5;*/
+    world->ammo.yMap += 0.5;
+    world->ammo.direction += 0.5;
   }
   
 	SDL_RenderPresent(screen->renderer);
