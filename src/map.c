@@ -7,7 +7,7 @@ void createMap(world_t* world){
                       "11 1111 1111 111",
                       "1              1",
                       "11111111111111 1",
-                      "1  1         1 1",
+                      "1  1   2     1 1",
                       "1  1   1 11  1 1",
                       "1    1       1 1",
                       "111  1 1  1  1 1",
@@ -63,13 +63,15 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
 		  		  }
         		break;
       		}
-            /**for (int m = 0; m < DIFFICULTE; m++) {
-                if (world->map[(int)(cy)][(int)(cx)] == world->map[(int)world->monstre[m].y][(int)world->monstre[m].x]) {
+            for (int m = 0; m < DIFFICULTE; m++) {
+                if (world->map[(int)(cy)][(int)(cx)] == '2' )/**world->map[(int)world->monstre[m].y][(int)world->monstre[m].x]) **/ {
+                    SDL_SetRenderDrawColor(screen->renderer, 0, 255, 255, 255);
                     drawMonstre3D(world,screen,m);
+                    SDL_RenderPresent(screen->renderer);
                 }
-            }**/
+            }
 
-            /**if (world->map[(int)(cy)][(int)(cx)] == '2') {
+           /** if (world->map[(int)(cy)][(int)(cx)] == '2') {
                 int line_height = HEIGHT / t;
                 for (int i = 0; i < 16; i++) {
                     //SDL_RenderDrawLine(screen->renderer, r*2.5+i , (HEIGHT+line_height)/2, r*2.5+i, (HEIGHT-line_height)/2);
@@ -90,8 +92,8 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
                     SDL_SetRenderDrawColor(screen->renderer,0, 255, 255, 255);
                     SDL_RenderDrawRect(screen->renderer, &destRect);
                 }
-                break;
-            }**/
+                break;**/
+            //}
     	}
   	}
   applyCrosshair(screen);  
@@ -192,8 +194,9 @@ void drawMonstre3D(world_t* world, screen_t* screen,int k) {
             if (h_offset + i < 0 || h_offset + i >= WIDTH) continue;
             for (int j = 0; j < sprite_screen_size; j++) {
                 if (v_offset + j < 0 || v_offset + j >= HEIGHT) continue;
-                SDL_RenderDrawLine(screen->renderer, h_offset + i, v_offset + j,sprite_screen_size, sprite_screen_size);
+                SDL_RenderDrawLine(screen->renderer, i + h_offset, j + v_offset, h_offset+sprite_screen_size, v_offset + sprite_screen_size);
 
             }
+
         }
 }

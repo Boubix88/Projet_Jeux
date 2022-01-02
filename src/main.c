@@ -17,10 +17,6 @@ int main(void) {
         world.ancienPlayer_x = world.player_x; //Pour les collisions
         world.ancienPlayer_y = world.player_y;
 
-        printf("Balle : %d\n", world.ammoShooted);
-        printf("X : %f\n", world.ammo.xMap);
-        printf("Y : %f\n", world.ammo.yMap);
-
         //if (world->ammo)
         
         draw3DMapSdl(&screen, &world);
