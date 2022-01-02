@@ -53,9 +53,9 @@ void setMonstre(world_t* world) {
         world->monstre[i].y = 0;
         while (world->monstre[i].x == 0 || world->monstre[i].y == 0){
             //Initialisation des coordonnées avec un random
-            float random_x = rand() % 14 + 1;
-            float random_y = rand() % 14 + 1;
-            if (world->map[(int)random_y][(int)random_x] == ' '){
+            int random_x = rand() % 14 + 1;
+            int random_y = rand() % 14 + 1;
+            if (world->map[random_y][random_x] == ' '){
                 world->monstre[i].x = random_x;
                 world->monstre[i].y = random_y;
             }

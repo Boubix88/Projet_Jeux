@@ -84,7 +84,14 @@ void initialiserTexturesMenu(screen_t* screen){
     }
     screen->flouTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->flou);
     SDL_FreeSurface(screen->flou); 
+    screen->robot = SDL_LoadBMP("../ressources/robot_bmp.bmp");
+    if (screen->robot == NULL) {
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->robotTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->robot);
+    SDL_FreeSurface(screen->robot);
 }
+
 
 void destroyTexturesMenu(screen_t* screen){
     SDL_DestroyTexture(screen->menuTexture);

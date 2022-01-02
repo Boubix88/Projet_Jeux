@@ -46,6 +46,9 @@ typedef struct screen_s
    SDL_Surface* murBrique;
    SDL_Texture* murBriqueTexture;
 
+   SDL_Surface* robot;
+   SDL_Texture* robotTexture;
+
    TTF_Font* font;
 
 

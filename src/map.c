@@ -7,7 +7,7 @@ void createMap(world_t* world){
                       "11 1111 1111 111",
                       "1              1",
                       "11111111111111 1",
-                      "1  1   2     1 1",
+                      "1  1         1 1",
                       "1  1   1 11  1 1",
                       "1    1       1 1",
                       "111  1 1  1  1 1",
@@ -35,43 +35,13 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
   	for (int r=0; r<512; r++) { 
   		float angle = world->player_a - FOV/2 + FOV*r/512;      
       //Pour regler la fluidité des fps, modifier l'incrementation de t, .001 => 30 fps, .002 => 60 fps, .05 => 144 fps 
-  		for (float t=0; t<20; t+=.002) {
-      		float cx = world->player_x + t*cos(angle);
-      		float cy = world->player_y + t*sin(angle);
+        for (float t = 0; t < 20; t += .002) {
+            float cx = world->player_x + t * cos(angle);
+            float cy = world->player_y + t * sin(angle);
 
-        	if (world->map[(int)(cy)][(int)(cx)]=='1'){
-        		int line_height = HEIGHT/t;
-		  		  for (int i = 0; i < 16; i++){
-              SDL_Rect srcRect;
-              SDL_Rect destRect;
-              float arrondcx = cx - floor(cx + .5);
-              float arrondcy = cy - floor(cy + .5);
-              srcRect.x = arrondcx*WALL_SIZE;
-              if (fabs(arrondcy) > fabs(arrondcx)) {
-                  srcRect.x = arrondcy * WALL_SIZE;
-              }
-              srcRect.h = WALL_SIZE;
-              srcRect.w = WALL_SIZE;
-              destRect.x = r*2.5+i;
-              destRect.y = (HEIGHT/2) - (line_height/2);
-              destRect.h = line_height;
-              destRect.w = 1;
-              SDL_RenderCopy(screen->renderer, screen->murBriqueTexture, &srcRect, &destRect);
-		  		  }
-        		break;
-      		}
-            for (int m = 0; m < DIFFICULTE; m++) {
-                if (world->map[(int)(cy)][(int)(cx)] == '2' )/**world->map[(int)world->monstre[m].y][(int)world->monstre[m].x]) **/ {
-                    SDL_SetRenderDrawColor(screen->renderer, 0, 255, 255, 255);
-                    drawMonstre3D(world,screen,m);
-                    SDL_RenderPresent(screen->renderer);
-                }
-            }
-
-           /** if (world->map[(int)(cy)][(int)(cx)] == '2') {
+            if (world->map[(int)(cy)][(int)(cx)] == '1') {
                 int line_height = HEIGHT / t;
                 for (int i = 0; i < 16; i++) {
-                    //SDL_RenderDrawLine(screen->renderer, r*2.5+i , (HEIGHT+line_height)/2, r*2.5+i, (HEIGHT-line_height)/2);
                     SDL_Rect srcRect;
                     SDL_Rect destRect;
                     float arrondcx = cx - floor(cx + .5);
@@ -82,14 +52,67 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
                     }
                     srcRect.h = WALL_SIZE;
                     srcRect.w = WALL_SIZE;
-                    destRect.x = r * 2 + i/4;
-                    destRect.y = (HEIGHT / 2) - (line_height / 2)/4;
-                    destRect.h = line_height/2;
-                    destRect.w =1 ;
-                    SDL_SetRenderDrawColor(screen->renderer,0, 255, 255, 255);
-                    SDL_RenderDrawRect(screen->renderer, &destRect);
+                    destRect.x = r * 2.5 + i;
+                    destRect.y = (HEIGHT / 2) - (line_height / 2);
+                    destRect.h = line_height;
+                    destRect.w = 1;
+                    SDL_RenderCopy(screen->renderer, screen->murBriqueTexture, &srcRect, &destRect);
                 }
-                break;**/
+                break;
+            }
+            for (int m = 0; m < DIFFICULTE; m++) {
+                /**SDL_SetRenderDrawColor(screen->renderer, 0, 255, 255, 255);
+                if (world->map[(int)(cy)][(int)(cx)] == world->map[(int)world->monstre[m].y][(int)world->monstre[m].x])  {
+                    drawMonstre3D(world,screen,m);
+                    SDL_RenderPresent(screen->renderer);
+                }**/
+
+                if (world->map[(int)(cy)][(int)(cx)] == world->map[(int)world->monstre[m].y][(int)world->monstre[m].x]) {
+                    int line_height = HEIGHT / t;
+                    for (int i = 0; i < 16; i++) {
+                        SDL_Rect srcRect;
+                        SDL_Rect destRect;
+                        float arrondcx = cx - floor(cx + .5);
+                        float arrondcy = cy - floor(cy + .5);
+                        srcRect.x = arrondcx * 471;
+                        if (fabs(arrondcy) > fabs(arrondcx)) {
+                            srcRect.x = arrondcy * 300;
+                        }
+                        srcRect.h = 471;
+                        srcRect.w = 300;
+                        destRect.x = r * 2.5 + i;
+                        destRect.y = (HEIGHT / 2) - (line_height / 2);
+                        destRect.h = line_height;
+                        destRect.w = 1;
+                        SDL_RenderCopy(screen->renderer, screen->robotTexture, &srcRect, &destRect);
+                        //SDL_RenderDrawLine(screen->renderer, i + h_offset, j + v_offset, h_offset + sprite_screen_size, v_offset + sprite_screen_size);
+                    }
+                    break;
+                }
+
+            }
+            /** if (world->map[(int)(cy)][(int)(cx)] == '2') {
+                 int line_height = HEIGHT / t;
+                 for (int i = 0; i < 16; i++) {
+                     //SDL_RenderDrawLine(screen->renderer, r*2.5+i , (HEIGHT+line_height)/2, r*2.5+i, (HEIGHT-line_height)/2);
+                     SDL_Rect srcRect;
+                     SDL_Rect destRect;
+                     float arrondcx = cx - floor(cx + .5);
+                     float arrondcy = cy - floor(cy + .5);
+                     srcRect.x = arrondcx * WALL_SIZE;
+                     if (fabs(arrondcy) > fabs(arrondcx)) {
+                         srcRect.x = arrondcy * WALL_SIZE;
+                     }
+                     srcRect.h = WALL_SIZE;
+                     srcRect.w = WALL_SIZE;
+                     destRect.x = r * 2 + i/4;
+                     destRect.y = (HEIGHT / 2) - (line_height / 2)/4;
+                     destRect.h = line_height/2;
+                     destRect.w =1 ;
+                     SDL_SetRenderDrawColor(screen->renderer,0, 255, 255, 255);
+                     SDL_RenderDrawRect(screen->renderer, &destRect);
+                 }
+                 break;**/
             //}
     	}
   	}
@@ -172,10 +195,6 @@ void drawGround(screen_t* screen){
 }
 
 void drawMonstre3D(world_t* world, screen_t* screen,int k) {
-  float sprite_dir = atan2(world->monstre[k].y - world->player_y, world->monstre[k].x - world->player_x);
-  while (sprite_dir - world->player_a > M_PI) {
-    sprite_dir -= 2 * M_PI;
-  }
 
         float sprite_dir = atan2(world->monstre[k].y - world->player_y, world->monstre[k].x - world->player_x);
         while (sprite_dir - world->player_a > M_PI) {
@@ -190,7 +209,6 @@ void drawMonstre3D(world_t* world, screen_t* screen,int k) {
         // do not forget the 3D view takes only a half of the framebuffer, thus fb.w/2 for the screen width
         int h_offset = (sprite_dir - world->player_a) * (WIDTH) / (FOV) + (WIDTH) - sprite_screen_size / 2;
         int v_offset = HEIGHT / 2 - sprite_screen_size / 2;
-
         for (int  i = 0; i < sprite_screen_size; i++) {
             if (h_offset + i < 0 || h_offset + i >= WIDTH) continue;
             for (int j = 0; j < sprite_screen_size; j++) {
