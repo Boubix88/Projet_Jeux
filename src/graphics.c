@@ -20,12 +20,12 @@ void initialiserTexture(screen_t* screen){
     screen->groundTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->ground);
     SDL_FreeSurface(screen->ground);  
 
-    screen->murBrique = SDL_LoadBMP("../ressources/mur_brique.bmp");
-    if (screen->murBrique == NULL){
+    SDL_Surface* murBrique = SDL_LoadBMP("../ressources/mur_brique.bmp");
+    if (murBrique == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
-    screen->murBriqueTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->murBrique);
-    SDL_FreeSurface(screen->murBrique);
+    screen->murBriqueTexture = SDL_CreateTextureFromSurface(screen->renderer, murBrique);
+    SDL_FreeSurface(murBrique);
 
     screen->degrade = SDL_LoadBMP("../ressources/degrade.bmp");
     if (screen->degrade == NULL){
@@ -34,19 +34,26 @@ void initialiserTexture(screen_t* screen){
     screen->degradeTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->degrade);
     SDL_FreeSurface(screen->degrade);
 
-    screen->pistolet = SDL_LoadBMP("../ressources/sprite_pistolet.bmp");
-    if (screen->pistolet == NULL){
+    SDL_Surface* pistolet = SDL_LoadBMP("../ressources/sprite_pistolet.bmp");
+    if (pistolet == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
-    screen->pistoletTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->pistolet);
-    SDL_FreeSurface(screen->pistolet);
+    screen->pistoletTexture = SDL_CreateTextureFromSurface(screen->renderer, pistolet);
+    SDL_FreeSurface(pistolet);
 
-    screen->ammo = SDL_LoadBMP("../ressources/sprite_ammo.bmp");
-    if (screen->ammo == NULL){
+    SDL_Surface* ammo = SDL_LoadBMP("../ressources/sprite_ammo.bmp");
+    if (ammo == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
-    screen->ammoTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->ammo);
-    SDL_FreeSurface(screen->ammo);
+    screen->ammoTexture = SDL_CreateTextureFromSurface(screen->renderer, ammo);
+    SDL_FreeSurface(ammo);
+
+    SDL_Surface* robot = SDL_LoadBMP("../ressources/robot_bmp.bmp");
+    if (robot == NULL) {
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->robotTexture = SDL_CreateTextureFromSurface(screen->renderer, robot);
+    SDL_FreeSurface(robot);
 }
 
 void initialiserTexturesMenu(screen_t* screen){
@@ -84,12 +91,6 @@ void initialiserTexturesMenu(screen_t* screen){
     }
     screen->flouTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->flou);
     SDL_FreeSurface(screen->flou); 
-    screen->robot = SDL_LoadBMP("../ressources/robot_bmp.bmp");
-    if (screen->robot == NULL) {
-        printf("Erreur SDL2 : %s", SDL_GetError());
-    }
-    screen->robotTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->robot);
-    SDL_FreeSurface(screen->robot);
 }
 
 
@@ -168,8 +169,8 @@ void applyMenuOption(screen_t* screen){
 }
 
 void applyCrosshair(screen_t* screen){
-    screen->crosshair = SDL_LoadBMP("../ressources/crosshair.bmp");
-    screen->crosshairTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->crosshair);
+    SDL_Surface* crosshair = SDL_LoadBMP("../ressources/crosshair.bmp");
+    screen->crosshairTexture = SDL_CreateTextureFromSurface(screen->renderer, crosshair);
 
     SDL_Rect destRect;
     destRect.x = 635;
@@ -178,7 +179,7 @@ void applyCrosshair(screen_t* screen){
     destRect.h = 10;
 
     SDL_RenderCopy(screen->renderer, screen->crosshairTexture, NULL, &destRect);
-    SDL_FreeSurface(screen->crosshair);
+    SDL_FreeSurface(crosshair);
 }
 
 void applyPistolet(screen_t* screen){
