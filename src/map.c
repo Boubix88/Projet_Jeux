@@ -26,8 +26,6 @@ void createMap(world_t* world){
 }
 
 void draw3DMapSdl(screen_t* screen, world_t *world){
-  float player_fov = 1.58;
-
 	SDL_SetRenderDrawColor(screen->renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
   SDL_RenderClear(screen->renderer);
   drawSky(screen, world);
@@ -35,7 +33,7 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
 
 	//SDL_SetRenderDrawColor(screen->renderer, 0, 200, 255, SDL_ALPHA_OPAQUE);
   	for (int r=0; r<512; r++) { 
-  		float angle = world->player_a - player_fov/2 + player_fov*r/512;      
+  		float angle = world->player_a - FOV/2 + FOV*r/512;      
       //Pour regler la fluidité des fps, modifier l'incrementation de t, .001 => 30 fps, .002 => 60 fps, .05 => 144 fps 
   		for (float t=0; t<20; t+=.002) {
       		float cx = world->player_x + t*cos(angle);
@@ -44,7 +42,6 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
         	if (world->map[(int)(cy)][(int)(cx)]=='1'){
         		int line_height = HEIGHT/t;
 		  		  for (int i = 0; i < 16; i++){
-		  			  //SDL_RenderDrawLine(screen->renderer, r*2.5+i , (HEIGHT+line_height)/2, r*2.5+i, (HEIGHT-line_height)/2);
               SDL_Rect srcRect;
               SDL_Rect destRect;
               float arrondcx = cx - floor(cx + .5);
@@ -111,21 +108,21 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
     world->ammo.h -= 0.5;
     world->ammo.w -= 0.5;
 
-    float angle = world->player_a - player_fov/2 + player_fov*256/256;
+    float cx = world->ammo.xMap + world->ammo.direction*cos(world->player_a);
+    float cy = world->ammo.yMap + world->ammo.direction*sin(world->player_a);
 
-    float cx = world->ammo.xMap + world->ammo.direction*cos(angle);
-    float cy = world->ammo.yMap + world->ammo.direction*sin(angle);
-
-      if (world->map[(int)(cy)][(int)(cx)]=='1'){
-        world->ammoShooted = false;
-        world->ammo.x = 1280/2 + 70;
-        world->ammo.y = 720/2 + 80;
-        world->ammo.w = AMMO_WIDTH;
-        world->ammo.h = AMMO_HEIGHT;
-      } 
-    world->ammo.xMap +=cx/32;
+    if (world->map[(int)cy][(int)cx]=='1'){
+      world->ammoShooted = false;
+      world->ammo.x = 1280/2 + 70;
+      world->ammo.y = 720/2 + 80;
+      world->ammo.w = AMMO_WIDTH;
+      world->ammo.h = AMMO_HEIGHT;
+    }
+      
+    world->ammo.xMap += cx/32;
     world->ammo.yMap += cy/32;
     world->ammo.direction += 0.5;
+    SDL_RenderDrawLine(screen->renderer, 8 + world->player_x*8 , 586 + world->player_y*8, 8 + cx*8, 586 + cy*8);
   }
   
 	SDL_RenderPresent(screen->renderer);
@@ -173,27 +170,24 @@ void drawGround(screen_t* screen){
 }
 
 void drawMonstre3D(world_t* world, screen_t* screen,int k) {
+  float sprite_dir = atan2(world->monstre[k].y - world->player_y, world->monstre[k].x - world->player_x);
+  while (sprite_dir - world->player_a > M_PI) {
+    sprite_dir -= 2 * M_PI;
+  }
 
-        float sprite_dir = atan2(world->monstre[k].y - world->player_y, world->monstre[k].x - world->player_x);
-        while (sprite_dir - world->player_a > M_PI) {
-            sprite_dir -= 2 * M_PI;
-        }
+  while (sprite_dir - world->player_a < -M_PI) sprite_dir += 2 * M_PI;
+  // distance from the player to the sprite
+  float sprite_dist = sqrt(pow(world->player_x - world->monstre[k].x, 2) + pow(world->player_y - world->monstre[k].y, 2));
+  int  sprite_screen_size = fmin(2000,(HEIGHT / sprite_dist));
+  // do not forget the 3D view takes only a half of the framebuffer, thus fb.w/2 for the screen width
+  int h_offset = (sprite_dir - world->player_a) * (WIDTH) / (FOV) + (WIDTH) - sprite_screen_size / 2;
+  int v_offset = HEIGHT / 2 - sprite_screen_size / 2;
 
-        while (sprite_dir - world->player_a < -M_PI) sprite_dir += 2 * M_PI;
-
-        // distance from the player to the sprite
-        float sprite_dist = sqrt(pow(world->player_x - world->monstre[k].x, 2) + pow(world->player_y - world->monstre[k].y, 2));
-        int  sprite_screen_size = fmin(2000,(HEIGHT / sprite_dist));
-        // do not forget the 3D view takes only a half of the framebuffer, thus fb.w/2 for the screen width
-        int h_offset = (sprite_dir - world->player_a) * (WIDTH) / (FOV) + (WIDTH) - sprite_screen_size / 2;
-        int v_offset = HEIGHT / 2 - sprite_screen_size / 2;
-
-        for (int  i = 0; i < sprite_screen_size; i++) {
-            if (h_offset + i < 0 || h_offset + i >= WIDTH) continue;
-            for (int j = 0; j < sprite_screen_size; j++) {
-                if (v_offset + j < 0 || v_offset + j >= HEIGHT) continue;
-                SDL_RenderDrawLine(screen->renderer, h_offset + i, v_offset + j,sprite_screen_size, sprite_screen_size);
-
-            }
-        }
+  for (int  i = 0; i < sprite_screen_size; i++) {
+    if (h_offset + i < 0 || h_offset + i >= WIDTH) continue;
+    for (int j = 0; j < sprite_screen_size; j++) {
+      if (v_offset + j < 0 || v_offset + j >= HEIGHT) continue;
+      SDL_RenderDrawLine(screen->renderer, h_offset + i, v_offset + j,sprite_screen_size, sprite_screen_size);
+    }
+  }
 }

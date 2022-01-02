@@ -20,8 +20,6 @@ int main(void) {
         printf("Balle : %d\n", world.ammoShooted);
         printf("X : %f\n", world.ammo.xMap);
         printf("Y : %f\n", world.ammo.yMap);
-
-        //if (world->ammo)
         
         draw3DMapSdl(&screen, &world);
         handle_events(&event, &world, &screen);

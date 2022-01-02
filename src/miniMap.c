@@ -1,12 +1,13 @@
 #include "main.h"
 
+//Taille map : 128x128 px   16*8
 void drawMiniMap(screen_t* screen, world_t* world) {
   drawWalls(screen, world);
   drawPlayer(screen, world);
   drawFov(screen, world);
   drawMonstre(screen, world);
 }
-//128x128 px   16*8
+
 void drawWalls(screen_t *screen, world_t* world){
   SDL_Rect destRect;
   destRect.x = 8;
@@ -47,10 +48,8 @@ void drawPlayer(screen_t* screen, world_t* world){
 }
 
 void drawFov(screen_t* screen, world_t* world){
-  float player_fov = 1.58; 
-  
   for (int r=0; r<512; r++) { 
-    float angle = world->player_a - player_fov/2 + player_fov*r/512;      
+    float angle = world->player_a - FOV/2 + FOV*r/512;      
   
     for (float t=0; t<20; t+=.05) {
         float cx = world->player_x + t*cos(angle);
@@ -69,11 +68,7 @@ void drawFov(screen_t* screen, world_t* world){
   }  
 }
 
-
-
-
 void drawMonstre(screen_t* screen, world_t* world) {
-  //setMonstre(world);
   SDL_SetRenderDrawColor(screen->renderer, 0, 122, 0, 122);
   for (int i = 0; i < 10; i++) {
       SDL_Rect destRect;
