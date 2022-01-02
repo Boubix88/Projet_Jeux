@@ -15,7 +15,7 @@ void drawWalls(screen_t *screen, world_t* world){
   destRect.w = 128;
   destRect.h = 128;
 
-  SDL_SetRenderDrawColor(screen->renderer, 255, 255, 0, 255);
+  SDL_SetRenderDrawColor(screen->renderer, 255, 255, 255, 255);
   SDL_RenderFillRect(screen->renderer, &destRect);
 
   destRect.x = 0;
@@ -28,7 +28,7 @@ void drawWalls(screen_t *screen, world_t* world){
     for (int j=0; j<16; j++){
       if (world->map[j][i]=='1') {
         destRect.y = 586 + j*8;
-        SDL_SetRenderDrawColor(screen->renderer, 255, 0, 200, 255);
+        SDL_SetRenderDrawColor(screen->renderer, 0, 0, 0, 255);
         SDL_RenderFillRect(screen->renderer, &destRect);
       }
     }  
@@ -42,7 +42,7 @@ void drawPlayer(screen_t* screen, world_t* world){
   destRect.y = 586 + world->player_y*8;
   destRect.x = 8 + world->player_x*8;
 
-  SDL_SetRenderDrawColor(screen->renderer, 0, 255, 0, 255);
+  SDL_SetRenderDrawColor(screen->renderer, 124, 0, 200, 255);
   SDL_RenderFillRect(screen->renderer, &destRect);
 
 }
@@ -62,14 +62,14 @@ void drawFov(screen_t* screen, world_t* world){
         int pixx = 8 + cx*8;
         int pixy = 586 + cy*8;
 
-        SDL_SetRenderDrawColor(screen->renderer, 0, 255, 100, 255);
+        SDL_SetRenderDrawColor(screen->renderer, 0, 0, 255, 255);
         SDL_RenderDrawPoint(screen->renderer, pixx, pixy);
     }
   }  
 }
 
 void drawMonstre(screen_t* screen, world_t* world) {
-  SDL_SetRenderDrawColor(screen->renderer, 0, 122, 0, 122);
+  SDL_SetRenderDrawColor(screen->renderer, 255, 0, 0, 122);
   for (int i = 0; i < 10; i++) {
       SDL_Rect destRect;
       destRect.w = 3;

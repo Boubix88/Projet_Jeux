@@ -60,14 +60,14 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
                 }
                 break;
             }
-            for (int m = 0; m < DIFFICULTE; m++) {
-                /**SDL_SetRenderDrawColor(screen->renderer, 0, 255, 255, 255);
+            /**for (int m = 0; m < DIFFICULTE; m++) {
+                SDL_SetRenderDrawColor(screen->renderer, 0, 255, 255, 255);
                 if (world->map[(int)(cy)][(int)(cx)] == world->map[(int)world->monstre[m].y][(int)world->monstre[m].x])  {
                     drawMonstre3D(world,screen,m);
                     SDL_RenderPresent(screen->renderer);
                 }**/
 
-                if (world->map[(int)(cy)][(int)(cx)] == world->map[(int)world->monstre[m].y][(int)world->monstre[m].x]) {
+                 /**if (world->map[(int)(cy)][(int)(cx)] == world->map[(int)world->monstre[m].y][(int)world->monstre[m].x]) {
                     int line_height = HEIGHT / t;
                     for (int i = 0; i < 16; i++) {
                         SDL_Rect srcRect;
@@ -88,9 +88,9 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
                         //SDL_RenderDrawLine(screen->renderer, i + h_offset, j + v_offset, h_offset + sprite_screen_size, v_offset + sprite_screen_size);
                     }
                     break;
-                }
+                }**/
 
-            }
+         
             /** if (world->map[(int)(cy)][(int)(cx)] == '2') {
                  int line_height = HEIGHT / t;
                  for (int i = 0; i < 16; i++) {
