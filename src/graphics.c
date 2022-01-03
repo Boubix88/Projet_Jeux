@@ -61,6 +61,13 @@ void initialiserTexture(screen_t* screen){
     }
     screen->murCellulePrison = SDL_CreateTextureFromSurface(screen->renderer, murCellule);
     SDL_FreeSurface(murCellule);
+
+    SDL_Surface* impactAmmo = SDL_LoadBMP("../ressources/impact_ammo.bmp");
+    if (impactAmmo == NULL) {
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->impactAmmoTexture = SDL_CreateTextureFromSurface(screen->renderer, impactAmmo);
+    SDL_FreeSurface(impactAmmo);
 }
 
 void initialiserTexturesMenu(screen_t* screen){
@@ -368,6 +375,20 @@ void drawAmmo(screen_t* screen, world_t* world){
     SDL_RenderCopy(screen->renderer, screen->ammoTexture, NULL, &destRect);
 }
 
+void drawExplosion(screen_t* screen, world_t* world){
+  if (world->ammo.x <= SCREEN_WIDTH/2 + 7 && world->ammo.y <= SCREEN_HEIGHT/2 + 7 && world->compteurNbreImpact != 4){
+    SDL_Rect destRect;
+    destRect.x = SCREEN_WIDTH/2 - ((50/4)*world->compteurNbreImpact)/2;
+    destRect.y = SCREEN_HEIGHT/2 - ((41/4)*world->compteurNbreImpact)/2;
+    destRect.w = (50/4)*world->compteurNbreImpact;
+    destRect.h = (41/4)*world->compteurNbreImpact;
+
+    world->compteurNbreImpact ++;
+
+    SDL_RenderCopy(screen->renderer, screen->impactAmmoTexture, NULL, &destRect);
+  }
+}
+
 void destroyTextures(screen_t* screen){
     SDL_DestroyTexture(screen->menuTexture);
     SDL_DestroyTexture(screen->continuerTexture);
@@ -396,4 +417,5 @@ void destroyTextures(screen_t* screen){
     SDL_DestroyTexture(screen->robotTexture);
     SDL_DestroyTexture(screen->text);
     SDL_DestroyTexture(screen->fpsTexture);
+    SDL_DestroyTexture(screen->impactAmmoTexture);
 }

@@ -24,6 +24,7 @@ void intitialiserData(world_t* world){
 
     world->ammoShooted = false;
     world->angleSky = world->player_a;
+    world->compteurNbreImpact = 0;
 }
 
 void calculFPS(world_t* world){

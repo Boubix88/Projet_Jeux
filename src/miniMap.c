@@ -23,12 +23,12 @@ void drawWalls(screen_t *screen, world_t* world){
   destRect.w = 8;
   destRect.h = 8;
   
+  SDL_SetRenderDrawColor(screen->renderer, 0, 0, 0, 255);
   for (short i=0; i<16; i++){
     destRect.x += 8;
     for (short j=0; j<16; j++){
       if (world->map[j][i] != ' ') {
         destRect.y = 586 + j*8;
-        SDL_SetRenderDrawColor(screen->renderer, 0, 0, 0, 255);
         SDL_RenderFillRect(screen->renderer, &destRect);
       }
     }  

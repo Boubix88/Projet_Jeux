@@ -62,6 +62,8 @@ typedef struct screen_s
    SDL_Surface *fpsSurface;
    SDL_Texture *fpsTexture;
 
+   SDL_Texture* impactAmmoTexture;
+
 }screen_t;
 
 void Init_Screen(screen_t*screen);
