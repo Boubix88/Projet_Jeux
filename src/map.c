@@ -26,7 +26,7 @@ void createMap(world_t* world){
 }
 
 void draw3DMapSdl(screen_t* screen, world_t *world){
-	SDL_SetRenderDrawColor(screen->renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+   SDL_SetRenderDrawColor(screen->renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
   SDL_RenderClear(screen->renderer);
   drawSky(screen, world);
   drawGround(screen);
@@ -38,6 +38,14 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
         for (float t = 0; t < 20; t += world->graphismeOption) {
           float cx = world->player_x + t * cos(angle);
           float cy = world->player_y + t * sin(angle);
+          //world->monstre[1].x = 8.1;
+          //world->monstre[1].y = 9.4;
+          for (int m = 0; m < DIFFICULTE; m++) {
+              if ((cx <= world->monstre[m].x + 0.01 && cx >= world->monstre[m].x - 0.01) && (cy <= world->monstre[m].y + 0.01 && cy >= world->monstre[m].y - 0.01)) {
+                  drawMonstre3D(world, screen, 1, cx, cy, t);
+              }
+
+          }
 
           if (world->map[(int)(cy)][(int)(cx)] != ' ') {
             int line_height = HEIGHT / t;
@@ -102,9 +110,7 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
     world->ammo.direction += 0.5;
     SDL_RenderDrawLine(screen->renderer, 8 + world->player_x*8 , 586 + world->player_y*8, 8 + cx*8, 586 + cy*8);
   }
-  /*for (short m = 0; m < DIFFICULTE; m++){
-    drawMonstre3D(world, screen, m);
-  }*/
+
 	SDL_RenderPresent(screen->renderer);
 }
 
@@ -171,7 +177,7 @@ void drawGround(screen_t* screen){
   SDL_RenderCopy(screen->renderer, screen->degradeTexture, &srcRect, &degradeDestRect);
 }
 
-void drawMonstre3D(world_t* world, screen_t* screen,int k) {
+void drawMonstre3D(world_t* world, screen_t* screen,int k,float cx,float cy,float t) {
         
         float sprite_dir = atan2(world->monstre[k].y - world->player_y, world->monstre[k].x - world->player_x);
         while (sprite_dir - world->player_a > M_PI) {
@@ -181,20 +187,23 @@ void drawMonstre3D(world_t* world, screen_t* screen,int k) {
         while (sprite_dir - world->player_a < -M_PI) sprite_dir += 2 * M_PI;
 
         // distance from the player to the sprite
-        float sprite_dist = sqrt(pow(world->player_x - world->monstre[k].x, 2) + pow(world->player_y - world->monstre[k].y, 2));
+       // float sprite_dist = std::sqrt(pow(player.x - sprite.x, 2) + pow(player.y - sprite.y, 2));
+        float sprite_dist = t;
         int  sprite_screen_size = fmin(1000,(HEIGHT / sprite_dist));
         // do not forget the 3D view takes only a half of the framebuffer, thus fb.w/2 for the screen width
-        //int h_offset = (sprite_dir - world->player_a) * (WIDTH) / (FOV) + (WIDTH) - sprite_screen_size / 2;
-        int h_offset = (sprite_dir - world->player_a) / FOV * (WIDTH/2) - 471 / 2;
-        int v_offset = HEIGHT / 2 - sprite_screen_size / 2;
-        for (short  i = 0; i < sprite_screen_size; i++) {
-            if (h_offset + i < 0 || h_offset + i >= 512/2) continue;
-            for (short j = 0; j < sprite_screen_size; j++) {
-                if (v_offset + j < 0 || v_offset + j >= HEIGHT) continue;
+        int h_offset = (sprite_dir - world->player_a) * (WIDTH/2) / (FOV) + (WIDTH/2) - sprite_screen_size / 2;
+        //int h_offset = (sprite_dir - player.a) * (fb.w / 2) / (player.fov) + (fb.w / 2) / 2 - sprite_screen_size / 2;
+        //int h_offset = (sprite_dir - world->player_a) / FOV * (WIDTH) - sprite_screen_size;
+        //int h_offset = (sprite_dir - world->player_a) * (WIDTH/2) / (FOV + (WIDTH / 2)) /2 - sprite_screen_size / 2;
+        int v_offset = HEIGHT/2 - sprite_screen_size ;
+        /**for (short i = 0; i < sprite_screen_size; i = i + 2)**/if (h_offset  < 0 || h_offset >= HEIGHT / 2) {
+            //if (h_offset + i < 0 || h_offset + i >= HEIGHT/2) continue;
+            /**for (short j = 0; j < sprite_screen_size; j = j + 2)**/if (v_offset < 0 || v_offset >= WIDTH) {
+                //if (v_offset + j < 0 || v_offset + j >= WIDTH) continue;
                 //SDL_RenderDrawLine(screen->renderer, i + h_offset, j + v_offset, h_offset+sprite_screen_size, v_offset + sprite_screen_size);
                 SDL_Rect destRect;
-                destRect.x = i + h_offset;
-                destRect.y = j + v_offset;
+                destRect.x = h_offset;
+                destRect.y = v_offset;
                 destRect.h = h_offset+sprite_screen_size;
                 destRect.w = v_offset + sprite_screen_size;
                 SDL_RenderCopy(screen->renderer, screen->robotTexture, NULL, &destRect);
