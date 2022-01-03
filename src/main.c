@@ -22,7 +22,7 @@ int main(void) {
         testCollision(&world);
         SDL_WarpMouseInWindow(screen.window, 1280 / 2, 720 / 2);
     }
-
+    ecrireScore(&world);
     TTF_Quit();
     SDL_Quit();
     destroyTextures(&screen);

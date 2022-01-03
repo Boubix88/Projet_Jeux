@@ -42,7 +42,7 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
           //world->monstre[1].y = 9.4;
           for (int m = 0; m < DIFFICULTE; m++) {
               if ((cx <= world->monstre[m].x + 0.01 && cx >= world->monstre[m].x - 0.01) && (cy <= world->monstre[m].y + 0.01 && cy >= world->monstre[m].y - 0.01)) {
-                  drawMonstre3D(world, screen, 1, cx, cy, t);
+                  drawMonstre3D(world, screen,m, t);
               }
 
           }
@@ -177,7 +177,7 @@ void drawGround(screen_t* screen){
   SDL_RenderCopy(screen->renderer, screen->degradeTexture, &srcRect, &degradeDestRect);
 }
 
-void drawMonstre3D(world_t* world, screen_t* screen,int k,float cx,float cy,float t) {
+void drawMonstre3D(world_t* world, screen_t* screen,int k,float t) {
         
         float sprite_dir = atan2(world->monstre[k].y - world->player_y, world->monstre[k].x - world->player_x);
         while (sprite_dir - world->player_a > M_PI) {

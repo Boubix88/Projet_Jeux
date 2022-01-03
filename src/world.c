@@ -1,5 +1,6 @@
 #include "main.h"
-
+#include <fcntl.h>
+#include <unistd.h>
 void intitialiserData(world_t* world){
     createMap(world);
     setMonstre(world);
@@ -54,16 +55,25 @@ void setMonstre(world_t* world) {
 
     for (short i = 0; i < DIFFICULTE; i++){
         //Initialisation des coordonnées à 0
-        world->monstre[i].x = 0, 
+        world->monstre[i].x = 0;
         world->monstre[i].y = 0;
         while (world->monstre[i].x == 0 || world->monstre[i].y == 0){
             //Initialisation des coordonnées avec un random
             short random_x = rand() % 14 + 1;
             short random_y = rand() % 14 + 1;
             if (world->map[random_y][random_x] == ' '){
-                world->monstre[i].x = random_x;
-                world->monstre[i].y = random_y;
+                world->monstre[i].x = random_x ;
+                world->monstre[i].y = random_y ;
             }
         }
     }
+}
+
+
+void ecrireScore(world_t* world) {
+    world->score = 345;
+    FILE* f;
+    f = fopen("score.txt", "w");
+    fprintf(f,"%d", world->score);
+    fclose(f);
 }
