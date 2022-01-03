@@ -40,12 +40,12 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
           float cy = world->player_y + t * sin(angle);
           //world->monstre[1].x = 8.1;
           //world->monstre[1].y = 9.4;
-          /*for (int m = 0; m < DIFFICULTE; m++) {
+          for (int m = 0; m < DIFFICULTE; m++) {
               if ((cx <= world->monstre[m].x + 0.01 && cx >= world->monstre[m].x - 0.01) && (cy <= world->monstre[m].y + 0.01 && cy >= world->monstre[m].y - 0.01)) {
-                  drawMonstre3D(world, screen, 1, cx, cy, t);
+                  drawMonstre3D(world, screen,m, t);
               }
 
-          }*/
+          }
 
           if (world->map[(int)(cy)][(int)(cx)] != ' ') {
             int line_height = HEIGHT / t;
@@ -88,17 +88,14 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
   }
 
   if (world->ammoShooted){
-    SDL_SetRenderDrawColor(screen->renderer, 255, 0, 255, SDL_ALPHA_OPAQUE);
-    if (world->ammo.x >= SCREEN_WIDTH/2  && world->ammo.y >= SCREEN_HEIGHT/2){
-      drawAmmo(screen, world);
-    }
-    world->ammo.x -= 20.4; //Defaut : 0.7
-    world->ammo.y -= 25.6; //Defaut : 0.8
+    drawAmmo(screen, world);
+    world->ammo.x -= 5.6; //Defaut : 0.7
+    world->ammo.y -= 6.4; //Defaut : 0.8
     world->ammo.h -= 0.5;
     world->ammo.w -= 0.5;
-    float angle = world->player_a - FOV/2 + FOV*256/512;
-    float cx = world->player_x + world->ammo.direction*cos(angle);
-    float cy = world->player_y + world->ammo.direction*sin(angle);
+
+    float cx = world->ammo.xMap + world->ammo.direction*cos(world->player_a);
+    float cy = world->ammo.yMap + world->ammo.direction*sin(world->player_a);
 
     if (world->map[(int)cy][(int)cx]=='1'){
       world->ammoShooted = false;
@@ -107,17 +104,11 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
       world->ammo.w = AMMO_WIDTH;
       world->ammo.h = AMMO_HEIGHT;
     }
-    
+      
     world->ammo.xMap += cx/32;
     world->ammo.yMap += cy/32;
     world->ammo.direction += 0.5;
     SDL_RenderDrawLine(screen->renderer, 8 + world->player_x*8 , 586 + world->player_y*8, 8 + cx*8, 586 + cy*8);
-  }
-
-  drawExplosion(screen, world);
-
-  if (world->compteurNbreImpact == 4){
-    world->compteurNbreImpact = 0;
   }
 
 	SDL_RenderPresent(screen->renderer);
@@ -186,36 +177,29 @@ void drawGround(screen_t* screen){
   SDL_RenderCopy(screen->renderer, screen->degradeTexture, &srcRect, &degradeDestRect);
 }
 
-//void drawMonstre3D(world_t* world, screen_t* screen,int k,float cx,float cy,float t) {
-        /*
+void drawMonstre3D(world_t* world, screen_t* screen,int k,float t) {
+        
         float sprite_dir = atan2(world->monstre[k].y - world->player_y, world->monstre[k].x - world->player_x);
         while (sprite_dir - world->player_a > M_PI) {
-          sprite_dir -= 2 * M_PI;
+            sprite_dir -= 2 * M_PI;
         }
 
-        while (sprite_dir - world->player_a < -M_PI){
-           sprite_dir += 2 * M_PI;
-        }
-        
+        while (sprite_dir - world->player_a < -M_PI) sprite_dir += 2 * M_PI;
+
         // distance from the player to the sprite
-        //float sprite_dist = sqrt(pow(world->player_x - world->monstre[k].x, 2) + pow(world->player_y - world->monstre[k].y, 2));
+       // float sprite_dist = std::sqrt(pow(player.x - sprite.x, 2) + pow(player.y - sprite.y, 2));
         float sprite_dist = t;
         int  sprite_screen_size = fmin(1000,(HEIGHT / sprite_dist));
-        //printf("Taille : %d\n", sprite_screen_size);
         // do not forget the 3D view takes only a half of the framebuffer, thus fb.w/2 for the screen width
-        //int h_offset = (sprite_dir - world->player_a) * (WIDTH/2) / (FOV) + (WIDTH/2) - sprite_screen_size / 2 - 300/2;
-        
-        //int h_offset = (sprite_dir - world->player_a) * (512 / 2) / (FOV) + (512 / 2) / 2 - sprite_screen_size / 2;
-        
-        //int h_offset = (sprite_dir - world->player_a) / FOV * (512) + (512)/2 - 300/2 + WIDTH/2;
-        
-        int h_offset = (sprite_dir - world->player_a) * (WIDTH/2) / (FOV) + (WIDTH / 2) /2 - sprite_screen_size / 2;
-        int v_offset = HEIGHT/2 - sprite_screen_size/2 ;
-        //printf("H : %d   V : %d\n", h_offset, v_offset);
-        for (short i = 0; i < sprite_screen_size; i++){//if (h_offset  < 0 || h_offset >= WIDTH / 2) {
-            if (h_offset + i < 0 || h_offset + i >= WIDTH/2) continue;
-            for (short j = 0; j < sprite_screen_size; j++){///if (v_offset < 0 || v_offset >= HEIGHT) {
-                if (v_offset + j < 0 || v_offset + j >= HEIGHT) continue;
+        int h_offset = (sprite_dir - world->player_a) * (WIDTH/2) / (FOV) + (WIDTH/2) - sprite_screen_size / 2;
+        //int h_offset = (sprite_dir - player.a) * (fb.w / 2) / (player.fov) + (fb.w / 2) / 2 - sprite_screen_size / 2;
+        //int h_offset = (sprite_dir - world->player_a) / FOV * (WIDTH) - sprite_screen_size;
+        //int h_offset = (sprite_dir - world->player_a) * (WIDTH/2) / (FOV + (WIDTH / 2)) /2 - sprite_screen_size / 2;
+        int v_offset = HEIGHT/2 - sprite_screen_size ;
+        /**for (short i = 0; i < sprite_screen_size; i = i + 2)**/if (h_offset  < 0 || h_offset >= HEIGHT / 2) {
+            //if (h_offset + i < 0 || h_offset + i >= HEIGHT/2) continue;
+            /**for (short j = 0; j < sprite_screen_size; j = j + 2)**/if (v_offset < 0 || v_offset >= WIDTH) {
+                //if (v_offset + j < 0 || v_offset + j >= WIDTH) continue;
                 //SDL_RenderDrawLine(screen->renderer, i + h_offset, j + v_offset, h_offset+sprite_screen_size, v_offset + sprite_screen_size);
                 SDL_Rect destRect;
                 destRect.x = h_offset;
@@ -225,5 +209,5 @@ void drawGround(screen_t* screen){
                 SDL_RenderCopy(screen->renderer, screen->robotTexture, NULL, &destRect);
             }
 
-        }*/
-//}
+        }
+}
