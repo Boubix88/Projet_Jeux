@@ -12,8 +12,8 @@ typedef struct sprite_s
     float x, y;
     float xMap, yMap;
     float direction;
-    int h;
-    int w;
+    short h;
+    short w;
 
 }sprite_t;
 
@@ -21,6 +21,7 @@ typedef struct world_s
 {
     float player_a;
     float angle;
+    float angleSky;
     float player_x;
     float player_y;
     float ancienPlayer_x;
@@ -29,13 +30,18 @@ typedef struct world_s
     float vx;       //coordonnee du point x pour se deplacer
     float vy;       //coordonnee du point y pour se deplacer
     float dis;
-    int map[MAP_SIZE][MAP_SIZE];
+    short map[MAP_SIZE][MAP_SIZE];
     bool fpsView;
     bool ammoShooted;
+    bool graphisme;
 
-    Uint32 fps_lasttime; //the last recorded time.
-    Uint32 fps_current; //the current FPS.
-    Uint32 fps_frames; //frames passed since the last recorded fps.
+    float graphismeOption;
+    short graphismeOptionRayon;
+    short graphismeOptionWidth;
+
+    short fps_lasttime; //the last recorded time.
+    short fps_current; //the current FPS.
+    short fps_frames; //frames passed since the last recorded fps.
     sprite_t monstre[10];
     sprite_t ammo;
 
@@ -83,3 +89,7 @@ void setMonstre(world_t* world);
 void drawMonstre(screen_t* screen,world_t* world);
 void drawMonstre3D(world_t* world, screen_t* screen,int k);
 void drawAmmo(screen_t* screen, world_t* world);
+void initialiserTexturesMenuGraphisme(screen_t* screen);
+void applyMenuGraphisme(screen_t* screen);
+void applyMenuGraphismeOption(screen_t* screen);
+void destroyTextures(screen_t* screen);

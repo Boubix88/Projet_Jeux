@@ -48,12 +48,19 @@ void initialiserTexture(screen_t* screen){
     screen->ammoTexture = SDL_CreateTextureFromSurface(screen->renderer, ammo);
     SDL_FreeSurface(ammo);
 
-    SDL_Surface* robot = SDL_LoadBMP("../ressources/robot_bmp.bmp");
+    SDL_Surface* robot = SDL_LoadBMP("../ressources/robot.bmp");
     if (robot == NULL) {
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->robotTexture = SDL_CreateTextureFromSurface(screen->renderer, robot);
     SDL_FreeSurface(robot);
+
+    SDL_Surface* murCellule = SDL_LoadBMP("../ressources/cellule_prison.bmp");
+    if (murCellule == NULL) {
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->murCellulePrison = SDL_CreateTextureFromSurface(screen->renderer, murCellule);
+    SDL_FreeSurface(murCellule);
 }
 
 void initialiserTexturesMenu(screen_t* screen){
@@ -93,6 +100,50 @@ void initialiserTexturesMenu(screen_t* screen){
     SDL_FreeSurface(screen->flou); 
 }
 
+void initialiserTexturesMenuGraphisme(screen_t* screen){
+    SDL_Surface* menu = SDL_LoadBMP("../ressources/menu_graphisme.bmp");
+    if (menu == NULL){
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->menuGraphisme = SDL_CreateTextureFromSurface(screen->renderer, menu);
+    SDL_FreeSurface(menu); 
+
+    SDL_Surface* tres_haut = SDL_LoadBMP("../ressources/tres_haut.bmp");
+    if (tres_haut == NULL){
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->tresHautGraphisme = SDL_CreateTextureFromSurface(screen->renderer, tres_haut);
+    SDL_FreeSurface(tres_haut); 
+
+    SDL_Surface* haut = SDL_LoadBMP("../ressources/haut.bmp");
+    if (haut == NULL){
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->hautGraphisme = SDL_CreateTextureFromSurface(screen->renderer, haut);
+    SDL_FreeSurface(haut); 
+
+    SDL_Surface* normal = SDL_LoadBMP("../ressources/normal.bmp");
+    if (normal == NULL){
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->normalGraphisme = SDL_CreateTextureFromSurface(screen->renderer, normal);
+    SDL_FreeSurface(normal); 
+
+    SDL_Surface* bas = SDL_LoadBMP("../ressources/bas.bmp");
+    if (bas == NULL){
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->basGraphisme = SDL_CreateTextureFromSurface(screen->renderer, bas);
+    SDL_FreeSurface(bas); 
+
+    SDL_Surface* tres_bas = SDL_LoadBMP("../ressources/tres_bas.bmp");
+    if (tres_bas == NULL){
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->tresBasGraphisme = SDL_CreateTextureFromSurface(screen->renderer, tres_bas);
+    SDL_FreeSurface(tres_bas); 
+}
+
 
 void destroyTexturesMenu(screen_t* screen){
     SDL_DestroyTexture(screen->menuTexture);
@@ -100,35 +151,42 @@ void destroyTexturesMenu(screen_t* screen){
     SDL_DestroyTexture(screen->graphismesTexture);
     SDL_DestroyTexture(screen->quitterTexture);
     SDL_DestroyTexture(screen->flouTexture);
+
+    SDL_DestroyTexture(screen->menuGraphisme);
+    SDL_DestroyTexture(screen->tresHautGraphisme);
+    SDL_DestroyTexture(screen->hautGraphisme);
+    SDL_DestroyTexture(screen->normalGraphisme);
+    SDL_DestroyTexture(screen->basGraphisme);
+    SDL_DestroyTexture(screen->tresBasGraphisme);
 }
 
 
 void drawFPS(world_t* world, screen_t* screen){
     SDL_Color color = {255, 0, 100, 255};
-    SDL_Surface *textSurface = TTF_RenderText_Solid(screen->font, "FPS  ", color);
-    SDL_Texture *text = SDL_CreateTextureFromSurface(screen->renderer, textSurface);
+    screen->textSurface = TTF_RenderText_Solid(screen->font, "FPS  ", color);
+    screen->text = SDL_CreateTextureFromSurface(screen->renderer, screen->textSurface);
     SDL_Rect textRect;
     textRect.x = 2;
     textRect.y = 0;
     textRect.h = 35;
     textRect.w = 50;
-    SDL_RenderCopy(screen->renderer, text, NULL, &textRect);
+    SDL_RenderCopy(screen->renderer, screen->text, NULL, &textRect);
 
 
     char fps[5];
     sprintf(fps,"%d", world->fps_current);
 
-    SDL_Surface *fpsSurface = TTF_RenderText_Solid(screen->font, fps, color);
-    SDL_Texture *fpsTexture = SDL_CreateTextureFromSurface(screen->renderer, fpsSurface);
+    screen->fpsSurface = TTF_RenderText_Solid(screen->font, fps, color);
+    screen->fpsTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->fpsSurface);
     SDL_Rect fpsRect;
     fpsRect.x = 50;
     fpsRect.y = 0;
     fpsRect.h = 35;
     fpsRect.w = 20;
-    SDL_RenderCopy(screen->renderer, fpsTexture, NULL, &fpsRect);
+    SDL_RenderCopy(screen->renderer, screen->fpsTexture, NULL, &fpsRect);
 
-    SDL_FreeSurface(textSurface);
-    SDL_FreeSurface(fpsSurface);
+    SDL_FreeSurface(screen->textSurface);
+    SDL_FreeSurface(screen->fpsSurface);
 }
 
 void apply_menu(screen_t* screen){
@@ -165,6 +223,55 @@ void applyMenuOption(screen_t* screen){
     }else {
         SDL_RenderCopy(screen->renderer, screen->flouTexture, NULL, NULL);   
     }
+    SDL_RenderPresent(screen->renderer);
+}
+
+void applyMenuGraphismeOption(screen_t* screen){
+    int x, y;
+
+    SDL_GetMouseState(&x, &y);
+    SDL_Rect destRect;
+
+    if (x >= 5 && x <= 333 && y >= 129 && y <= 176){
+        destRect.x = 4;
+        destRect.y = 111;
+        destRect.w = 332;
+        destRect.h = 67;
+        SDL_RenderCopy(screen->renderer, screen->tresHautGraphisme, NULL, &destRect);
+    }
+    else if (x >= 7 && x <= 166 && y >= 223 && y <= 270){
+        destRect.x = 1;
+        destRect.y = 210;
+        destRect.w = 168;
+        destRect.h = 62;
+        SDL_RenderCopy(screen->renderer, screen->hautGraphisme, NULL, &destRect);
+    }
+    else if (x >= 7 && x <= 251 && y >= 315 && y <= 361){
+        destRect.x = 1;
+        destRect.y = 302;
+        destRect.w = 252;
+        destRect.h = 60;
+        SDL_RenderCopy(screen->renderer, screen->normalGraphisme, NULL, &destRect);   
+    }else if (x >= 7 && x <= 125 && y >= 415 && y <= 462){
+        destRect.x = 1;
+        destRect.y = 402;
+        destRect.w = 132;
+        destRect.h = 62;
+        SDL_RenderCopy(screen->renderer, screen->basGraphisme, NULL, &destRect);   
+    }else if (x >= 6 && x <= 297 && y >= 512 && y <= 560){
+        destRect.x = 5;
+        destRect.y = 494;
+        destRect.w = 295;
+        destRect.h = 67;
+        SDL_RenderCopy(screen->renderer, screen->tresBasGraphisme, NULL, &destRect);   
+    }else {
+        SDL_RenderCopy(screen->renderer, screen->menuGraphisme, NULL, NULL);   
+    }
+    SDL_RenderPresent(screen->renderer);
+}
+
+void applyMenuGraphisme(screen_t* screen){
+    SDL_RenderCopy(screen->renderer, screen->menuGraphisme, NULL, NULL);
     SDL_RenderPresent(screen->renderer);
 }
 
@@ -261,3 +368,32 @@ void drawAmmo(screen_t* screen, world_t* world){
     SDL_RenderCopy(screen->renderer, screen->ammoTexture, NULL, &destRect);
 }
 
+void destroyTextures(screen_t* screen){
+    SDL_DestroyTexture(screen->menuTexture);
+    SDL_DestroyTexture(screen->continuerTexture);
+    SDL_DestroyTexture(screen->graphismesTexture);
+    SDL_DestroyTexture(screen->quitterTexture);
+    SDL_DestroyTexture(screen->flouTexture);
+
+    SDL_DestroyTexture(screen->menuGraphisme);
+    SDL_DestroyTexture(screen->tresHautGraphisme);
+    SDL_DestroyTexture(screen->hautGraphisme);
+    SDL_DestroyTexture(screen->normalGraphisme);
+    SDL_DestroyTexture(screen->basGraphisme);
+    SDL_DestroyTexture(screen->tresBasGraphisme);
+
+    SDL_DestroyTexture(screen->text);
+    SDL_DestroyTexture(screen->fpsTexture);
+
+    SDL_DestroyTexture(screen->skyTexture);
+    SDL_DestroyTexture(screen->groundTexture);
+    SDL_DestroyTexture(screen->degradeTexture);
+    SDL_DestroyTexture(screen->crosshairTexture);
+    SDL_DestroyTexture(screen->pistoletTexture);
+    SDL_DestroyTexture(screen->ammoTexture);
+    SDL_DestroyTexture(screen->murBriqueTexture);
+    SDL_DestroyTexture(screen->murCellulePrison);
+    SDL_DestroyTexture(screen->robotTexture);
+    SDL_DestroyTexture(screen->text);
+    SDL_DestroyTexture(screen->fpsTexture);
+}

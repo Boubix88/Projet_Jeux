@@ -40,12 +40,27 @@ typedef struct screen_s
    SDL_Surface* flou;
    SDL_Texture* flouTexture;
 
+   SDL_Texture* menuGraphisme;
+   SDL_Texture* tresHautGraphisme;
+   SDL_Texture* hautGraphisme;
+   SDL_Texture* normalGraphisme;
+   SDL_Texture* basGraphisme;
+   SDL_Texture* tresBasGraphisme;
+
+
    SDL_Texture* murBriqueTexture;
+
+   SDL_Texture* murCellulePrison;
 
    SDL_Texture* robotTexture;
 
    TTF_Font* font;
 
+   SDL_Surface *textSurface;
+   SDL_Texture *text;
+
+   SDL_Surface *fpsSurface;
+   SDL_Texture *fpsTexture;
 
 }screen_t;
 

@@ -17,6 +17,8 @@ int main(void) {
         world.ancienPlayer_x = world.player_x; //Pour les collisions
         world.ancienPlayer_y = world.player_y;
         
+        printf("Valeur de l'angle : %f\n", world.angleSky);
+
         draw3DMapSdl(&screen, &world);
         handle_events(&event, &world, &screen);
         calculFPS(&world);
@@ -26,6 +28,8 @@ int main(void) {
 
     TTF_Quit();
     SDL_Quit();
+    destroyTextures(&screen);
+    SDL_DestroyRenderer(screen.renderer);
     SDL_DestroyWindow(screen.window);
     return EXIT_SUCCESS;
 }

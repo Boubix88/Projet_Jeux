@@ -22,17 +22,17 @@ void drawWalls(screen_t *screen, world_t* world){
   destRect.y = 586;
   destRect.w = 8;
   destRect.h = 8;
-
-  for (int i=0; i<16; i++){
+  
+  for (short i=0; i<16; i++){
     destRect.x += 8;
-    for (int j=0; j<16; j++){
-      if (world->map[j][i]=='1') {
+    for (short j=0; j<16; j++){
+      if (world->map[j][i] != ' ') {
         destRect.y = 586 + j*8;
         SDL_SetRenderDrawColor(screen->renderer, 0, 0, 0, 255);
         SDL_RenderFillRect(screen->renderer, &destRect);
       }
     }  
-  }    
+  }  
 }
 
 void drawPlayer(screen_t* screen, world_t* world){
@@ -48,7 +48,7 @@ void drawPlayer(screen_t* screen, world_t* world){
 }
 
 void drawFov(screen_t* screen, world_t* world){
-  for (int r=0; r<512; r++) { 
+  for (short r=0; r<512; r++) { 
     float angle = world->player_a - FOV/2 + FOV*r/512;      
   
     for (float t=0; t<20; t+=.05) {
@@ -70,7 +70,7 @@ void drawFov(screen_t* screen, world_t* world){
 
 void drawMonstre(screen_t* screen, world_t* world) {
   SDL_SetRenderDrawColor(screen->renderer, 255, 0, 0, 122);
-  for (int i = 0; i < 10; i++) {
+  for (short i = 0; i < 10; i++) {
       SDL_Rect destRect;
       destRect.w = 3;
       destRect.h = 3;
