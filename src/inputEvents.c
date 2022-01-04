@@ -45,6 +45,7 @@ void handle_events(SDL_Event *event, world_t *world, screen_t *screen){
                 }
                 //si la touche appuyée est 'Echap'
                 if (event->key.keysym.sym == SDLK_ESCAPE){
+                    SDL_ShowCursor(SDL_TRUE);
                     initialiserTexturesMenu(screen);
                     initialiserTexturesMenuGraphisme(screen);
                     apply_menu(screen);
@@ -102,6 +103,8 @@ void handle_events(SDL_Event *event, world_t *world, screen_t *screen){
             break;
         }
     }
+    SDL_ShowCursor(SDL_FALSE);
+
 }
 
 void testSourisPosition(SDL_Event* event, screen_t* screen,world_t* world){

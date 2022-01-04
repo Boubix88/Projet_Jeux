@@ -212,24 +212,12 @@ void drawMonstre3D(world_t* world, screen_t* screen,int k,float t, short r) {
 
         while (sprite_dir - world->player_a < -M_PI) sprite_dir += 2 * M_PI;
 
-        // distance from the player to the sprite
-       // float sprite_dist = std::sqrt(pow(player.x - sprite.x, 2) + pow(player.y - sprite.y, 2));
         float sprite_dist = t;
         int  sprite_screen_size = fmin(1000,(HEIGHT / sprite_dist));
-        // do not forget the 3D view takes only a half of the framebuffer, thus fb.w/2 for the screen width
         int h_offset = (sprite_dir - world->player_a) * (HEIGHT/2) / (FOV) + (HEIGHT/2)/2 - sprite_screen_size / 2;
-        //int h_offset = (sprite_dir - player.a) * (fb.w / 2) / (player.fov) + (fb.w / 2) / 2 - sprite_screen_size / 2;
-        //int h_offset = (sprite_dir - world->player_a) / FOV * (WIDTH) - sprite_screen_size;
-        //int h_offset = (sprite_dir - world->player_a) * (WIDTH/2) / (FOV + (WIDTH / 2)) /2 - sprite_screen_size / 2;
         int v_offset = HEIGHT/2 - sprite_screen_size/2 ;
-        //printf("Taille : %d\n", sprite_screen_size);
-        /**for (short i = 0; i < sprite_screen_size; i = i + 2)**/
         if (h_offset  > HEIGHT || h_offset <= WIDTH + 300) {
-          //if (h_offset + i < 0 || h_offset + i >= HEIGHT/2) continue;
-          /**for (short j = 0; j < sprite_screen_size; j = j + 2)**/
           if (v_offset < HEIGHT || v_offset >= 0) {
-            //if (v_offset + j < 0 || v_offset + j >= WIDTH) continue;
-            //SDL_RenderDrawLine(screen->renderer, i + h_offset, j + v_offset, h_offset+sprite_screen_size, v_offset + sprite_screen_size);
             SDL_Rect destRect;
             destRect.x = h_offset + r*2 - 100 - sprite_screen_size;
             destRect.y = v_offset + r/16 + sprite_screen_size/2;
