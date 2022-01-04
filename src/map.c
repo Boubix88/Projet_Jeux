@@ -2,20 +2,20 @@
 
 void createMap(world_t* world){
   char map[16][16] = {"1111111111111111",
-                      "1   11   11   11",
-                      "1   11   11   11",
+                      "1   1     1   11",
+                      "1   1     1   11",
                       "1121111211112111",
                       "6   5    4     1",
                       "11111111111111 1",
                       "1  5         1 6",
-                      "6  1   1 11221 1",
-                      "1    1       1 6",
-                      "111  1 1  1  141",
-                      "1      6 1   1 6",
-                      "1  1 1 1       1",
+                      "6  1     11221 1",
+                      "1            1 6",
+                      "1    1 1     141",
+                      "1      6     1 6",
+                      "1      1       1",
                       "1111   4   1   6",
                       "1    1  1 1  1 1",
-                      "3    11      1 6",
+                      "3    1       1 6",
                       "1111111116116161"}; 
                       
   for (short i = 0; i < 16; i++){
@@ -35,7 +35,7 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
   	for (short r=0; r<world->graphismeOptionRayon; r++) { 
   		float angle = world->player_a - FOV/2 + FOV*r/world->graphismeOptionRayon;      
       //Pour regler la fluidité des fps, modifier l'incrementation de t, .001 => 30 fps, .002 => 60 fps, .05 => 144 fps 
-        for (float t = 0; t < 20; t += world->graphismeOption) {
+        for (float t = 0; t < 16; t += world->graphismeOption) {
           float cx = world->player_x + t * cos(angle);
           float cy = world->player_y + t * sin(angle);
           for (int m = 0; m < world->difficulte; m++) {
@@ -46,7 +46,7 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
 
           if (world->map[(int)(cy)][(int)(cx)] != ' ' ) {
             int line_height = HEIGHT / t;
-            for (short i = 0; i < 16; i++) {
+            for (short i = 0; i <10; i++) {
               SDL_Rect srcRect;
               SDL_Rect destRect;
               float arrondcx = cx - floor(cx + .5);
@@ -102,11 +102,11 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
 
   if (world->ammoShooted) {
     SDL_SetRenderDrawColor(screen->renderer, 255, 0, 255, SDL_ALPHA_OPAQUE);
-    if (world->ammo.x >= SCREEN_WIDTH / 2 && world->ammo.y >= SCREEN_HEIGHT / 2) {
+    if (world->ammo.x >= SCREEN_WIDTH / 2 && world->ammo.y >= SCREEN_HEIGHT / 2 && world->fpsView == false) {
           drawAmmo(screen, world);
     }
-    world->ammo.x -= 20.4; //Defaut : 0.7
-    world->ammo.y -= 25.6; //Defaut : 0.8
+    world->ammo.x -= 20.4;
+    world->ammo.y -= 25.6;
     world->ammo.h -= 0.5;
      world->ammo.w -= 0.5;
      float angle = world->player_a - FOV / 2 + FOV * 256 / 512;
@@ -161,11 +161,7 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
 }
 
 void drawSky(screen_t* screen){
-  /** if (world->angleSky > .5) {
-    world->angleSky -= .5;
-  }else if (world->angleSky < -0.5){
-    world->angleSky += .5;
-  }**/
+
 
   SDL_Rect srcRect;
   SDL_Rect destRect;
@@ -182,21 +178,6 @@ void drawSky(screen_t* screen){
 
   SDL_RenderCopy(screen->renderer, screen->skyTexture, &srcRect, &destRect);
 
-  /*if (world->player_a*800 > 1280){
-  SDL_Rect srcRect1;
-  SDL_Rect destRect1;
-  
-  srcRect1.x = world->player_a*800 - 1280;
-  srcRect1.y = 0;
-  srcRect1.w = SCREEN_WIDTH-world->player_a*800;
-  srcRect1.h = SCREEN_HEIGHT/2;
-
-  destRect1.x = world->player_a*800 - 1280;
-  destRect1.y = 0;
-  destRect1.w = SCREEN_WIDTH-world->player_a*800;
-  destRect1.h = SCREEN_HEIGHT/2;
-  SDL_RenderCopy(screen->renderer, screen->skyTexture, &srcRect1, &destRect1);
-  }*/
 }
 
 void drawGround(screen_t* screen){

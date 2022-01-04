@@ -20,8 +20,7 @@ int main(void) {
     SDL_ShowCursor(SDL_FALSE);
 
     while (!world.exit) {
-        world.ancienPlayer_x = world.player_x; //Pour les collisions
-        world.ancienPlayer_y = world.player_y;
+        ancienCoord(&world);
         draw3DMapSdl(&screen, &world);
         handle_events(&event, &world, &screen);
         calculFPS(&world);

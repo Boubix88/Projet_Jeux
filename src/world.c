@@ -16,9 +16,9 @@ void intitialiserData(world_t* world){
     world->graphismeOptionRayon = 512;
     world->graphismeOptionWidth = 1;
     world->tonyMort = false;
-    world->fps_lasttime = SDL_GetTicks(); //Le dernier temps enregistré
-    world->fps_frames = 0; //Le nombre d'images depuis le dernier FPS
-    world->fps_current = 0; //Les FPS du moment
+    world->fps_lasttime = SDL_GetTicks(); 
+    world->fps_frames = 0; 
+    world->fps_current = 0; 
 
     world->ammo.x = 1280/2 + 70;
     world->ammo.y = 720/2 + 80;
@@ -26,7 +26,6 @@ void intitialiserData(world_t* world){
     world->ammo.h = AMMO_HEIGHT;
 
     world->ammoShooted = false;
-    world->angleSky = world->player_a;
     world->compteurNbreImpact = 0;
     world->difficulte = 0;
 }
@@ -58,11 +57,9 @@ void setMonstre(world_t* world) {
     srand(time(NULL));
 
     for (short i = 0; i < world->difficulte; i++){
-        //Initialisation des coordonnées à 0
         world->monstre[i].xMap = 0;
         world->monstre[i].yMap = 0;
         while (world->monstre[i].xMap == 0 || world->monstre[i].yMap == 0){
-            //Initialisation des coordonnées avec un random
             short random_x = rand() % 14 + 1;
             short random_y = rand() % 14 + 1;
             if (world->map[random_y][random_x] == ' '){
@@ -79,4 +76,11 @@ void ecrireScore(world_t* world) {
     f = fopen("score.txt", "w");
     fprintf(f,"%d", world->score);
     fclose(f);
+}
+
+
+
+void ancienCoord(world_t* world) {
+    world->ancienPlayer_x = world->player_x;
+    world->ancienPlayer_y = world->player_y;
 }

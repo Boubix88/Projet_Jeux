@@ -21,7 +21,6 @@ typedef struct world_s
 {
     float player_a;
     float angle;
-    float angleSky;
     float player_x;
     float player_y;
     float ancienPlayer_x;
@@ -42,10 +41,10 @@ typedef struct world_s
     float graphismeOption;
     short graphismeOptionRayon;
     short graphismeOptionWidth;
-
-    short fps_lasttime; //the last recorded time.
-    short fps_current; //the current FPS.
-    short fps_frames; //frames passed since the last recorded fps.
+    int  paquetrayon;
+    short fps_lasttime;
+    short fps_current; 
+    short fps_frames;
     int score;
     bool tonyMort;
     sprite_t monstre[MAX_SPRITE];
@@ -76,7 +75,6 @@ void deplacementGauche(world_t* world);
 void deplacementDroite(world_t* world);
 void avancerDirection(world_t* world);
 bool testMur(world_t* world);
-
 void applyMenuOption(screen_t* screen);
 void testSourisPosition(SDL_Event* event, screen_t* screen,world_t* world);
 void apply_menu(screen_t* screen);
@@ -109,5 +107,5 @@ void destroyTexturesMenuStart(screen_t* screen);
 void testSourisMenuStart(SDL_Event* event, screen_t* screen,world_t* world);
 void drawDifficulte(screen_t* screen, world_t* world);
 void testPositionSourisMenuStart(screen_t* screen, world_t* world);
-
+void ancienCoord(world_t* world);
 void ecrireScore(world_t* world);

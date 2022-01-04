@@ -68,6 +68,12 @@ void handle_events(SDL_Event *event, world_t *world, screen_t *screen){
                             }
                             SDL_RenderPresent(screen->renderer);
                         }else if(world->fpsView){
+                            if (!world->ammoShooted) {
+                                world->ammoShooted = true;
+                                world->ammo.direction = 0;
+                                world->ammo.xMap = world->player_x;
+                                world->ammo.yMap = world->player_y;
+                            }
                             applyTirPistoletFps(screen);
                             SDL_RenderPresent(screen->renderer);
                         }
@@ -86,12 +92,10 @@ void handle_events(SDL_Event *event, world_t *world, screen_t *screen){
 
             case SDL_MOUSEMOTION :
                 if (event->motion.xrel > 0){
-                    world->player_a += .005;
-                    world->angleSky += .005;
+                    world->player_a += .007;
                 }
                 else{
-                    world->player_a -= .005;
-                    world->angleSky -= .005;
+                    world->player_a -= .007;
                 }
                 world->angle = world->player_a;
                 avancerDirection(world);

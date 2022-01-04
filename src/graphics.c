@@ -401,12 +401,12 @@ void applyViseeFpsPistolet(screen_t* screen){
     SDL_Rect srcRect1;
     SDL_Rect destRect1;
 
-    srcRect1.x = 175;  // Image 2
+    srcRect1.x = 175;  
     srcRect1.y = 373;
     srcRect1.w = 152;
     srcRect1.h = 155;
 
-    destRect1.x = 1280/2 - 163; // Image 2
+    destRect1.x = 1280/2 - 163; 
     destRect1.y = 720-385;
     destRect1.w = 380;
     destRect1.h = 387;
