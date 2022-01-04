@@ -50,6 +50,9 @@ typedef struct screen_s
 
    SDL_Texture* murBriqueTexture;
 
+   SDL_Texture* exitDoorTexture;
+   SDL_Texture*	barreauPorteTexture;
+
    SDL_Texture* murCellulePrison;
 
    SDL_Texture* robotTexture;

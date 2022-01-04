@@ -6,8 +6,8 @@ void intitialiserData(world_t* world){
     setMonstre(world);
 
     world->player_a = 1.8;
-    world->player_x = 5;
-    world->player_y = 6;
+    world->player_x = 2;
+    world->player_y = 2;
     world->exit = false;
     world->graphisme = false;
     world->graphismeOption = .002;

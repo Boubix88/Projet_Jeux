@@ -34,6 +34,7 @@ typedef struct world_s
     bool fpsView;
     bool ammoShooted;
     bool graphisme;
+    int compteurNbreImpact;
 
     float graphismeOption;
     short graphismeOptionRayon;
@@ -94,4 +95,8 @@ void initialiserTexturesMenuGraphisme(screen_t* screen);
 void applyMenuGraphisme(screen_t* screen);
 void applyMenuGraphismeOption(screen_t* screen);
 void destroyTextures(screen_t* screen);
+void drawExplosion(screen_t* screen, world_t* world);
+
+
+
 void ecrireScore(world_t* world);

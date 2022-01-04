@@ -4,19 +4,19 @@ void createMap(world_t* world){
   char map[16][16] = {"1111111111111111",
                       "1   11   11   11",
                       "1   11   11   11",
-                      "11 1111 1111 111",
+                      "1121111211112111",
                       "1              1",
-                      "11111111111111 2",
+                      "11111111111111 1",
                       "1  1         1 1",
-                      "1  1   1 11  1 2",
+                      "1  1   1 11  1 1",
                       "1    1       1 1",
-                      "111  1 1  1  1 2",
+                      "111  1 1  1  1 1",
                       "1      1 1   1 1",
-                      "1  1 1 1       2",
-                      "1  1       1   1",
-                      "1    1  1 1  1 2",
-                      "1     1      1 1",
-                      "1111111111111121"}; 
+                      "1  1 1 1       1",
+                      "1111       1   1",
+                      "1    1  1 1  1 1",
+                      "3    11      1 1",
+                      "1111111111111111"}; 
                       
   for (short i = 0; i < 16; i++){
     for (short j = 0; j < 16; j++){
@@ -40,12 +40,12 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
           float cy = world->player_y + t * sin(angle);
           //world->monstre[1].x = 8.1;
           //world->monstre[1].y = 9.4;
-          for (int m = 0; m < DIFFICULTE; m++) {
+          /** for (int m = 0; m < DIFFICULTE; m++) {
               if ((cx <= world->monstre[m].x + 0.01 && cx >= world->monstre[m].x - 0.01) && (cy <= world->monstre[m].y + 0.01 && cy >= world->monstre[m].y - 0.01)) {
                   drawMonstre3D(world, screen,m, t);
               }
 
-          }
+          }**/
 
           if (world->map[(int)(cy)][(int)(cx)] != ' ') {
             int line_height = HEIGHT / t;
@@ -69,8 +69,12 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
                 SDL_RenderCopy(screen->renderer, screen->murBriqueTexture, &srcRect, &destRect);
               }else if (world->map[(int)(cy)][(int)(cx)] == '2') {
                 srcRect.w = WALL_SIZE/2;
-                SDL_RenderCopy(screen->renderer, screen->murCellulePrison, &srcRect, &destRect);
+                SDL_RenderCopy(screen->renderer, screen->barreauPorteTexture, &srcRect, &destRect);
               }
+             else if (world->map[(int)(cy)][(int)(cx)] == '3') {
+              srcRect.w = WALL_SIZE / 2;
+              SDL_RenderCopy(screen->renderer, screen->exitDoorTexture, &srcRect, &destRect);
+             }
             }
             break;
           }
@@ -87,30 +91,43 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
     applyViseeFpsPistolet(screen);
   }
 
-  if (world->ammoShooted){
-    drawAmmo(screen, world);
-    world->ammo.x -= 5.6; //Defaut : 0.7
-    world->ammo.y -= 6.4; //Defaut : 0.8
+  if (world->ammoShooted) {
+    SDL_SetRenderDrawColor(screen->renderer, 255, 0, 255, SDL_ALPHA_OPAQUE);
+    if (world->ammo.x >= SCREEN_WIDTH / 2 && world->ammo.y >= SCREEN_HEIGHT / 2) {
+          drawAmmo(screen, world);
+    }
+    world->ammo.x -= 20.4; //Defaut : 0.7
+    world->ammo.y -= 25.6; //Defaut : 0.8
     world->ammo.h -= 0.5;
-    world->ammo.w -= 0.5;
+     world->ammo.w -= 0.5;
+     float angle = world->player_a - FOV / 2 + FOV * 256 / 512;
+     float cx = world->player_x + world->ammo.direction * cos(angle);
+     float cy = world->player_y + world->ammo.direction * sin(angle);
 
-    float cx = world->ammo.xMap + world->ammo.direction*cos(world->player_a);
-    float cy = world->ammo.yMap + world->ammo.direction*sin(world->player_a);
-
-    if (world->map[(int)cy][(int)cx]=='1'){
+    if (world->map[(int)cy][(int)cx]=='1' || world->map[(int)cy][(int)cx] == '2'){
       world->ammoShooted = false;
       world->ammo.x = SCREEN_WIDTH/2 + 70;
       world->ammo.y = SCREEN_HEIGHT/2 + 80;
       world->ammo.w = AMMO_WIDTH;
       world->ammo.h = AMMO_HEIGHT;
+      if(world->map[(int)cy][(int)cx] == '2'){
+
+      world->map[(int)cy][(int)cx] = ' ';
+      }
+
     }
       
     world->ammo.xMap += cx/32;
     world->ammo.yMap += cy/32;
     world->ammo.direction += 0.5;
     SDL_RenderDrawLine(screen->renderer, 8 + world->player_x*8 , 586 + world->player_y*8, 8 + cx*8, 586 + cy*8);
-  }
 
+  }
+  drawExplosion(screen, world);
+  //world->map[(int)world->ammo.yMap][(int)world->ammo.yMap] = ' ';
+  if (world->compteurNbreImpact == 4) {
+      world->compteurNbreImpact = 0;
+  }
 	SDL_RenderPresent(screen->renderer);
 }
 
