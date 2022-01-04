@@ -8,12 +8,13 @@ void intitialiserData(world_t* world){
     world->player_a = 1.8;
     world->player_x = 2;
     world->player_y = 2;
+    world->score = 0;
     world->exit = false;
     world->graphisme = false;
     world->graphismeOption = .002;
     world->graphismeOptionRayon = 512;
     world->graphismeOptionWidth = 1;
-
+    world->tonyMort = false;
     world->fps_lasttime = SDL_GetTicks(); //Le dernier temps enregistré
     world->fps_frames = 0; //Le nombre d'images depuis le dernier FPS
     world->fps_current = 0; //Les FPS du moment
@@ -72,7 +73,6 @@ void setMonstre(world_t* world) {
 
 
 void ecrireScore(world_t* world) {
-    world->score = 345;
     FILE* f;
     f = fopen("score.txt", "w");
     fprintf(f,"%d", world->score);

@@ -35,6 +35,24 @@ void initialiserTexture(screen_t* screen){
     SDL_FreeSurface(barreauPorte);
 
 
+    SDL_Surface* policierGarde = SDL_LoadBMP("../ressources/policierGarde.bmp");
+    if (policierGarde == NULL) {
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->policierGardeTexture = SDL_CreateTextureFromSurface(screen->renderer, policierGarde);
+    SDL_FreeSurface(policierGarde);
+
+
+
+
+
+    SDL_Surface* tonyLeMechant = SDL_LoadBMP("../ressources/tonyLeMechant.bmp");
+    if (tonyLeMechant == NULL) {
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->tonyLeMechantTexture = SDL_CreateTextureFromSurface(screen->renderer, tonyLeMechant);
+    SDL_FreeSurface(tonyLeMechant);
+
 
 
 
@@ -440,5 +458,7 @@ void destroyTextures(screen_t* screen){
     SDL_DestroyTexture(screen->impactAmmoTexture);
     SDL_DestroyTexture(screen->exitDoorTexture);
     SDL_DestroyTexture(screen->barreauPorteTexture);
+    SDL_DestroyTexture(screen->policierGardeTexture);
+    SDL_DestroyTexture(screen->tonyLeMechantTexture);
     
 }

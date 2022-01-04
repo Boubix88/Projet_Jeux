@@ -44,6 +44,7 @@ typedef struct world_s
     short fps_current; //the current FPS.
     short fps_frames; //frames passed since the last recorded fps.
     int score;
+    bool tonyMort;
     sprite_t monstre[DIFFICULTE];
     sprite_t ammo;
 

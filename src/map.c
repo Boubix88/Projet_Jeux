@@ -5,18 +5,18 @@ void createMap(world_t* world){
                       "1   11   11   11",
                       "1   11   11   11",
                       "1121111211112111",
-                      "1              1",
+                      "6        4     1",
                       "11111111111111 1",
-                      "1  1         1 1",
-                      "1  1   1 11  1 1",
-                      "1    1       1 1",
-                      "111  1 1  1  1 1",
-                      "1      1 1   1 1",
+                      "1  1 5       1 6",
+                      "6  1   1 11  1 1",
+                      "1    1       1 6",
+                      "111  1 1  1  141",
+                      "1      6 1   1 6",
                       "1  1 1 1       1",
-                      "1111       1   1",
+                      "1111   4   1   6",
                       "1    1  1 1  1 1",
-                      "3    11      1 1",
-                      "1111111111111111"}; 
+                      "3    11      1 6",
+                      "1111111116116161"}; 
                       
   for (short i = 0; i < 16; i++){
     for (short j = 0; j < 16; j++){
@@ -71,11 +71,23 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
                 srcRect.w = WALL_SIZE/2;
                 SDL_RenderCopy(screen->renderer, screen->barreauPorteTexture, &srcRect, &destRect);
               }
-             else if (world->map[(int)(cy)][(int)(cx)] == '3') {
-              srcRect.w = WALL_SIZE / 2;
-              SDL_RenderCopy(screen->renderer, screen->exitDoorTexture, &srcRect, &destRect);
-             }
-            }
+              else if (world->map[(int)(cy)][(int)(cx)] == '3') {
+                srcRect.w = WALL_SIZE / 2;
+                SDL_RenderCopy(screen->renderer, screen->exitDoorTexture, &srcRect, &destRect);
+               }
+              else if (world->map[(int)(cy)][(int)(cx)] == '4') {
+                  srcRect.w = WALL_SIZE / 2;
+                  SDL_RenderCopy(screen->renderer, screen->policierGardeTexture, &srcRect, &destRect);
+              }
+              else if (world->map[(int)(cy)][(int)(cx)] == '5') {
+                    srcRect.w = WALL_SIZE/2;
+                    SDL_RenderCopy(screen->renderer, screen->tonyLeMechantTexture, &srcRect, &destRect);
+              }
+              else if (world->map[(int)(cy)][(int)(cx)] == '6') {
+                  srcRect.w = WALL_SIZE / 2;
+                  SDL_RenderCopy(screen->renderer, screen->murCellulePrison, &srcRect, &destRect);
+              }
+              }
             break;
           }
         }
@@ -104,18 +116,31 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
      float cx = world->player_x + world->ammo.direction * cos(angle);
      float cy = world->player_y + world->ammo.direction * sin(angle);
 
-    if (world->map[(int)cy][(int)cx]=='1' || world->map[(int)cy][(int)cx] == '2'){
-      world->ammoShooted = false;
-      world->ammo.x = SCREEN_WIDTH/2 + 70;
-      world->ammo.y = SCREEN_HEIGHT/2 + 80;
-      world->ammo.w = AMMO_WIDTH;
-      world->ammo.h = AMMO_HEIGHT;
-      if(world->map[(int)cy][(int)cx] == '2'){
+     if (world->map[(int)cy][(int)cx] == '1' || world->map[(int)cy][(int)cx] == '2' || world->map[(int)cy][(int)cx] == '4' || world->map[(int)cy][(int)cx] == '5') {
+         world->ammoShooted = false;
+         world->ammo.x = SCREEN_WIDTH / 2 + 70;
+         world->ammo.y = SCREEN_HEIGHT / 2 + 80;
+         world->ammo.w = AMMO_WIDTH;
+         world->ammo.h = AMMO_HEIGHT;
+     }
 
-      world->map[(int)cy][(int)cx] = ' ';
+      if(world->map[(int)cy][(int)cx] == '2'){
+        world->map[(int)cy][(int)cx] = ' ';
       }
 
-    }
+      if (world->map[(int)cy][(int)cx] == '4') {
+          world->map[(int)cy][(int)cx] = ' ';
+          world->score = world->score + 1;
+      }
+
+      if (world->map[(int)cy][(int)cx] == '5') {
+          world->score = world->score + 5;
+          world->map[(int)cy][(int)cx] = ' ';
+          world->tonyMort = true;
+      }
+      if (world->map[(int)cy][(int)cx] == '3' && world->tonyMort == true) {
+          world->exit = true;
+      }
       
     world->ammo.xMap += cx/32;
     world->ammo.yMap += cy/32;
