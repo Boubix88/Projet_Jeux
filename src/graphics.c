@@ -428,19 +428,6 @@ void drawExplosion(screen_t* screen, world_t* world) {
 }
 
 void destroyTextures(screen_t* screen){
-    SDL_DestroyTexture(screen->menuTexture);
-    SDL_DestroyTexture(screen->continuerTexture);
-    SDL_DestroyTexture(screen->graphismesTexture);
-    SDL_DestroyTexture(screen->quitterTexture);
-    SDL_DestroyTexture(screen->flouTexture);
-
-    SDL_DestroyTexture(screen->menuGraphisme);
-    SDL_DestroyTexture(screen->tresHautGraphisme);
-    SDL_DestroyTexture(screen->hautGraphisme);
-    SDL_DestroyTexture(screen->normalGraphisme);
-    SDL_DestroyTexture(screen->basGraphisme);
-    SDL_DestroyTexture(screen->tresBasGraphisme);
-
     SDL_DestroyTexture(screen->text);
     SDL_DestroyTexture(screen->fpsTexture);
 

@@ -34,6 +34,7 @@ typedef struct world_s
     bool fpsView;
     bool ammoShooted;
     bool graphisme;
+    bool objectif;
     int compteurNbreImpact;
 
     float graphismeOption;

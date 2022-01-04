@@ -10,6 +10,7 @@ void intitialiserData(world_t* world){
     world->player_y = 2;
     world->score = 0;
     world->exit = false;
+    world->objectif = false;
     world->graphisme = false;
     world->graphismeOption = .002;
     world->graphismeOptionRayon = 512;

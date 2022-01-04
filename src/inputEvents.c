@@ -20,6 +20,10 @@ void handle_events(SDL_Event *event, world_t *world, screen_t *screen){
                     world->angle -= M_PI / 2;
                     avancerDirection(world);
                 }
+                if (event->key.keysym.sym == SDLK_l && world->tonyMort && world->objectif) {
+                    world->exit = true;
+                }
+
                 //si la touche appuyée est 'Q'
                 if (event->key.keysym.sym == SDLK_q || event->key.keysym.sym ==SDLK_LEFT){
                     world->angle += M_PI / 2;

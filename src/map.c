@@ -5,10 +5,10 @@ void createMap(world_t* world){
                       "1   11   11   11",
                       "1   11   11   11",
                       "1121111211112111",
-                      "6        4     1",
+                      "6   5    4     1",
                       "11111111111111 1",
-                      "1  1 5       1 6",
-                      "6  1   1 11  1 1",
+                      "1  5         1 6",
+                      "6  1   1 11221 1",
                       "1    1       1 6",
                       "111  1 1  1  141",
                       "1      6 1   1 6",
@@ -46,7 +46,7 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
             }
           }
 
-          if (world->map[(int)(cy)][(int)(cx)] != ' ') {
+          if (world->map[(int)(cy)][(int)(cx)] != ' ' ) {
             int line_height = HEIGHT / t;
             for (short i = 0; i < 16; i++) {
               SDL_Rect srcRect;
@@ -115,7 +115,7 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
      float cx = world->player_x + world->ammo.direction * cos(angle);
      float cy = world->player_y + world->ammo.direction * sin(angle);
 
-     if (world->map[(int)cy][(int)cx] == '1' || world->map[(int)cy][(int)cx] == '2' || world->map[(int)cy][(int)cx] == '4' || world->map[(int)cy][(int)cx] == '5') {
+     if (world->map[(int)cy][(int)cx] == '1' || world->map[(int)cy][(int)cx] == '2' || world->map[(int)cy][(int)cx] == '4' || world->map[(int)cy][(int)cx] == '5' || world->map[(int)cy][(int)cx] == '6') {
          world->ammoShooted = false;
          world->ammo.x = SCREEN_WIDTH / 2 + 70;
          world->ammo.y = SCREEN_HEIGHT / 2 + 80;
@@ -125,11 +125,12 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
 
       if(world->map[(int)cy][(int)cx] == '2'){
         world->map[(int)cy][(int)cx] = ' ';
+        world->score = world->score + 1;
       }
 
       if (world->map[(int)cy][(int)cx] == '4') {
           world->map[(int)cy][(int)cx] = ' ';
-          world->score = world->score + 1;
+          world->score = world->score + 2;
       }
 
       if (world->map[(int)cy][(int)cx] == '5') {
@@ -138,13 +139,13 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
           world->tonyMort = true;
       }
       if (world->map[(int)cy][(int)cx] == '3' && world->tonyMort == true) {
-          world->exit = true;
+          world->objectif = true;
       }
       for (int i = 0; i < DIFFICULTE; i++){
-      printf("X : %f  Y : %f\n", world->monstre[i].xMap, world->monstre[i].yMap);
       if (cx >= world->monstre[i].xMap - 1 && cx <= world->monstre[i].xMap + 1 && cy >= world->monstre[i].yMap - 1 && cy <= world->monstre[i].yMap + 1){
-        world->monstre[i].xMap = 0;
-        world->monstre[i].yMap = 0;
+        world->monstre[i].xMap = 20;
+        world->monstre[i].yMap = 20;
+        world->score = world->score +3;
       }
     }
       
@@ -162,21 +163,21 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
 }
 
 void drawSky(screen_t* screen, world_t* world){
-  if (world->angleSky > .5){
+  /** if (world->angleSky > .5) {
     world->angleSky -= .5;
   }else if (world->angleSky < -0.5){
     world->angleSky += .5;
-  }
+  }**/
 
   SDL_Rect srcRect;
   SDL_Rect destRect;
   
-  srcRect.x = world->angleSky*800;
+  srcRect.x = 0;
   srcRect.y = 0;
   srcRect.w = SCREEN_WIDTH;
   srcRect.h = SCREEN_HEIGHT/2;
 
-  destRect.x = world->angleSky*800;
+  destRect.x = 0;
   destRect.y = 0;
   destRect.w = SCREEN_WIDTH;
   destRect.h = SCREEN_HEIGHT/2;
