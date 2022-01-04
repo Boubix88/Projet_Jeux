@@ -81,7 +81,6 @@ void handle_events(SDL_Event *event, world_t *world, screen_t *screen){
                     break;
 
                     case SDL_BUTTON_RIGHT:
-                        //applyViseeFpsPistolet(screen);
                         if (world->fpsView){
                             world->fpsView = false;
                         }else {
