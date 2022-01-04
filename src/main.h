@@ -58,7 +58,7 @@ void handle_events(SDL_Event *event, world_t *world, screen_t *screen);
 
 void draw3DMapSdl(screen_t* screen, world_t *world);
 void map(screen_t* screen, world_t *world);
-void drawSky(screen_t* screen, world_t* world);
+void drawSky(screen_t* screen);
 void drawGround(screen_t* screen);
 void calculFPS(world_t* world);
 void drawFPS(world_t* world, screen_t* screen);

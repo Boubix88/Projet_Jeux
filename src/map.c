@@ -28,7 +28,7 @@ void createMap(world_t* world){
 void draw3DMapSdl(screen_t* screen, world_t *world){
    SDL_SetRenderDrawColor(screen->renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
   SDL_RenderClear(screen->renderer);
-  drawSky(screen, world);
+  drawSky(screen);
   drawGround(screen);
 
 	//SDL_SetRenderDrawColor(screen->renderer, 0, 200, 255, SDL_ALPHA_OPAQUE);
@@ -162,7 +162,7 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
 	SDL_RenderPresent(screen->renderer);
 }
 
-void drawSky(screen_t* screen, world_t* world){
+void drawSky(screen_t* screen){
   /** if (world->angleSky > .5) {
     world->angleSky -= .5;
   }else if (world->angleSky < -0.5){
