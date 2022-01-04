@@ -36,6 +36,8 @@ typedef struct world_s
     bool graphisme;
     bool objectif;
     int compteurNbreImpact;
+    short difficulte;
+    bool continuer;
 
     float graphismeOption;
     short graphismeOptionRayon;
@@ -46,7 +48,7 @@ typedef struct world_s
     short fps_frames; //frames passed since the last recorded fps.
     int score;
     bool tonyMort;
-    sprite_t monstre[DIFFICULTE];
+    sprite_t monstre[MAX_SPRITE];
     sprite_t ammo;
 
 }world_t;
@@ -98,7 +100,14 @@ void applyMenuGraphisme(screen_t* screen);
 void applyMenuGraphismeOption(screen_t* screen);
 void destroyTextures(screen_t* screen);
 void drawExplosion(screen_t* screen, world_t* world);
-
-
+void initialiserTextureMenuStart(screen_t* screen);
+void applyMenuStart(screen_t* screen);
+void applyStart(screen_t* screen);
+void applyMoins(screen_t* screen);
+void applyPlus(screen_t* screen);
+void destroyTexturesMenuStart(screen_t* screen);
+void testSourisMenuStart(SDL_Event* event, screen_t* screen,world_t* world);
+void drawDifficulte(screen_t* screen, world_t* world);
+void testPositionSourisMenuStart(screen_t* screen, world_t* world);
 
 void ecrireScore(world_t* world);

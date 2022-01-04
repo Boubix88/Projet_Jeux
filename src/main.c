@@ -10,6 +10,12 @@ int main(void) {
     Init_Screen(&screen);
     initialiserTexture(&screen);
     intitialiserData(&world);
+    initialiserTextureMenuStart(&screen);
+    SDL_Delay(100);
+
+    testSourisMenuStart(&event, &screen, &world);
+    setMonstre(&world);
+    destroyTexturesMenuStart(&screen);
 
     SDL_ShowCursor(SDL_FALSE);
 
@@ -22,6 +28,7 @@ int main(void) {
         testCollision(&world);
         SDL_WarpMouseInWindow(screen.window, 1280 / 2, 720 / 2);
     }
+
     ecrireScore(&world);
     TTF_Quit();
     SDL_Quit();

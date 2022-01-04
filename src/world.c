@@ -3,13 +3,13 @@
 #include <unistd.h>
 void intitialiserData(world_t* world){
     createMap(world);
-    setMonstre(world);
 
     world->player_a = 1.8;
     world->player_x = 2;
     world->player_y = 2;
     world->score = 0;
     world->exit = false;
+    world->continuer = false;
     world->objectif = false;
     world->graphisme = false;
     world->graphismeOption = .002;
@@ -28,6 +28,7 @@ void intitialiserData(world_t* world){
     world->ammoShooted = false;
     world->angleSky = world->player_a;
     world->compteurNbreImpact = 0;
+    world->difficulte = 0;
 }
 
 void calculFPS(world_t* world){
@@ -56,7 +57,7 @@ void testCollision(world_t* world){
 void setMonstre(world_t* world) {
     srand(time(NULL));
 
-    for (short i = 0; i < DIFFICULTE; i++){
+    for (short i = 0; i < world->difficulte; i++){
         //Initialisation des coordonnées à 0
         world->monstre[i].xMap = 0;
         world->monstre[i].yMap = 0;

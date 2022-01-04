@@ -166,3 +166,65 @@ void testSourisPosition(SDL_Event* event, screen_t* screen,world_t* world){
 
     }
 }
+
+void testSourisMenuStart(SDL_Event* event, screen_t* screen, world_t* world){
+    int x, y;
+    applyMenuStart(screen);
+    while (!world->continuer){
+        //Applique les couleurs des options selon la position de la souris
+        testPositionSourisMenuStart(screen, world);
+
+        while(SDL_PollEvent(event)){
+            switch(event->type) {
+                case SDL_MOUSEBUTTONDOWN :
+                    SDL_GetMouseState(&x, &y);
+                    if (x >= 393 && x <= 447 && y >= 325 && y <= 401){
+                        //Moins -
+                        if (world->difficulte != 0){
+                            world->difficulte --;
+                        }
+                    }
+                    if (x >= 839 && x <= 892 && y >= 325 && y <= 401){
+                        //Plus +
+                        if (world->difficulte < MAX_SPRITE){
+                            world->difficulte ++;
+                        }
+                    }
+                    else if (x >= 503 && x <= 756 && y >= 486 && y <= 578){
+                        //Start
+                        world->continuer = true;
+                    }
+                break;
+
+                case SDL_KEYDOWN :
+                    //si la touche appuyée est 'Echap'
+                    if (event->key.keysym.sym == SDLK_ESCAPE){
+                        world->continuer = true;
+                        world->exit = true;
+                    }
+                break;
+            }
+        }
+    }
+}
+
+void testPositionSourisMenuStart(screen_t* screen, world_t* world){
+    int x, y;
+    SDL_GetMouseState(&x, &y);
+    SDL_RenderClear(screen->renderer);
+    applyMenuStart(screen);
+    if (x >= 393 && x <= 447 && y >= 325 && y <= 401){
+        //Moins -}
+        applyMoins(screen);
+    }
+    if (x >= 839 && x <= 892 && y >= 325 && y <= 401){
+        //Plus +
+        applyPlus(screen);
+    }
+    else if (x >= 503 && x <= 756 && y >= 486 && y <= 578){
+        //Start
+        applyStart(screen);
+    }
+    drawDifficulte(screen, world);
+    SDL_RenderPresent(screen->renderer);
+}

@@ -189,6 +189,35 @@ void initialiserTexturesMenuGraphisme(screen_t* screen){
     SDL_FreeSurface(tres_bas); 
 }
 
+void initialiserTextureMenuStart(screen_t* screen){
+    SDL_Surface* menu = SDL_LoadBMP("../ressources/start_menu.bmp");
+    if (menu == NULL){
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->menuStartTexture = SDL_CreateTextureFromSurface(screen->renderer, menu);
+    SDL_FreeSurface(menu); 
+
+    SDL_Surface* start = SDL_LoadBMP("../ressources/start.bmp");
+    if (start == NULL){
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->startTexture = SDL_CreateTextureFromSurface(screen->renderer, start);
+    SDL_FreeSurface(start); 
+
+    SDL_Surface* moins = SDL_LoadBMP("../ressources/moins.bmp");
+    if (moins == NULL){
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->moinsTexture = SDL_CreateTextureFromSurface(screen->renderer, moins);
+    SDL_FreeSurface(moins); 
+
+    SDL_Surface* plus = SDL_LoadBMP("../ressources/plus.bmp");
+    if (plus == NULL){
+        printf("Erreur SDL2 : %s", SDL_GetError());
+    }
+    screen->plusTexture = SDL_CreateTextureFromSurface(screen->renderer, plus);
+    SDL_FreeSurface(plus);
+}
 
 void destroyTexturesMenu(screen_t* screen){
     SDL_DestroyTexture(screen->menuTexture);
@@ -427,6 +456,71 @@ void drawExplosion(screen_t* screen, world_t* world) {
     }
 }
 
+void applyMenuStart(screen_t* screen){
+    SDL_RenderCopy(screen->renderer, screen->menuStartTexture, NULL, NULL);
+}
+
+void drawDifficulte(screen_t* screen, world_t* world){
+    SDL_Color color = {255, 0, 100, 255};
+    SDL_Rect textRect;
+
+    textRect.x = SCREEN_WIDTH/2 - 50/2 ;
+    textRect.y = SCREEN_HEIGHT/2 - 100;
+    textRect.h = 70;
+    textRect.w = 40;
+
+    char difficulte[3];
+    sprintf(difficulte,"%d", world->difficulte);
+
+    SDL_Surface* text = TTF_RenderText_Solid(screen->font, difficulte, color);
+    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(screen->renderer, text);
+
+    SDL_RenderCopy(screen->renderer, textTexture, NULL, &textRect);
+
+    SDL_FreeSurface(text);
+    SDL_DestroyTexture(textTexture);
+}
+
+void applyStart(screen_t* screen){
+    SDL_Rect destRect;
+
+    destRect.x = 505;
+    destRect.y = 488;
+    destRect.w = 250;
+    destRect.h = 90;
+
+    SDL_RenderCopy(screen->renderer, screen->startTexture, NULL, &destRect);
+}
+
+void applyMoins(screen_t* screen){
+    SDL_Rect destRect;
+
+    destRect.x = 414;
+    destRect.y = 360;
+    destRect.w = 24;
+    destRect.h = 8;
+
+    SDL_RenderCopy(screen->renderer, screen->moinsTexture, NULL, &destRect);
+}
+
+void applyPlus(screen_t* screen){
+    SDL_Rect destRect;
+
+    destRect.x = 849;
+    destRect.y = 352;
+    destRect.w = 27;
+    destRect.h = 25;
+
+    SDL_RenderCopy(screen->renderer, screen->plusTexture, NULL, &destRect);
+}
+
+void destroyTexturesMenuStart(screen_t* screen){
+    SDL_DestroyTexture(screen->menuStartTexture);
+    SDL_DestroyTexture(screen->startTexture);
+    SDL_DestroyTexture(screen->moinsTexture);
+    SDL_DestroyTexture(screen->plusTexture);
+}
+
 void destroyTextures(screen_t* screen){
     SDL_DestroyTexture(screen->text);
     SDL_DestroyTexture(screen->fpsTexture);
@@ -440,8 +534,6 @@ void destroyTextures(screen_t* screen){
     SDL_DestroyTexture(screen->murBriqueTexture);
     SDL_DestroyTexture(screen->murCellulePrison);
     SDL_DestroyTexture(screen->robotTexture);
-    SDL_DestroyTexture(screen->text);
-    SDL_DestroyTexture(screen->fpsTexture);
     SDL_DestroyTexture(screen->impactAmmoTexture);
     SDL_DestroyTexture(screen->exitDoorTexture);
     SDL_DestroyTexture(screen->barreauPorteTexture);

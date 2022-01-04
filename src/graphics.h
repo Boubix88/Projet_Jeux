@@ -11,6 +11,11 @@ typedef struct screen_s
    SDL_Window *window;
    SDL_Renderer *renderer;
    SDL_Surface* icon;
+
+   SDL_Texture* menuStartTexture;
+   SDL_Texture* plusTexture;
+   SDL_Texture* moinsTexture;
+   SDL_Texture* startTexture;
    
    SDL_Surface* sky;
    SDL_Texture* skyTexture;

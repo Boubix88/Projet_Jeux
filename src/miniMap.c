@@ -67,7 +67,7 @@ void drawFov(screen_t* screen, world_t* world){
 
 void drawMonstre(screen_t* screen, world_t* world) {
   SDL_SetRenderDrawColor(screen->renderer, 255, 0, 0, 122);
-  for (short i = 0; i < DIFFICULTE; i++) {
+  for (short i = 0; i < world->difficulte; i++) {
       SDL_Rect destRect;
       destRect.w = 3;
       destRect.h = 3;

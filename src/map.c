@@ -38,9 +38,7 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
         for (float t = 0; t < 20; t += world->graphismeOption) {
           float cx = world->player_x + t * cos(angle);
           float cy = world->player_y + t * sin(angle);
-          //world->monstre[1].x = 8.1;
-          //world->monstre[1].y = 9.4;
-          for (int m = 0; m < DIFFICULTE; m++) {
+          for (int m = 0; m < world->difficulte; m++) {
             if ((cx <= world->monstre[m].xMap + 0.01 && cx >= world->monstre[m].xMap - 0.01) && (cy <= world->monstre[m].yMap + 0.01 && cy >= world->monstre[m].yMap - 0.01)) {
               drawMonstre3D(world, screen,m, t, r);
             }
@@ -141,7 +139,7 @@ void draw3DMapSdl(screen_t* screen, world_t *world){
       if (world->map[(int)cy][(int)cx] == '3' && world->tonyMort == true) {
           world->objectif = true;
       }
-      for (int i = 0; i < DIFFICULTE; i++){
+      for (int i = 0; i < world->difficulte; i++){
       if (cx >= world->monstre[i].xMap - 1 && cx <= world->monstre[i].xMap + 1 && cy >= world->monstre[i].yMap - 1 && cy <= world->monstre[i].yMap + 1){
         world->monstre[i].xMap = 20;
         world->monstre[i].yMap = 20;
