@@ -57,15 +57,15 @@ void setMonstre(world_t* world) {
 
     for (short i = 0; i < DIFFICULTE; i++){
         //Initialisation des coordonnées à 0
-        world->monstre[i].x = 0;
-        world->monstre[i].y = 0;
-        while (world->monstre[i].x == 0 || world->monstre[i].y == 0){
+        world->monstre[i].xMap = 0;
+        world->monstre[i].yMap = 0;
+        while (world->monstre[i].xMap == 0 || world->monstre[i].yMap == 0){
             //Initialisation des coordonnées avec un random
             short random_x = rand() % 14 + 1;
             short random_y = rand() % 14 + 1;
             if (world->map[random_y][random_x] == ' '){
-                world->monstre[i].x = random_x ;
-                world->monstre[i].y = random_y ;
+                world->monstre[i].xMap = random_x ;
+                world->monstre[i].yMap = random_y ;
             }
         }
     }

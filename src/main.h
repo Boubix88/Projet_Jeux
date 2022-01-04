@@ -90,7 +90,7 @@ void applyViseeFpsPistolet(screen_t* screen);
 void applyTirPistoletFps(screen_t* screen);
 void setMonstre(world_t* world);
 void drawMonstre(screen_t* screen,world_t* world);
-void drawMonstre3D(world_t* world, screen_t* screen,int k,float t);
+void drawMonstre3D(world_t* world, screen_t* screen,int k,float t, short r);
 void drawAmmo(screen_t* screen, world_t* world);
 void initialiserTexturesMenuGraphisme(screen_t* screen);
 void applyMenuGraphisme(screen_t* screen);

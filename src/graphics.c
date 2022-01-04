@@ -460,5 +460,4 @@ void destroyTextures(screen_t* screen){
     SDL_DestroyTexture(screen->barreauPorteTexture);
     SDL_DestroyTexture(screen->policierGardeTexture);
     SDL_DestroyTexture(screen->tonyLeMechantTexture);
-    
 }
