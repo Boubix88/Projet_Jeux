@@ -109,3 +109,4 @@ void drawDifficulte(screen_t* screen, world_t* world);
 void testPositionSourisMenuStart(screen_t* screen, world_t* world);
 void ancienCoord(world_t* world);
 void ecrireScore(world_t* world);
+SDL_Surface *load_bmp(char const *path, SDL_Surface *windowSurface);

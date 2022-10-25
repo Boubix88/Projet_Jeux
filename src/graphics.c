@@ -1,33 +1,54 @@
 #include "main.h"
 
+SDL_Surface *load_bmp(char const *path, SDL_Surface *windowSurface){
+    SDL_Surface *optimized_version = NULL;
+    SDL_Surface *image_surface = SDL_LoadBMP(path);
+
+    if(!image_surface)
+        return 0;
+
+    optimized_version = SDL_ConvertSurface(image_surface, windowSurface->format, 0);
+
+    if(!optimized_version){
+        SDL_FreeSurface(image_surface);
+        return 0;
+    }
+
+    SDL_FreeSurface(image_surface);
+
+    return optimized_version;
+}
+
 void initialiserTexture(screen_t* screen){
+    SDL_Surface *windowSurface = SDL_GetWindowSurface(screen->window);
+    windowSurface = SDL_ConvertSurfaceFormat(windowSurface, SDL_PIXELFORMAT_RGBA8888, 0);
     screen->font = TTF_OpenFont("../ressources/Pixeled.ttf", 25);
     if (screen->font == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
 
-    screen->sky = SDL_LoadBMP("../ressources/ciel.bmp");
+    screen->sky = load_bmp("../ressources/ciel.bmp", windowSurface);
     if (screen->sky == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->skyTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->sky);
     SDL_FreeSurface(screen->sky);
 
-    screen->ground = SDL_LoadBMP("../ressources/solgris.bmp");
+    screen->ground = load_bmp("../ressources/solgris.bmp", windowSurface);
     if (screen->ground == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->groundTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->ground);
     SDL_FreeSurface(screen->ground);  
 
-    SDL_Surface* murBrique = SDL_LoadBMP("../ressources/mur_brique.bmp");
+    SDL_Surface* murBrique = load_bmp("../ressources/mur_brique.bmp", windowSurface);
     if (murBrique == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->murBriqueTexture = SDL_CreateTextureFromSurface(screen->renderer, murBrique);
     SDL_FreeSurface(murBrique);
 
-    SDL_Surface* barreauPorte = SDL_LoadBMP("../ressources/barreauPorte.bmp");
+    SDL_Surface* barreauPorte = load_bmp("../ressources/barreauPorte.bmp", windowSurface);
     if (barreauPorte == NULL) {
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
@@ -35,7 +56,7 @@ void initialiserTexture(screen_t* screen){
     SDL_FreeSurface(barreauPorte);
 
 
-    SDL_Surface* policierGarde = SDL_LoadBMP("../ressources/policierGarde.bmp");
+    SDL_Surface* policierGarde = load_bmp("../ressources/policierGarde.bmp", windowSurface);
     if (policierGarde == NULL) {
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
@@ -43,48 +64,42 @@ void initialiserTexture(screen_t* screen){
     SDL_FreeSurface(policierGarde);
 
 
-
-
-
-    SDL_Surface* tonyLeMechant = SDL_LoadBMP("../ressources/tonyLeMechant.bmp");
+    SDL_Surface* tonyLeMechant = load_bmp("../ressources/tonyLeMechant.bmp", windowSurface);
     if (tonyLeMechant == NULL) {
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->tonyLeMechantTexture = SDL_CreateTextureFromSurface(screen->renderer, tonyLeMechant);
     SDL_FreeSurface(tonyLeMechant);
 
-
-
-
-    screen->degrade = SDL_LoadBMP("../ressources/degrade.bmp");
+    screen->degrade = load_bmp("../ressources/degrade.bmp", windowSurface);
     if (screen->degrade == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->degradeTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->degrade);
     SDL_FreeSurface(screen->degrade);
 
-    SDL_Surface* pistolet = SDL_LoadBMP("../ressources/sprite_pistolet.bmp");
+    SDL_Surface* pistolet = load_bmp("../ressources/sprite_pistolet.bmp", windowSurface);
     if (pistolet == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->pistoletTexture = SDL_CreateTextureFromSurface(screen->renderer, pistolet);
     SDL_FreeSurface(pistolet);
 
-    SDL_Surface* ammo = SDL_LoadBMP("../ressources/sprite_ammo.bmp");
+    SDL_Surface* ammo = load_bmp("../ressources/sprite_ammo.bmp", windowSurface);
     if (ammo == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->ammoTexture = SDL_CreateTextureFromSurface(screen->renderer, ammo);
     SDL_FreeSurface(ammo);
 
-    SDL_Surface* robot = SDL_LoadBMP("../ressources/robot.bmp");
+    SDL_Surface* robot = load_bmp("../ressources/robot.bmp", windowSurface);
     if (robot == NULL) {
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->robotTexture = SDL_CreateTextureFromSurface(screen->renderer, robot);
     SDL_FreeSurface(robot);
 
-    SDL_Surface* murCellule = SDL_LoadBMP("../ressources/cellule_prison.bmp");
+    SDL_Surface* murCellule = load_bmp("../ressources/cellule_prison.bmp", windowSurface);
     if (murCellule == NULL) {
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
@@ -92,7 +107,7 @@ void initialiserTexture(screen_t* screen){
     SDL_FreeSurface(murCellule);
 
 
-    SDL_Surface* exitDoor = SDL_LoadBMP("../ressources/exitDoor.bmp");
+    SDL_Surface* exitDoor = load_bmp("../ressources/exitDoor.bmp", windowSurface);
     if (exitDoor == NULL) {
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
@@ -100,7 +115,7 @@ void initialiserTexture(screen_t* screen){
     SDL_FreeSurface(exitDoor);
 
 
-    SDL_Surface* impactAmmo = SDL_LoadBMP("../ressources/impact_ammo.bmp");
+    SDL_Surface* impactAmmo = load_bmp("../ressources/impact_ammo.bmp", windowSurface);
     if (impactAmmo == NULL) {
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
@@ -109,35 +124,37 @@ void initialiserTexture(screen_t* screen){
 }
 
 void initialiserTexturesMenu(screen_t* screen){
-    screen->menu = SDL_LoadBMP("../ressources/flou.bmp");
+    SDL_Surface *windowSurface = SDL_GetWindowSurface(screen->window);
+    windowSurface = SDL_ConvertSurfaceFormat(windowSurface, SDL_PIXELFORMAT_RGBA8888, 0);
+    screen->menu = load_bmp("../ressources/flou.bmp", windowSurface);
     if (screen->menu == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->menuTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->menu);
     SDL_FreeSurface(screen->menu);
 
-    screen->continuerS = SDL_LoadBMP("../ressources/continuer.bmp");
+    screen->continuerS = load_bmp("../ressources/continuer.bmp", windowSurface);
     if (screen->continuerS == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->continuerTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->continuerS);
     SDL_FreeSurface(screen->continuerS);
 
-    screen->graphismes = SDL_LoadBMP("../ressources/graphismes.bmp");
+    screen->graphismes = load_bmp("../ressources/graphismes.bmp", windowSurface);
     if (screen->graphismes == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->graphismesTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->graphismes);
     SDL_FreeSurface(screen->graphismes);
 
-    screen->quitter = SDL_LoadBMP("../ressources/quitter.bmp");
+    screen->quitter = load_bmp("../ressources/quitter.bmp", windowSurface);
     if (screen->quitter == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->quitterTexture = SDL_CreateTextureFromSurface(screen->renderer, screen->quitter);
     SDL_FreeSurface(screen->quitter);
 
-    screen->flou = SDL_LoadBMP("../ressources/flou_ecriture.bmp");
+    screen->flou = load_bmp("../ressources/flou_ecriture.bmp", windowSurface);
     if (screen->flou == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
@@ -146,42 +163,44 @@ void initialiserTexturesMenu(screen_t* screen){
 }
 
 void initialiserTexturesMenuGraphisme(screen_t* screen){
-    SDL_Surface* menu = SDL_LoadBMP("../ressources/menu_graphisme.bmp");
+    SDL_Surface *windowSurface = SDL_GetWindowSurface(screen->window);
+    windowSurface = SDL_ConvertSurfaceFormat(windowSurface, SDL_PIXELFORMAT_RGBA8888, 0);
+    SDL_Surface* menu = load_bmp("../ressources/menu_graphisme.bmp", windowSurface);
     if (menu == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->menuGraphisme = SDL_CreateTextureFromSurface(screen->renderer, menu);
     SDL_FreeSurface(menu); 
 
-    SDL_Surface* tres_haut = SDL_LoadBMP("../ressources/tres_haut.bmp");
+    SDL_Surface* tres_haut = load_bmp("../ressources/tres_haut.bmp", windowSurface);
     if (tres_haut == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->tresHautGraphisme = SDL_CreateTextureFromSurface(screen->renderer, tres_haut);
     SDL_FreeSurface(tres_haut); 
 
-    SDL_Surface* haut = SDL_LoadBMP("../ressources/haut.bmp");
+    SDL_Surface* haut = load_bmp("../ressources/haut.bmp", windowSurface);
     if (haut == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->hautGraphisme = SDL_CreateTextureFromSurface(screen->renderer, haut);
     SDL_FreeSurface(haut); 
 
-    SDL_Surface* normal = SDL_LoadBMP("../ressources/normal.bmp");
+    SDL_Surface* normal = load_bmp("../ressources/normal.bmp", windowSurface);
     if (normal == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->normalGraphisme = SDL_CreateTextureFromSurface(screen->renderer, normal);
     SDL_FreeSurface(normal); 
 
-    SDL_Surface* bas = SDL_LoadBMP("../ressources/bas.bmp");
+    SDL_Surface* bas = load_bmp("../ressources/bas.bmp", windowSurface);
     if (bas == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->basGraphisme = SDL_CreateTextureFromSurface(screen->renderer, bas);
     SDL_FreeSurface(bas); 
 
-    SDL_Surface* tres_bas = SDL_LoadBMP("../ressources/tres_bas.bmp");
+    SDL_Surface* tres_bas = load_bmp("../ressources/tres_bas.bmp", windowSurface);
     if (tres_bas == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
@@ -190,28 +209,30 @@ void initialiserTexturesMenuGraphisme(screen_t* screen){
 }
 
 void initialiserTextureMenuStart(screen_t* screen){
-    SDL_Surface* menu = SDL_LoadBMP("../ressources/start_menu.bmp");
+    SDL_Surface *windowSurface = SDL_GetWindowSurface(screen->window);
+    windowSurface = SDL_ConvertSurfaceFormat(windowSurface, SDL_PIXELFORMAT_RGBA8888, 0);
+    SDL_Surface* menu = load_bmp("../ressources/start_menu.bmp", windowSurface);
     if (menu == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->menuStartTexture = SDL_CreateTextureFromSurface(screen->renderer, menu);
     SDL_FreeSurface(menu); 
 
-    SDL_Surface* start = SDL_LoadBMP("../ressources/start.bmp");
+    SDL_Surface* start = load_bmp("../ressources/start.bmp", windowSurface);
     if (start == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->startTexture = SDL_CreateTextureFromSurface(screen->renderer, start);
     SDL_FreeSurface(start); 
 
-    SDL_Surface* moins = SDL_LoadBMP("../ressources/moins.bmp");
+    SDL_Surface* moins = load_bmp("../ressources/moins.bmp", windowSurface);
     if (moins == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
     screen->moinsTexture = SDL_CreateTextureFromSurface(screen->renderer, moins);
     SDL_FreeSurface(moins); 
 
-    SDL_Surface* plus = SDL_LoadBMP("../ressources/plus.bmp");
+    SDL_Surface* plus = load_bmp("../ressources/plus.bmp", windowSurface);
     if (plus == NULL){
         printf("Erreur SDL2 : %s", SDL_GetError());
     }
@@ -350,7 +371,9 @@ void applyMenuGraphisme(screen_t* screen){
 }
 
 void applyCrosshair(screen_t* screen){
-    SDL_Surface* crosshair = SDL_LoadBMP("../ressources/crosshair.bmp");
+    SDL_Surface *windowSurface = SDL_GetWindowSurface(screen->window);
+    windowSurface = SDL_ConvertSurfaceFormat(windowSurface, SDL_PIXELFORMAT_RGBA8888, 0);
+    SDL_Surface* crosshair = load_bmp("../ressources/crosshair.bmp", windowSurface);
     screen->crosshairTexture = SDL_CreateTextureFromSurface(screen->renderer, crosshair);
 
     SDL_Rect destRect;
